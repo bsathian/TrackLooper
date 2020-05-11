@@ -1,7 +1,7 @@
 #ifndef StudyOccupancy_h
 #define StudyOccupancy_h
 
-# include "SDL/Event.cuh"
+# include "SDL/Event.h"
 # include "Study.h"
 # include <vector>
 # include <tuple>

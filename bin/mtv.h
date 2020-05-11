@@ -9,8 +9,8 @@
 #include "rooutil.h"
 #include "cxxopts.h"
 
-#include "SDL/Event.h" // SDL::Event
-#include "SDL/Module.h" // SDL::Module
+#include "SDL/Event.cuh" // SDL::Event
+#include "SDL/Module.cuh" // SDL::Module
 #include "SDL/PrintUtil.h" // SDL::out
 #include "SDL/EndcapGeometry.h" // SDL::EndcapGeometry
 #include "SDL/ModuleConnectionMap.h" // SDL::ModuleConnectionMap

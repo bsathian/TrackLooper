@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "AnalysisConfig.h"
-#include "SDL/Event.h"
+#include "SDL/Event.cuh"
 #include <cppitertools/itertools.hpp>
 #include "Study.h"
 #include "StudyTrackletSelection.h"

@@ -2,7 +2,7 @@
 #define trkCore_h
 
 #include "trktree.h"
-#include "SDL/Module.h" // SDL::Module
+#include "SDL/Module.cuh" // SDL::Module
 #include "TCanvas.h"
 #include "TRandom3.h"
 #include "TGraph.h"
@@ -12,7 +12,7 @@
 #include "Fit/Fitter.h"
 #include "AnalysisConfig.h"
 #include "SDL/ModuleConnectionMap.h"
-#include "SDL/Event.h"
+#include "SDL/Event.cuh"
 #include "SDL/TrackCandidate.h"
 #include "SDL/Tracklet.h"
 #include <cppitertools/itertools.hpp>

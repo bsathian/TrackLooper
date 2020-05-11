@@ -347,7 +347,7 @@ int main(int argc, char** argv)
 
     // List of studies to perform
     std::vector<Study*> studies;
-    if (ana.run_eff_study)
+/*    if (ana.run_eff_study)
     {
         // studies.push_back(new StudySDLEfficiency("efficiency",
         //             StudySDLEfficiency::kStudySDLMDEffBarrel,
@@ -384,12 +384,12 @@ int main(int argc, char** argv)
                     ana.pdg_id
                     ));
         studies.push_back(new StudyConditionalHitEfficiency("ConditionalHitEfficiency", pt_boundaries, ana.pdg_id));
-    }
-    else
+    }*/
+//    else
     {
         studies.push_back(new StudyOccupancy("studyOccupancy"));
-        studies.push_back(new StudyMDOccupancy("studyMDOccupancy"));
-        studies.push_back(new StudyLinkedModule("studyLinkedModule"));
+/*        studies.push_back(new StudyMDOccupancy("studyMDOccupancy"));
+       studies.push_back(new StudyLinkedModule("studyLinkedModule"));
         studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
         studies.push_back(new StudyTrackletSelection("studySelTlBB1BB3", StudyTrackletSelection::kStudySelBB1BB3));
         studies.push_back(new StudyTrackletSelection("studySelTlBB2BB4", StudyTrackletSelection::kStudySelBB2BB4));
@@ -403,7 +403,7 @@ int main(int argc, char** argv)
         // studies.push_back(new StudyTripletSelection("studySelTPBB2BB3", StudyTripletSelection::kStudySelBB2BB3));
         // studies.push_back(new StudyTripletSelection("studySelTPBB3BB4", StudyTripletSelection::kStudySelBB3BB4));
         // studies.push_back(new StudyTripletSelection("studySelTPBB4BB5", StudyTripletSelection::kStudySelBB4BB5));
-        // studies.push_back(new StudyTrackCandidateSelection("studySelTCAll", StudyTrackCandidateSelection::kStudySelAll, pt_boundaries));
+        // studies.push_back(new StudyTrackCandidateSelection("studySelTCAll", StudyTrackCandidateSelection::kStudySelAll, pt_boundaries));*/
     }
 
     // book the studies
@@ -418,7 +418,8 @@ int main(int argc, char** argv)
     // SDL::endcapGeometry.load("scripts/endcap_orientation_data.txt");
     SDL::endcapGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/endcap_orientation_data_v2.txt"); // centroid values added to the map
     SDL::tiltedGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/tilted_orientation_data.txt");
-    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+//    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/data/module_connection_2020_0429.txt");
 
     // // Following maps to compute centroid of each modules
     std::map<unsigned int, std::vector<float>> module_xs;

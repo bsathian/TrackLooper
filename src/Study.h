@@ -4,7 +4,7 @@
 #include <vector>
 #include <tuple>
 
-#include "SDL/Event.h"
+#include "SDL/Event.cuh"
 
 class Study
 {

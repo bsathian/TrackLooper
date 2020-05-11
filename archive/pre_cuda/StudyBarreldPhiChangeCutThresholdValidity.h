@@ -1,7 +1,7 @@
 #ifndef StudyBarreldPhiChangeCutThresholdValidity_h
 #define StudyBarreldPhiChangeCutThresholdValidity_h
 
-#include "SDL/Event.h"
+#include "SDL/Event.cuh"
 
 #include "Study.h"
 
