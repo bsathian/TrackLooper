@@ -387,7 +387,6 @@ int main(int argc, char** argv)
     }*/
 //    else
     {
-        studies.push_back(new StudyOccupancy("studyOccupancy"));
 /*        studies.push_back(new StudyMDOccupancy("studyMDOccupancy"));
        studies.push_back(new StudyLinkedModule("studyLinkedModule"));
         studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
@@ -475,24 +474,24 @@ int main(int argc, char** argv)
         // *****************************************************
         // Print module -> module connection info from sim track
         // *****************************************************
-        if (ana.print_conn)
+/*        if (ana.print_conn)
         {
             // Print the module connection info and do nothing else on the event
             printModuleConnectionInfo(module_connection_log_output);
             continue;
-        }
+        }*/
 
         // *****************************************************
         // Print module boundaries
         // *****************************************************
-        if (ana.print_boundary)
+/*        if (ana.print_boundary)
         {
             // Print the module connection info and do nothing else on the event
             processModuleBoundaryInfo();
             continue;
-        }
+        }*/
 
-        if (ana.print_centroid)
+/*        if (ana.print_centroid)
         {
             // Adding hits to modules
             for (unsigned int ihit = 0; ihit < trk.ph2_x().size(); ++ihit)
@@ -517,7 +516,7 @@ int main(int argc, char** argv)
 
             continue;
 
-        }
+        }*/
 
         // <--------------------------
         // <--------------------------
@@ -542,6 +541,7 @@ int main(int argc, char** argv)
         TStopwatch my_timer;
 
         // run_eff_study == 0 then run all the reconstruction
+      // 
         if ((ana.run_eff_study == 0 and ana.run_ineff_study == 0) or ana.run_mtv_study)
         {
 
@@ -604,7 +604,9 @@ int main(int argc, char** argv)
             event.createMiniDoublets();
             // event.createPseudoMiniDoubletsFromAnchorModule(); // Useless.....
             float md_elapsed = my_timer.RealTime();
+            
             if (ana.verbose != 0) std::cout << "Reco Mini-doublet processing time: " << md_elapsed << " secs" << std::endl;
+
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced: " << event.getNumberOfMiniDoublets() << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced barrel layer 1: " << event.getNumberOfMiniDoubletsByLayerBarrel(0) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced barrel layer 2: " << event.getNumberOfMiniDoubletsByLayerBarrel(1) << std::endl;
@@ -612,6 +614,7 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced barrel layer 4: " << event.getNumberOfMiniDoubletsByLayerBarrel(3) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced barrel layer 5: " << event.getNumberOfMiniDoubletsByLayerBarrel(4) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced barrel layer 6: " << event.getNumberOfMiniDoubletsByLayerBarrel(5) << std::endl;
+/*
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered: " << event.getNumberOfMiniDoubletCandidates() << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 1: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(0) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 2: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(1) << std::endl;
@@ -631,12 +634,14 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 3: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(2) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 4: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(3) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 5: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(4) << std::endl;
-            if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 6: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(5) << std::endl;
+            if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 6: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(5) << std::endl;*/
 
 
             // ----------------
 
             // ----------------
+            // 
+/*
             if (ana.verbose != 0) std::cout << "Reco Segment start" << std::endl;
             my_timer.Start(kFALSE);
             event.createSegmentsWithModuleMap();
@@ -814,165 +819,13 @@ int main(int argc, char** argv)
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 4: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(3) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 5: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(4) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 6: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(5) << std::endl;
-            // ----------------
+            // ----------------*/
 
             if (ana.verbose != 0) std::cout << "Reco SDL end" << std::endl;
 
         }
         // If efficiency is to be calculated
-        if (ana.run_eff_study or ana.run_ineff_study or ana.run_mtv_study)
-        {
 
-            // *******************************************************
-            // Formation of mini-doublets "candidates" from sim-tracks
-            // *******************************************************
-
-            // Loop over sim-tracks and per sim-track aggregate good hits (i.e. matched with particle ID)
-            // and only use those hits, and run mini-doublet reco algorithm on the sim-track-matched-reco-hits
-            for (unsigned int isimtrk = 0; isimtrk < trk.sim_q().size(); ++isimtrk)
-            {
-
-                // Then select all charged particle
-                if (ana.pdg_id == 1)
-                {
-                    // Select only muon tracks
-                    if (abs(trk.sim_q()[isimtrk]) == 0)
-                        continue;
-                }
-                else
-                {
-                    // Select only muon tracks
-                    if (abs(trk.sim_pdgId()[isimtrk]) != ana.pdg_id)
-                        continue;
-                }
-
-                // // Select hard scatter only
-                // if (abs(trk.sim_event()[isimtrk]) != 0)
-                //     continue;
-
-                // Select in time only
-                if (abs(trk.sim_bunchCrossing()[isimtrk]) != 0)
-                    continue;
-
-                // // Select only muon with pt > 1 GeV
-                // if (trk.sim_pt()[isimtrk] < 1)
-                //     continue;
-
-                // if (not (hasAll12HitsWithNBarrel(isimtrk, 2)))
-                //     continue;
-                // if (not (hasAll12HitsWithNBarrelUsingModuleMap(isimtrk, 6) or hasAll12HitsWithNBarrelUsingModuleMap(isimtrk, 5)))
-                //     continue;
-                // if (not hasAll12HitsInBarrel(isimtrk))
-                //     continue;
-
-                // event just for this track
-                SDL::Event* trackevent = new SDL::Event();
-
-                // loop over the simulated hits
-                for (unsigned int ith_hit = 0; ith_hit < trk.sim_simHitIdx()[isimtrk].size(); ++ith_hit)
-                {
-
-                    // Retrieve the sim hit idx
-                    unsigned int simhitidx = trk.sim_simHitIdx()[isimtrk][ith_hit];
-
-                    // Select only the hits in the outer tracker
-                    // if (not (trk.simhit_subdet()[simhitidx] == 4 or trk.simhit_subdet()[simhitidx] == 5))
-                    //     continue;
-                    // if (not (trk.simhit_subdet()[simhitidx] == 5))
-                    //     continue;
-
-                    if (isMuonCurlingHit(isimtrk, ith_hit))
-                        break;
-
-                    // list of reco hit matched to this sim hit
-                    for (unsigned int irecohit = 0; irecohit < trk.simhit_hitIdx()[simhitidx].size(); ++irecohit)
-                    {
-
-                        // Get the recohit type
-                        int recohittype = trk.simhit_hitType()[simhitidx][irecohit];
-
-                        // Consider only ph2 hits (i.e. outer tracker hits)
-                        if (recohittype == 4)
-                        {
-
-                            int ihit = trk.simhit_hitIdx()[simhitidx][irecohit];
-
-                            trackevent->addHitToModule(
-                                    // a hit
-                                    SDL::Hit(trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit], ihit),
-                                    // add to module with "detId"
-                                    trk.ph2_detId()[ihit]
-                                    );
-
-                        }
-
-                    }
-
-                }
-
-                if (ana.run_ineff_study)
-                {
-                    switch (ana.mode_write_ineff_study_debug_ntuple)
-                    {
-                        case 0: // MD
-                            if (ana.verbose != 0) std::cout << "Sim Mini-Doublet start" << std::endl;
-                            trackevent->createMiniDoublets(SDL::AllComb_MDAlgo);
-                            break;
-                        case 1:
-                            if (ana.verbose != 0) std::cout << "Sim Mini-Doublet start" << std::endl;
-                            trackevent->createMiniDoublets();
-                            if (ana.verbose != 0) std::cout << "Sim Segment start" << std::endl;
-                            trackevent->createSegmentsWithModuleMap(SDL::AllComb_SGAlgo);
-                            break;
-                        case 2:
-                            if (ana.verbose != 0) std::cout << "Sim Mini-Doublet start" << std::endl;
-                            trackevent->createMiniDoublets();
-                            if (ana.verbose != 0) std::cout << "Sim Segment start" << std::endl;
-                            trackevent->createSegmentsWithModuleMap();
-                            if (ana.verbose != 0) std::cout << "Sim Tracklet start" << std::endl;
-                            trackevent->createTrackletsWithModuleMap(SDL::AllComb_TLAlgo);
-                            break;
-                        case 3:
-                            if (ana.verbose != 0) std::cout << "Sim Mini-Doublet start" << std::endl;
-                            trackevent->createMiniDoublets();
-                            if (ana.verbose != 0) std::cout << "Sim Segment start" << std::endl;
-                            trackevent->createSegmentsWithModuleMap();
-                            if (ana.verbose != 0) std::cout << "Sim Tracklet start" << std::endl;
-                            trackevent->createTrackletsWithModuleMap();
-                            if (ana.verbose != 0) std::cout << "Sim TrackCandidate start" << std::endl;
-                            trackevent->createTrackCandidatesFromTracklets(SDL::AllComb_TCAlgo);
-                            break;
-                        default:
-                            std::cout << options.help() << std::endl;
-                            std::cout << "ERROR: ana.mode_write_ineff_study_debug_ntuple not recognized! value = " << ana.mode_write_ineff_study_debug_ntuple << std::endl;
-                            exit(1);
-                            break;
-                    }
-                }
-                else
-                {
-                    if (ana.verbose != 0) std::cout << "Sim Mini-Doublet start" << std::endl;
-                    trackevent->createMiniDoublets();
-                    if (ana.verbose != 0) std::cout << "Sim Segment start" << std::endl;
-                    trackevent->createSegmentsWithModuleMap();
-                    if (ana.verbose != 0) std::cout << "Sim Tracklet start" << std::endl;
-                    // trackevent->createTrackletsWithModuleMap();
-                    trackevent->createTrackletsWithModuleMap();
-                    if (ana.verbose != 0) std::cout << "Sim Triplet start" << std::endl;
-                    trackevent->createTriplets();
-                    if (ana.verbose != 0) std::cout << "Sim TrackCandidate start" << std::endl;
-                    trackevent->createTrackCandidatesFromTracklets();
-                    if (ana.verbose != 0) std::cout << "Sim SDL end" << std::endl;
-                }
-
-
-                // Push to the vector so we have a data-base of per hit, mini-doublets
-                simtrkevents.push_back(std::make_tuple(isimtrk, trackevent));
-
-            }
-
-
-        }
 
         // Print content in the event
         // (SDL::cout is a modified version of std::cout where each line is prefixed by SDL::)
@@ -986,10 +839,6 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
 
-        for (auto& study : studies)
-        {
-            study->doStudy(event, simtrkevents);
-        }
 
 
         // ************************************************
@@ -997,102 +846,10 @@ int main(int argc, char** argv)
         // ************************************************
 
         // Fill all the histograms
-        ana.cutflow.fill();
 
         // <--------------------------
         // <--------------------------
         // <--------------------------
-    }
-
-    if (ana.print_boundary)
-    {
-        for (auto mb : ana.moduleBoundaries)
-        {
-            int detid = mb.first;
-            std::array<float, 6> bounds = mb.second;
-            float zmin = bounds[0];
-            float zmax = bounds[1];
-            float phimin = bounds[2];
-            float phimax = bounds[3];
-            float rtmin = bounds[4];
-            float rtmax = bounds[5];
-            float zlen = abs(zmax - zmin);
-            float philen = abs(phimax - phimin);
-            float rtlen = abs(rtmax - rtmin);
-            module_boundary_output_info <<  " detid: " << detid <<  " zlen: " << zlen <<  " philen: " << philen <<  " rtlen: " << rtlen <<  " zmax: " << zmax <<  " zmin: " << zmin <<  " phimax: " << phimax <<  " phimin: " << phimin <<  " rtmax: " << rtmax <<  " rtmin: " << rtmin <<  std::endl;
-            // std::cout <<  " detid: " << detid <<  " zlen: " << zlen <<  " philen: " << philen <<  " rtlen: " << rtlen <<  " zmax: " << zmax <<  " zmin: " << zmin <<  " phimax: " << phimax <<  " phimin: " << phimin <<  " rtmax: " << rtmax <<  " rtmin: " << rtmin <<  std::endl;
-        }
-        for (auto ms : ana.moduleSimHits)
-        {
-            int detid = ms.first;
-            std::vector<std::vector<float>>& hit_coords = ms.second;
-            SDL::Module module(detid);
-            ana.tx->setBranch<int>("detId", detid);
-            ana.tx->setBranch<int>("subdet", module.subdet());
-            ana.tx->setBranch<int>("side", module.side());
-            ana.tx->setBranch<int>("layer", module.layer());
-            ana.tx->setBranch<int>("rod", module.rod());
-            ana.tx->setBranch<int>("module", module.module());
-            ana.tx->setBranch<int>("ring", module.ring());
-            ana.tx->setBranch<int>("isPS", module.moduleType() == SDL::Module::PS);
-            ana.tx->setBranch<int>("isStrip", module.moduleLayerType() == SDL::Module::Strip);
-            for (auto& hit_coord : hit_coords)
-            {
-                ana.tx->pushbackToBranch<float>("x", hit_coord[0]);
-                ana.tx->pushbackToBranch<float>("y", hit_coord[1]);
-                ana.tx->pushbackToBranch<float>("z", hit_coord[2]);
-            }
-            ana.tx->fill();
-            ana.tx->clear();
-        }
-    }
-
-    if (ana.print_centroid)
-    {
-
-        std::map<unsigned int, float> module_center_x;
-        std::map<unsigned int, float> module_center_y;
-        std::map<unsigned int, float> module_center_z;
-
-        for (auto& key : module_xs)
-        {
-            unsigned int detid = key.first;
-            std::vector<float> fs = key.second;
-            float sumf = 0;
-            for (auto& f : fs)
-                sumf += f;
-            if (fs.size() > 0)
-                module_center_x[detid] = sumf / fs.size();
-        }
-
-        for (auto& key : module_ys)
-        {
-            unsigned int detid = key.first;
-            std::vector<float> fs = key.second;
-            float sumf = 0;
-            for (auto& f : fs)
-                sumf += f;
-            if (fs.size() > 0)
-                module_center_y[detid] = sumf / fs.size();
-        }
-
-        for (auto& key : module_zs)
-        {
-            unsigned int detid = key.first;
-            std::vector<float> fs = key.second;
-            float sumf = 0;
-            for (auto& f : fs)
-                sumf += f;
-            if (fs.size() > 0)
-                module_center_z[detid] = sumf / fs.size();
-        }
-
-        for (auto& key : module_center_x)
-        {
-            unsigned int detid = key.first;
-            std::cout <<  " detid: " << detid <<  " module_center_x[detid]: " << module_center_x[detid] <<  " module_center_y[detid]: " << module_center_y[detid] <<  " module_center_z[detid]: " << module_center_z[detid] <<  std::endl;
-        }
-
     }
 
     // Writing output file
@@ -1116,227 +873,7 @@ int layer(int lay, int det)
     return lay;
 }
 
-void processModuleBoundaryInfo()
-{
-    int iidOld = -1;
 
-    constexpr int nBoundPoints = 6;
-    constexpr int nLayersB = 10; //barrel layers
-    std::array<float, nBoundPoints>* cbound;
-
-    int dpop = 0;
-    int* cpop = nullptr;
-    std::array<float, nBoundPoints> dbound {999, -999, 999, -999, 999, -999}; //zmin, zmax, phimin, phimax, rtmin, rtmax
-
-    std::array<int, nLayersB + 1> hitsBarrelLayer {};
-    auto nPh2 = trk.ph2_isBarrel().size();
-    for (auto iph2 = 0U; iph2 < nPh2; ++iph2)
-    {
-        bool isBarrel = trk.ph2_isBarrel()[iph2];
-        int lay = layer(trk.ph2_layer()[iph2], trk.ph2_detId()[iph2]);
-        hitsBarrelLayer[lay]++;
-        int iid = trk.ph2_detId()[iph2];
-
-        SDL::Module module = SDL::Module(iid);
-
-        // if (not (module.layer() == 1 and module.subdet() == SDL::Module::Barrel and module.side() == SDL::Module::Center and module.rod() == 1 and module.module() == 1))
-        //     continue;
-
-        if (iidOld != iid)
-        {
-            iidOld = iid;
-            if (ana.modulePopulation.find(iid) == ana.modulePopulation.end())
-            {
-                ana.modulePopulation[iid] = dpop;
-                ana.moduleBoundaries[iid] = dbound;
-            }
-            cpop = &ana.modulePopulation[iid];
-            cbound = &ana.moduleBoundaries[iid];
-        }
-
-        //look at all associated simhits, ignoring double-counting
-        auto const& ph2shV = trk.ph2_simHitIdx()[iph2];
-        auto nPh2sh = ph2shV.size();
-        for (auto iph2sh = 0U; iph2sh < nPh2sh; ++iph2sh)
-        {
-            const float x = trk.simhit_x()[ph2shV[iph2sh]];
-            const float y = trk.simhit_y()[ph2shV[iph2sh]];
-            const float rt = sqrt(x * x + y * y);
-            // const float z = isBarrel ? trk.simhit_z()[ph2shV[iph2sh]] : rt;
-            const float z = trk.simhit_z()[ph2shV[iph2sh]];
-
-            if (z == 0)
-                continue;
-
-            float phi = atan2(y, x);
-
-            std::vector<float> simhit_coords = {x, y, z};
-            ana.moduleSimHits[iid].push_back(simhit_coords);
-
-            if ((*cbound)[0] > z)
-                (*cbound)[0] = z;
-            if ((*cbound)[1] < z)
-                (*cbound)[1] = z;
-
-            if (*cpop == 0)
-            {
-                (*cbound)[2] = phi;
-                (*cbound)[3] = phi;
-                (*cbound)[4] = rt;
-                (*cbound)[5] = rt;
-            }
-            else
-            {
-                if (sin((*cbound)[2] - phi) > 0)
-                    (*cbound)[2] = phi;
-                if (sin((*cbound)[3] - phi) < 0)
-                    (*cbound)[3] = phi;
-
-                if ((*cbound)[4] > rt)
-                    (*cbound)[4] = rt;
-                if ((*cbound)[5] < rt)
-                    (*cbound)[5] = rt;
-            }
-
-            (*cpop)++;
-        }
-    }
-
-}
-
-void printModuleConnectionInfo(std::ofstream& ostrm)
-{
-    // *****************************************************
-    // Print module -> module connection info from sim track
-    // *****************************************************
-
-    // Loop over sim-tracks and per sim-track aggregate good hits (i.e. matched with particle ID)
-    // and only use those hits, and run mini-doublet reco algorithm on the sim-track-matched-reco-hits
-    for (unsigned int isimtrk = 0; isimtrk < trk.sim_q().size(); ++isimtrk)
-    {
-
-        // Select only muon tracks
-        if (abs(trk.sim_pdgId()[isimtrk]) != 13)
-            continue;
-
-        if (trk.sim_pt()[isimtrk] < 1)
-            continue;
-
-        // if (trk.sim_pt()[isimtrk] > 1.05)
-        //     continue;
-
-        // // Select only 1 cm from center tracks
-        // if (fabs(trk.sim_pca_dz()[isimtrk]) > 0.1)
-        //     continue;
-
-        std::vector<int> layers;
-        std::vector<int> subdets;
-        std::vector<int> detids;
-        std::vector<float> ps;
-
-        // std::cout <<  " trk.event(): " << trk.event() <<  std::endl;
-        // std::cout <<  " isimtrk: " << isimtrk <<  std::endl;
-
-        // loop over the simulated hits
-        for (auto& simhitidx : trk.sim_simHitIdx()[isimtrk])
-        {
-
-            // Select only the hits in the outer tracker
-            if (not (trk.simhit_subdet()[simhitidx] == 4 or trk.simhit_subdet()[simhitidx] == 5))
-                continue;
-
-            int simhit_particle = trk.simhit_particle()[simhitidx];
-            int detid = trk.simhit_detId()[simhitidx];
-            int layer = trk.simhit_layer()[simhitidx];
-            float x = trk.simhit_x()[simhitidx];
-            float y = trk.simhit_y()[simhitidx];
-            float z = trk.simhit_z()[simhitidx];
-            float r3 = sqrt(x*x + y*y + z*z);
-            float px = trk.simhit_px()[simhitidx];
-            float py = trk.simhit_py()[simhitidx];
-            float pz = trk.simhit_pz()[simhitidx];
-            float p = sqrt(px*px + py*py + pz*pz);
-            float rdotp = x*px + y*py + z*pz;
-            rdotp = rdotp / r3;
-            rdotp = rdotp / p;
-            float angle = acos(rdotp);
-            int subdet = trk.simhit_subdet()[simhitidx];
-            int trkidx = trk.simhit_simTrkIdx()[simhitidx];
-            SDL::Module module = SDL::Module(detid);
-
-            // Select only the sim hits that is matched to the muon
-            if (abs(simhit_particle) != 13)
-                continue;
-
-            // std::cout <<  " layer: " << layer <<  " subdet: " << subdet <<  " simhit_particle: " << simhit_particle <<  " x: " << x <<  " y: " << y <<  " z: " << z <<  " r3: " << r3 <<  " px: " << px <<  " py: " << py <<  " pz: " << pz <<  " p: " << p <<  " angle: " << angle <<  " trkidx: " << trkidx <<  " module.isLower(): " << module.isLower() <<  " detid: " << detid <<  std::endl;
-
-            // if (abs(angle) > 1.6)
-            //     break;
-
-            if (ps.size() > 0)
-            {
-                float loss = fabs(ps.back() - p) / ps.back();
-                if (loss > 0.35)
-                    break;
-            }
-
-            // Access hits on the S side of the PS modules in the endcaps and get three numbers, (detId, x, y)
-            if (module.isLower())
-            {
-                layers.push_back(layer);
-                subdets.push_back(subdet);
-                detids.push_back(detid);
-                ps.push_back(p);
-            }
-
-        }
-
-        // std::cout << "momentums: ";
-        // for (auto& p : ps)
-        // {
-        //     std::cout << p << " ";
-        // }
-        // std::cout << std::endl;
-
-        if (layers.size() > 0)
-        {
-
-            // std::cout <<  " trk.sim_pt()[isimtrk]: " << trk.sim_pt()[isimtrk] <<  " trk.sim_phi()[isimtrk]: " << trk.sim_phi()[isimtrk] <<  " trk.sim_eta()[isimtrk]: " << trk.sim_eta()[isimtrk] <<  " trk.sim_pca_dz()[isimtrk]: " << trk.sim_pca_dz()[isimtrk] <<  " trk.sim_pca_dxy()[isimtrk]: " << trk.sim_pca_dxy()[isimtrk] <<  " trk.sim_pca_lambda()[isimtrk]: " << trk.sim_pca_lambda()[isimtrk] <<  " trk.sim_pca_cotTheta()[isimtrk]: " << trk.sim_pca_cotTheta()[isimtrk] <<  " trk.sim_pca_phi()[isimtrk]: " << trk.sim_pca_phi()[isimtrk] <<  std::endl;
-            ostrm << "moduleconnection: ";
-            for (unsigned int i = 0; i < layers.size(); ++i)
-            {
-                ostrm << "(" << layers[i] << "," << subdets[i] << "," << detids[i] << "," << SDL::Module(detids[i]).partnerDetId() << ");";
-            }
-            ostrm << std::endl;
-            // ostrm << trk.event() << " " << isimtrk << " ";
-            // for (unsigned int i = 0; i < layers.size(); ++i)
-            // {
-            //     ostrm << detids[i] << "," << SDL::Module(detids[i]).partnerDetId();
-            //     if (i != layers.size() - 1)
-            //         ostrm << ",";
-            // }
-            // ostrm << std::endl;
-
-            // // std::cout <<  " trk.sim_pt()[isimtrk]: " << trk.sim_pt()[isimtrk] <<  " trk.sim_phi()[isimtrk]: " << trk.sim_phi()[isimtrk] <<  " trk.sim_eta()[isimtrk]: " << trk.sim_eta()[isimtrk] <<  " trk.sim_pca_dz()[isimtrk]: " << trk.sim_pca_dz()[isimtrk] <<  " trk.sim_pca_dxy()[isimtrk]: " << trk.sim_pca_dxy()[isimtrk] <<  " trk.sim_pca_lambda()[isimtrk]: " << trk.sim_pca_lambda()[isimtrk] <<  " trk.sim_pca_cotTheta()[isimtrk]: " << trk.sim_pca_cotTheta()[isimtrk] <<  " trk.sim_pca_phi()[isimtrk]: " << trk.sim_pca_phi()[isimtrk] <<  std::endl;
-            // std::cout << "moduleconnection: ";
-            // for (unsigned int i = 0; i < layers.size(); ++i)
-            // {
-            //     std::cout << "(" << layers[i] << "," << subdets[i] << "," << detids[i] << "," << SDL::Module(detids[i]).partnerDetId() << ");";
-            // }
-            // std::cout << std::endl;
-            // std::cout << trk.event() << " " << isimtrk << " ";
-            // for (unsigned int i = 0; i < layers.size(); ++i)
-            // {
-            //     std::cout << detids[i] << "," << SDL::Module(detids[i]).partnerDetId();
-            //     if (i != layers.size() - 1)
-            //         std::cout << ",";
-            // }
-            // std::cout << std::endl;
-
-        }
-
-    }
-}
 
 // bool isSDLDenominator(unsigned int isimtrk)
 // {
