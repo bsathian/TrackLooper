@@ -1,6 +1,6 @@
 [submodule "SDL"]
 	path = SDL
-	url = git@github.com:sgnoohc/SDL.git
+	url = git@github.com:bsathian/SDL.git
 [submodule "rooutil"]
 	path = rooutil
 	url = git@github.com:sgnoohc/rooutil.git
