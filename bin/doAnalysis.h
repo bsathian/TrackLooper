@@ -18,13 +18,11 @@
 
 // Efficiency study modules
 #include "Study.h"
-#include "StudyOccupancy.h"
 
 #include "constants.h"
 
 #include "AnalysisConfig.h"
 
-#include "trkCore.h"
 
 void printModuleConnectionInfo(std::ofstream&);
 // bool hasAll12HitsInBarrel(unsigned int);
