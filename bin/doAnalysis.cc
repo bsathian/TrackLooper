@@ -569,12 +569,7 @@ int main(int argc, char** argv)
 
                 // Takes two arguments, SDL::Hit, and detId
                 // SDL::Event internally will structure whether we already have the module instance or we need to create a new one.
-                event.addHitToModule(
-                        // a hit
-                        SDL::Hit(trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit], ihit),
-                        // add to module with "detId"
-                        trk.ph2_detId()[ihit]
-                        );
+                event.addHitToEvent(trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit],trk.ph2_detId()[ihit]);
 
             }
 
