@@ -415,10 +415,10 @@ int main(int argc, char** argv)
     ana.cutflow.bookHistograms(ana.histograms); // if just want to book everywhere
 
     // SDL::endcapGeometry.load("scripts/endcap_orientation_data.txt");
-    endcapGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/endcap_orientation_data_v2.txt"); // centroid values added to the map
-    tiltedGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/tilted_orientation_data.txt");
+    SDL::endcapGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/endcap_orientation_data_v2.txt"); // centroid values added to the map
+    SDL::tiltedGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/tilted_orientation_data.txt");
 //    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
-    moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/data/module_connection_2020_0429.txt");
+    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/data/module_connection_2020_0429.txt");
 
     // // Following maps to compute centroid of each modules
     std::map<unsigned int, std::vector<float>> module_xs;
@@ -532,11 +532,11 @@ int main(int argc, char** argv)
         // *************************************************
 
         // Main instance that will hold modules, hits, minidoublets, etc. (i.e. main data structure)
-        Event event;
+        SDL::Event event;
 
         // Each SDL::Event object in simtrkevents will hold single sim-track related hits
         // It will be a vector of tuple of <sim_track_index, SDL::Event*>.
-        std::vector<std::tuple<unsigned int, Event*>> simtrkevents;
+        std::vector<std::tuple<unsigned int, SDL::Event*>> simtrkevents;
 
         TStopwatch my_timer;
 
