@@ -453,7 +453,7 @@ int main(int argc, char** argv)
     }
 
     //create them modules
-    SDL::initModules()
+    SDL::initModules();
 
     // Looping input file
     while (ana.looper.nextEvent())
