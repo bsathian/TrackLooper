@@ -4,9 +4,9 @@
 
     git clone --recurse-submodules git@github.com:bsathian/TrackLooper.git
     cd TrackLooper
-    source rooutil/thisrooutil.sh # set rooutil
-    source rooutil/root.sh # set ROOT
+    source setup.sh # set ROOT
     make clean;
+    cd SDL && make -j && cd -
     make -j all;
 
 ## Running efficiency plot
