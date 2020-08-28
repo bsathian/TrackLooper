@@ -417,8 +417,8 @@ int main(int argc, char** argv)
     // SDL::endcapGeometry.load("scripts/endcap_orientation_data.txt");
     SDL::endcapGeometry.load("data/endcap_orientation_data_v2.txt"); // centroid values added to the map
     SDL::tiltedGeometry.load("data/tilted_orientation_data.txt");
-//    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
-    SDL::moduleConnectionMap.load("data/module_connection_2020_0429.txt");
+    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+//    SDL::moduleConnectionMap.load("data/module_connection_2020_0429.txt");
 
     // // Following maps to compute centroid of each modules
     std::map<unsigned int, std::vector<float>> module_xs;
@@ -639,7 +639,7 @@ int main(int argc, char** argv)
 
             // ----------------
             // 
-/*
+
             if (ana.verbose != 0) std::cout << "Reco Segment start" << std::endl;
             my_timer.Start(kFALSE);
             event.createSegmentsWithModuleMap();
@@ -651,6 +651,7 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "# of Segments produced layer 3-4: " << event.getNumberOfSegmentsByLayerBarrel(2) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Segments produced layer 4-5: " << event.getNumberOfSegmentsByLayerBarrel(3) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Segments produced layer 5-6: " << event.getNumberOfSegmentsByLayerBarrel(4) << std::endl;
+/*
             // if (ana.verbose != 0) std::cout << "# of Segments produced layer 6: " << event.getNumberOfSegmentsByLayerBarrel(5) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Segments considered: " << event.getNumberOfSegmentCandidates() << std::endl;
             if (ana.verbose != 0) std::cout << "# of Segments considered layer 1-2: " << event.getNumberOfSegmentCandidatesByLayerBarrel(0) << std::endl;
