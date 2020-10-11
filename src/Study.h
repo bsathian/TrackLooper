@@ -4,7 +4,7 @@
 #include <vector>
 #include <tuple>
 
-#include "SDL/Event.cuh"
+#include "AnalysisInterface/EventForAnalysisInterface.h"
 
 class Study
 {
@@ -12,7 +12,7 @@ class Study
 public:
 
     virtual void bookStudy();
-    virtual void doStudy(SDL::Event& recoevent, std::vector<std::tuple<unsigned int, SDL::Event*>> simtrkevents);
+    virtual void doStudy(SDL::EventForAnalysisInterface& recoevent, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents);
 
 };
 
