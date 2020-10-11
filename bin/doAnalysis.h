@@ -22,6 +22,7 @@
 
 #include "AnalysisConfig.h"
 
+#include "AnalysisInterface/EventForAnalysisInterface.h"
 
 void printModuleConnectionInfo(std::ofstream&);
 // bool hasAll12HitsInBarrel(unsigned int);
