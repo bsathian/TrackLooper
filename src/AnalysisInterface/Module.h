@@ -69,6 +69,7 @@ namespace SDL
 
         public:
             Module();
+            Module(unsigned int detId);
             Module(unsigned int detId, short layer, short ring, short rod, short module, bool isInverted, bool isLower, SubDet subdet, ModuleType moduleType, short side);
             ~Module();
 
@@ -81,7 +82,7 @@ namespace SDL
             const short& rod() const;
             const short& ring() const;
             const short& module() const;
-            const short& isLower() const;
+            const bool& isLower() const;
             const bool& isInverted() const;
             const ModuleType& moduleType() const;
             const ModuleLayerType& moduleLayerType() const;
@@ -89,6 +90,21 @@ namespace SDL
             const std::vector<MiniDoublet*>& getMiniDoubletPtrs() const;
             const std::vector<Segment*>& getSegmentPtrs() const;
             const std::vector<Tracklet*>& getTrackletPtrs() const;
+
+            // static functions to parse detId
+            static unsigned short parseSubdet(unsigned int);
+            static unsigned short parseSide(unsigned int);
+            static unsigned short parseLayer(unsigned int);
+            static unsigned short parseRod(unsigned int);
+            static unsigned short parseRing(unsigned int);
+            static unsigned short parseModule(unsigned int);
+            static unsigned short parseIsLower(unsigned int);
+            static bool parseIsInverted(unsigned int);
+            static unsigned int parsePartnerDetId(unsigned int);
+            static ModuleType parseModuleType(unsigned int);
+            static ModuleLayerType parseModuleLayerType(unsigned int);
+            void setDerivedQuantities();
+
 
             void addHit(Hit* hit);
             void addMiniDoublet(MiniDoublet* md);
