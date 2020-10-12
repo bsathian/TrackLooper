@@ -10,6 +10,8 @@ SDL::MiniDoublet::MiniDoublet(float dz, float drt, float dphi, float dphichange,
     dphichangenoshift_ = dphichangenoshift;
     lowerHitPtr_ = lowerHitPtr;
     upperHitPtr_ = upperHitPtr;
+
+    setAnchorHit();
 }
 
 SDL::Hit* SDL::MiniDoublet::lowerHitPtr() const
@@ -20,6 +22,11 @@ SDL::Hit* SDL::MiniDoublet::lowerHitPtr() const
 SDL::Hit* SDL::MiniDoublet::upperHitPtr() const
 {
     return upperHitPtr_;
+}
+
+SDL::Hit* SDL::MiniDoublet::anchorHitPtr() const
+{
+    return anchorHitPtr_;
 }
 
 const float& SDL::MiniDoublet::getDz() const
