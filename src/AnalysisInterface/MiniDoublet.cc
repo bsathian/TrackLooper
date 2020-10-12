@@ -12,43 +12,64 @@ SDL::MiniDoublet::MiniDoublet(float dz, float drt, float dphi, float dphichange,
     upperHitPtr_ = upperHitPtr;
 }
 
-SDL::Hit* SDL::MiniDoublet::lowerHitPtr()
+SDL::Hit* SDL::MiniDoublet::lowerHitPtr() const
 {
     return lowerHitPtr_;
 }
 
-SDL::Hit* SDL::MiniDoublet::upperHitPtr()
+SDL::Hit* SDL::MiniDoublet::upperHitPtr() const
 {
     return upperHitPtr_;
 }
 
-const float& SDL::MiniDoublet::getDz()
+const float& SDL::MiniDoublet::getDz() const
 {
     return dz_;
 }
 
-const float& SDL::MiniDoublet::getDrt()
+const float& SDL::MiniDoublet::getDrt() const
 {
     return drt_;
 }
 
-const float& SDL::MiniDoublet::getDeltaPhi()
+const float& SDL::MiniDoublet::getDeltaPhi() const
 {
     return dphi_;
 }
 
-const float& SDL::MiniDoublet::getDeltaPhiChange()
+const float& SDL::MiniDoublet::getDeltaPhiChange() const
 {
     return dphichange_;
 }
 
-const float& SDL::MiniDoublet::getDeltaPhiNoShift()
+const float& SDL::MiniDoublet::getDeltaPhiNoShift() const
 {
     return dphinoshift_;
 }
 
-const float& SDL::MiniDoublet::getDeltaPhiChangeNoShift()
+const float& SDL::MiniDoublet::getDeltaPhiChangeNoShift() const
 {
     return dphichangenoshift_;
 }
 
+void SDL::MiniDoublet::setAnchorHit()
+{
+    const SDL::Module& lowerModule = lowerHitPtr()->getModule();
+
+    // Assign anchor hit pointers based on their hit type
+    if (lowerModule.moduleType() == SDL::Module::PS)
+    {
+        if (lowerModule.moduleLayerType() == SDL::Module::Pixel)
+        {
+            anchorHitPtr_ = lowerHitPtr();
+        }
+        else
+        {
+            anchorHitPtr_ = upperHitPtr();
+        }
+    }
+    else
+    {
+        anchorHitPtr_ = lowerHitPtr();
+    }
+}
