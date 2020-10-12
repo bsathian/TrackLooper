@@ -403,4 +403,42 @@ bool hasAll12HitsWithNBarrel(unsigned int isimtrk, int nbarrel)
 }
 
 
-
+bool checkModuleConnectionsAreGood(std::array<std::vector<unsigned int>, 6>& layers_good_paired_modules)
+{
+    // Dumbest possible solution
+    for (auto& module0 : layers_good_paired_modules[0])
+    {
+        const std::vector<unsigned int>& connectedModule1s = ana.moduleConnectiongMapLoose.getConnectedModuleDetIds(module0);
+        for (auto& module1 : layers_good_paired_modules[1])
+        {
+            if (std::find(connectedModule1s.begin(), connectedModule1s.end(), module1) == connectedModule1s.end())
+                break;
+            const std::vector<unsigned int>& connectedModule2s = ana.moduleConnectiongMapLoose.getConnectedModuleDetIds(module1);
+            for (auto& module2 : layers_good_paired_modules[2])
+            {
+                if (std::find(connectedModule2s.begin(), connectedModule2s.end(), module2) == connectedModule2s.end())
+                    break;
+                const std::vector<unsigned int>& connectedModule3s = ana.moduleConnectiongMapLoose.getConnectedModuleDetIds(module2);
+                for (auto& module3 : layers_good_paired_modules[3])
+                {
+                    if (std::find(connectedModule3s.begin(), connectedModule3s.end(), module3) == connectedModule3s.end())
+                        break;
+                    const std::vector<unsigned int>& connectedModule4s = ana.moduleConnectiongMapLoose.getConnectedModuleDetIds(module3);
+                    for (auto& module4 : layers_good_paired_modules[4])
+                    {
+                        if (std::find(connectedModule4s.begin(), connectedModule4s.end(), module4) == connectedModule4s.end())
+                            break;
+                        const std::vector<unsigned int>& connectedModule5s = ana.moduleConnectiongMapLoose.getConnectedModuleDetIds(module4);
+                        for (auto& module5 : layers_good_paired_modules[5])
+                        {
+                            if (std::find(connectedModule5s.begin(), connectedModule5s.end(), module5) == connectedModule5s.end())
+                                break;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}

@@ -29,4 +29,5 @@ float hitAngle(unsigned int simhitidx);
 bool isMuonCurlingHit(unsigned int isimtrk, unsigned int ith_hit);
 bool hasAll12HitsWithNBarrel(unsigned int isimtrk, int nbarrel);
 bool hasAll12HitsWithNBarrelUsingModuleMap(unsigned int isimtrk, int nbarrel, bool usesimhits=false);
+bool checkModuleConnectionsAreGood(std::array<std::vector<unsigned int>, 6>& layers_good_paired_modules);
 #endif
