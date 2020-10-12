@@ -27,9 +27,11 @@ namespace SDL
             Hit* anchorHitPtr_;
         public:
             MiniDoublet(float dz, float drt, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, Hit* lowerHitPtr, Hit* upperHitPtr);
+            void setAnchorHit();
             ~MiniDoublet();
             Hit* lowerHitPtr() const;
             Hit* upperHitPtr() const;
+            Hit* anchorHitPtr() const;
             const float& getDz() const;
             const float& getDrt() const;
             const float& getDeltaPhi() const;
