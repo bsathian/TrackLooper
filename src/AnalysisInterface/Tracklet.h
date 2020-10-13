@@ -27,7 +27,7 @@ namespace SDL
             float betaOut_;
             float betaInCut_;
             float betaOutCut_;
-            float dBetaCut_;
+            float deltaBetaCut_;
             Segment* innerSegment_;
             Segment* outerSegment_;
         public:

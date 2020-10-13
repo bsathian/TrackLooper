@@ -9,49 +9,49 @@ SDL::Tracklet::Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, floa
     betaIn_ = betaIn;
     betaOut_ = betaOut;
     betaInCut_ = betaInCut;
-    betaOutCut_ = betaOutcut;
+    betaOutCut_ = betaOutCut;
     deltaBetaCut_ = deltaBetaCut;
     innerSegment_ = innerSegment;
     outerSegment_ = outerSegment;
     
 }
 
-const float& SDL::Tracklet::getDeltaBeta()
+const float& SDL::Tracklet::getDeltaBeta() const
 {
     return fabs(betaIn_ - betaOut_);
 }
 
-const float& SDL::Tracklet::getDeltaBetaCut()
+const float& SDL::Tracklet::getDeltaBetaCut() const
 {
     return deltaBetaCut_;
 }
 
-const float& SDL::Tracklet::getBetaIn()
+const float& SDL::Tracklet::getBetaIn() const
 {
     return betaIn_;
 }
 
-const float& SDL::Tracklet::getBetaOut()
+const float& SDL::Tracklet::getBetaOut() const
 {
     return betaOut_;
 }
 
-const float& SDL::Tracklet::getBetaInCut()
+const float& SDL::Tracklet::getBetaInCut() const
 {
     return betaInCut_;
 }
 
-const float& SDL::Tracklet::getBetaOutCut()
+const float& SDL::Tracklet::getBetaOutCut() const
 {
     return betaOutCut_;
 }
 
-const SDL::Segment* SDL::Tracklet::getInnerSegmentPtr()
+const SDL::Segment* SDL::Tracklet::getInnerSegmentPtr() const
 {
     return innerSegment_;
 }
 
-const SDL::Segment* SDL::Tracklet::getOuterSegmentPtr()
+const SDL::Segment* SDL::Tracklet::getOuterSegmentPtr() const
 {
     return outerSegment_;
 }

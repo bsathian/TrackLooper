@@ -1,8 +1,6 @@
 #ifndef StudySDLEfficiencyv2_h
 #define StudySDLEfficiencyv2_h
 
-#include "SDL/Event.h"
-#include "SDL/Module.h"
 
 #include "Study.h"
 
@@ -15,7 +13,7 @@
 
 #include "AnalysisConfig.h"
 #include "AnalysisInterface/EventForAnalysisInterface.h"
-
+#include "AnalysisInterface/Module.h"
 #include "trkCore.h"
 
 

@@ -5,7 +5,7 @@ SDL::Module::Module()
 
 }
 
-SDL::Module::Module(unsigned int detId, short layer, short ring, short rod, short module, bool isInverted, bool isLower, SubDet subdet, ModuleType moduleType, short side)
+SDL::Module::Module(unsigned int detId, short layer, short ring, short rod, short module, bool isInverted, bool isLower, short subdet, SDL::ModuleType moduleType, SDL::ModuleLayerType moduleLayerType, short side)
 {
     detId_ = detId;
     layer_ = layer;
@@ -14,16 +14,24 @@ SDL::Module::Module(unsigned int detId, short layer, short ring, short rod, shor
     ring_ = ring;
     isInverted_ = isInverted;
     isLower_ = isLower;
-    subdet_ = subdet;
-    moduleType_ = moduleType;
+    subdet_ = (SDL::Module::SubDet) subdet;
+    moduleType_ = (SDL::Module::ModuleType) moduleType;
+    moduleLayerType_ = (SDL::Module::ModuleLayerType) moduleLayerType;
     side_ = (SDL::Module::Side)side;
+    partnerDetId_ = parsePartnerDetId(detId_);
 }
 
 SDL::Module::Module(unsigned int detId)
 {
     detId_ = detId;
+    setDerivedQuantities();
     
 }
+
+SDL::Module::~Module()
+{
+}
+
 unsigned short SDL::Module::parseSubdet(unsigned int detId)
 {
     return (detId & (7 << 25)) >> 25;
@@ -222,18 +230,19 @@ SDL::Module::ModuleLayerType SDL::Module::parseModuleLayerType(unsigned int detI
 
 void SDL::Module::setDerivedQuantities()
 {
-    subdet_ = parseSubdet(detId_);
-    side_ = parseSide(detId_);
+    subdet_ = (SDL::Module::SubDet) parseSubdet(detId_);
+    side_ = (SDL::Module::Side) parseSide(detId_);
     layer_ = parseLayer(detId_);
     rod_ = parseRod(detId_);
     ring_ = parseRing(detId_);
     module_ = parseModule(detId_);
     isLower_ = parseIsLower(detId_);
     isInverted_ = parseIsInverted(detId_);
-    partnerDetId_ = parsePartnerDetId(detId_);
     moduleType_ = parseModuleType(detId_);
     moduleLayerType_ = parseModuleLayerType(detId_);
+    partnerDetId_ = parsePartnerDetId(detId_);
 }
+
 
 const unsigned int& SDL::Module::detId() const
 {
@@ -278,6 +287,11 @@ const bool& SDL::Module::isLower() const
 const bool& SDL::Module::isInverted() const
 {
     return isInverted_;
+}
+
+const unsigned int& SDL::Module::partnerDetId() const
+{
+    return partnerDetId_;
 }
 
 const SDL::Module::ModuleType& SDL::Module::moduleType() const

@@ -5,6 +5,7 @@
 #include "TCanvas.h"
 #include "AnalysisInterface/EventForAnalysisInterface.h"
 #include "AnalysisInterface/Module.h"
+#include "AnalysisConfig.h"
 #include "SDL/ModuleConnectionMap.h"
 
 enum TrackletType {

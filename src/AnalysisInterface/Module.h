@@ -9,6 +9,7 @@
 #include "MiniDoublet.h"
 #include "Segment.h"
 #include "Tracklet.h"
+#include "SDL/Module.cuh"
 
 namespace SDL
 {
@@ -21,6 +22,7 @@ namespace SDL
     {
         private:
             unsigned int detId_;
+            unsigned int partnerDetId_;
             short layer_;
             short ring_;
             short rod_;
@@ -70,7 +72,7 @@ namespace SDL
         public:
             Module();
             Module(unsigned int detId);
-            Module(unsigned int detId, short layer, short ring, short rod, short module, bool isInverted, bool isLower, SubDet subdet, ModuleType moduleType, short side);
+            Module(unsigned int detId, short layer, short ring, short rod, short module, bool isInverted, bool isLower, short subdet, SDL::ModuleType moduleType, SDL::ModuleLayerType moduleLayerType, short side);
             ~Module();
 
             // accessor functions

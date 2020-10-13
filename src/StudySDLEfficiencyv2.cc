@@ -120,6 +120,7 @@ void StudySDLEfficiencyv2::bookStudy()
 
 void StudySDLEfficiencyv2::doStudy(SDL::EventForAnalysisInterface& event, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents)
 {
+    std::cout<<"study study study"<<std::endl;
     // Each do study is performed per event
 
     // First clear all the output variables that will be used to fill the histograms for this event
@@ -291,8 +292,7 @@ void StudySDLEfficiencyv2::doStudy(SDL::EventForAnalysisInterface& event, std::v
 
         // Unpack the tuple (sim_track_index, SDL::Event containing reco hits only matched to the given sim track)
         unsigned int& isimtrk = std::get<0>(simtrkevent);
-        SDL::Event& trackevent = *(std::get<1>(simtrkevent));
-
+        SDL::EventForAnalysisInterface& trackevent = *(std::get<1>(simtrkevent));
         // auto [has_missing_hits, is_clean_punch_through, nbarrel, nendcap] = getDenomSimTrackTypeForAlgoEff(isimtrk);
 
         // switch (eff_mode)
@@ -329,7 +329,12 @@ void StudySDLEfficiencyv2::doStudy(SDL::EventForAnalysisInterface& event, std::v
         {
             case kStudySDLBBBBBB:
                 if (not hasAll12HitsWithNBarrelUsingModuleMap(isimtrk, 6))
+{
+                    std::cout<<isimtrk <<" not all 12 hits in barrel!"<<std::endl;
+
                     continue;
+              }
+               
                 break;
             case kStudySDLBBBBBE:
                 if (not (hasAll12HitsWithNBarrelUsingModuleMap(isimtrk, 5) and not hasAll12HitsWithNBarrelUsingModuleMap(isimtrk, 6)))
