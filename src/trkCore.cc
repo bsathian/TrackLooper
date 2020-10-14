@@ -759,3 +759,22 @@ bool isMTVMatch(unsigned int isimtrk, std::vector<unsigned int> hit_idxs, bool v
     // If 75% of 12 hits have been found than it is matched
     return (v_intersection.size() > ana.nmatch_threshold * factor);
 }
+
+void loadMaps()
+{
+    SDL::endcapGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/endcap_orientation_data_v2.txt"); // centroid values added to the map
+    SDL::tiltedGeometry.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/tilted_orientation_data.txt");
+
+    SDL::moduleConnectionMap.load("data/module_connection_combined_2020_0520_helixray.txt");
+    ana.moduleConnectiongMapLoose.load("data/module_connection_combined_2020_0520_helixray.txt");
+
+    // SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+    // ana.moduleConnectiongMapLoose.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+
+    // SDL::moduleConnectionMap.load("data/module_connection_2020_0429.txt");
+    // ana.moduleConnectiongMapLoose.load("data/module_connection_2020_0429.txt");
+
+    // SDL::moduleConnectionMap.load("data/module_connection_tracing_2020_0514.txt");
+    // SDL::moduleConnectionMap.load("data/module_connection_combined_2020_0518_helixray.txt");
+
+}
