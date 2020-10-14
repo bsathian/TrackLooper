@@ -39,6 +39,7 @@ namespace SDL
             std::vector<Tracklet*> trackletPointers;
 
         public:
+	    EventForAnalysisInterface(struct modules& modulesInGPU, struct hits& hitsInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU);
 
             void addModulesToAnalysisInterface(struct modules& modulesInGPU);
             void getModule(unsigned int detId);

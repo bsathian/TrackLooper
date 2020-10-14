@@ -2,10 +2,10 @@
 #define trkCore_h
 
 #include "trktree.h"
-#include "SDL/Module.h" // SDL::Module
 #include "TCanvas.h"
 #include "AnalysisInterface/EventForAnalysisInterface.h"
 #include "AnalysisInterface/Module.h"
+#include "AnalysisConfig.h"
 #include "SDL/ModuleConnectionMap.h"
 
 enum TrackletType {
