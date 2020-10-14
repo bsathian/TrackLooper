@@ -9,6 +9,7 @@ SDL::Hit::Hit(float x, float y, float z, float phi, float rt, int idx, const Mod
     rt_ = rt;
     idx_ = idx;
     modulePtr_ = modulePtr;
+    eta_ = ((z_ > 0) - ( z_ < 0)) * std::acosh(r3_ / rt_);
 }
 
 SDL::Hit::~Hit()
@@ -59,6 +60,11 @@ const SDL::Hit* SDL::Hit::getHitHighEdgePtr() const
 const SDL::Hit* SDL::Hit::getHitLowEdgePtr() const
 {
     return hit_low_edge_;
+}
+
+const float SDL::Hit::eta() const
+{
+    return eta_;
 }
 
 void SDL::Hit::setHighEdgePtr(SDL::Hit* hitHighEdge)

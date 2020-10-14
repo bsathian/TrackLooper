@@ -19,6 +19,7 @@ namespace SDL
             float z_;
             float phi_;
             float rt_;
+            float eta_;
             Hit* hit_high_edge_;
             Hit* hit_low_edge_;
             const Module* modulePtr_;
