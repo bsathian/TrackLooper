@@ -560,3 +560,202 @@ std::vector<float> getPtBounds()
         pt_boundaries = {0, 0.5, 1.0, 3.0, 5.0, 10, 15., 25, 50};
     return pt_boundaries;
 }
+
+bool inTimeTrackWithPdgId(int isimtrk, int pdgid)
+{
+    // Then select all charged particle
+    if (pdgid == 0)
+    {
+        // Select all charged particle tracks
+        if (abs(trk.sim_q()[isimtrk]) == 0)
+            return false;
+    }
+    else
+    {
+        // Select tracks with given pdgid
+        if (abs(trk.sim_pdgId()[isimtrk]) != pdgid)
+            return false;
+    }
+
+    // Select in time only
+    if (abs(trk.sim_bunchCrossing()[isimtrk]) != 0)
+        return false;
+
+    return true;
+}
+
+std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hittypes)
+{
+    if (hitidxs.size() != hittypes.size())
+    {
+        std::cout << "Error: matched_sim_trk_idxs()   hitidxs and hittypes have different lengths" << std::endl;
+        std::cout << "hitidxs.size(): " << hitidxs.size() << std::endl;
+        std::cout << "hittypes.size(): " << hittypes.size() << std::endl;
+    }
+
+    std::vector<std::pair<int, int>> to_check_duplicate;
+    for (auto&& [ihit, ihitdata] : iter::enumerate(iter::zip(hitidxs, hittypes)))
+    {
+        auto&& [hitidx, hittype] = ihitdata;
+        auto item = std::make_pair(hitidx, hittype);
+        if (std::find(to_check_duplicate.begin(), to_check_duplicate.end(), item) == to_check_duplicate.end())
+        {
+            to_check_duplicate.push_back(item);
+        }
+    }
+
+    int nhits_input = to_check_duplicate.size();
+
+    std::vector<vector<int>> simtrk_idxs;
+    std::vector<int> unique_idxs; // to aggregate which ones to count and test
+
+    for (auto&& [ihit, ihitdata] : iter::enumerate(to_check_duplicate))
+    {
+        auto&& [hitidx, hittype] = ihitdata;
+
+        std::vector<int> simtrk_idxs_per_hit;
+
+        const std::vector<vector<int>>* simHitIdxs;
+
+        if (hittype == 4)
+            simHitIdxs = &trk.ph2_simHitIdx();
+        else
+            simHitIdxs = &trk.pix_simHitIdx();
+
+        if ( (*simHitIdxs).size() <= hitidx)
+        {
+                std::cout << (*simHitIdxs).size() << " " << hittype << std::endl;
+                std::cout << hitidx << " " << hittype << std::endl;
+        }
+
+        for (auto& simhit_idx : (*simHitIdxs).at(hitidx))
+        {
+            // std::cout << "  " << trk.simhit_simTrkIdx().size() << std::endl;
+            // std::cout << " " << simhit_idx << std::endl;
+            if (trk.simhit_simTrkIdx().size() <= simhit_idx)
+            {
+                std::cout << (*simHitIdxs).size() << " " << hittype << std::endl;
+                std::cout << hitidx << " " << hittype << std::endl;
+                std::cout << trk.simhit_simTrkIdx().size() << " " << simhit_idx << std::endl;
+            }
+            int simtrk_idx = trk.simhit_simTrkIdx().at(simhit_idx);
+            simtrk_idxs_per_hit.push_back(simtrk_idx);
+            if (std::find(unique_idxs.begin(), unique_idxs.end(), simtrk_idx) == unique_idxs.end())
+                unique_idxs.push_back(simtrk_idx);
+        }
+
+        if (simtrk_idxs_per_hit.size() == 0)
+        {
+            simtrk_idxs_per_hit.push_back(-1);
+            if (std::find(unique_idxs.begin(), unique_idxs.end(), -1) == unique_idxs.end())
+                unique_idxs.push_back(-1);
+        }
+
+        simtrk_idxs.push_back(simtrk_idxs_per_hit);
+    }
+
+    // print
+    if (ana.verbose != 0)
+    {
+        std::cout << "va print" << std::endl;
+        for (auto& vec : simtrk_idxs)
+        {
+            for (auto& idx : vec)
+            {
+                std::cout << idx << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "va print end" << std::endl;
+    }
+
+    // Compute all permutations
+    std::function<void(vector<vector<int>>&, vector<int>, size_t, vector<vector<int>>&)> perm =
+        [&](vector<vector<int>>& result, vector<int> intermediate, size_t n, vector<vector<int>>& va)
+    {
+        if (va.size() > n)
+        {
+            for (auto x : va[n])
+            {
+                intermediate.push_back(x);
+                perm(result, intermediate, n+1, va);
+            }
+        }
+        else
+        {
+            result.push_back(intermediate);
+        }
+    };
+
+    vector<vector<int>> allperms;
+    perm(allperms, vector<int>(), 0, simtrk_idxs);
+
+    std::vector<int> matched_sim_trk_idxs;
+    for (auto& trkidx_perm : allperms)
+    {
+        std::vector<int> counts;
+        for (auto& unique_idx : unique_idxs)
+        {
+            int cnt = std::count(trkidx_perm.begin(), trkidx_perm.end(), unique_idx);
+            counts.push_back(cnt);
+        }
+        auto result = std::max_element(counts.begin(), counts.end());
+        int rawidx = std::distance(counts.begin(), result);
+        int trkidx = unique_idxs[rawidx];
+        if (trkidx < 0)
+            continue;
+        if (counts[rawidx] > (((float)nhits_input) * 0.75))
+            matched_sim_trk_idxs.push_back(trkidx);
+    }
+
+    return matched_sim_trk_idxs;
+}
+
+bool isMTVMatch(unsigned int isimtrk, std::vector<unsigned int> hit_idxs, bool verbose)
+{
+    std::vector<unsigned int> sim_trk_ihits;
+    for (auto& i_simhit_idx : trk.sim_simHitIdx()[isimtrk])
+    {
+        for (auto& ihit : trk.simhit_hitIdx()[i_simhit_idx])
+        {
+            sim_trk_ihits.push_back(ihit);
+        }
+    }
+
+    std::sort(sim_trk_ihits.begin(), sim_trk_ihits.end());
+    std::sort(hit_idxs.begin(), hit_idxs.end());
+
+    std::vector<unsigned int> v_intersection;
+
+    std::set_intersection(sim_trk_ihits.begin(), sim_trk_ihits.end(),
+                          hit_idxs.begin(), hit_idxs.end(),
+                          std::back_inserter(v_intersection));
+
+    if (verbose)
+    {
+        if (v_intersection.size() > ana.nmatch_threshold)
+        {
+            std::cout << "Matched" << std::endl;
+        }
+        else
+        {
+            std::cout << "Not matched" << std::endl;
+        }
+        std::cout << "sim_trk_ihits: ";
+        for (auto& i_simhit_idx : sim_trk_ihits)
+            std::cout << i_simhit_idx << " ";
+        std::cout << std::endl;
+
+        std::cout << "     hit_idxs: ";
+        for (auto& i_hit_idx : hit_idxs)
+            std::cout << i_hit_idx << " ";
+        std::cout << std::endl;
+    }
+
+    int nhits = hit_idxs.size();
+
+    float factor = nhits / 12.;
+
+    // If 75% of 12 hits have been found than it is matched
+    return (v_intersection.size() > ana.nmatch_threshold * factor);
+}

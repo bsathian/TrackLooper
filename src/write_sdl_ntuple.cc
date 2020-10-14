@@ -96,7 +96,7 @@ void write_sdl_ntuple()
         SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments, event.getTracklets());
         for (auto& study : studies)
         {
-            study->doStudy(eventForAnalysisInterface, simtrkeventsForAnalysisInterface);
+            study->doStudy(*eventForAnalysisInterface, simtrkeventsForAnalysisInterface);
         }
 
 

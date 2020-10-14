@@ -37,4 +37,7 @@ void runMinidoublet(SDL::Event& event);
 void runSegment(SDL::Event& event);
 void runTracklet(SDL::Event& event);
 std::vector<float> getPtBounds();
+bool inTimeTrackWithPdgId(int isimtrk, int pdgid);
+std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hittypes);
+bool isMTVMatch(unsigned int isimtrk, std::vector<unsigned int> hit_idxs, bool verbose);
 #endif

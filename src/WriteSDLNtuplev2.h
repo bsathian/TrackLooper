@@ -44,12 +44,12 @@ public:
 
     void setHitsSimHitsSimTracksBranches();
     void setPixelSeedBranches();
-    void setMiniDoubletBranches(SDL::Event& recoevent);
-    void setSegmentBranches(SDL::Event& recoevent);
-    void setTripletBranches(SDL::Event& recoevent);
-    void setQuadrupletBranches(SDL::Event& recoevent);
-    void setPixelQuadrupletBranches(SDL::Event& recoevent);
-    void setTrackCandidateBranches(SDL::Event& recoevent);
+    void setMiniDoubletBranches(SDL::EventForAnalysisInterface& recoevent);
+    void setSegmentBranches(SDL::EventForAnalysisInterface& recoevent);
+    void setTripletBranches(SDL::EventForAnalysisInterface& recoevent);
+    void setQuadrupletBranches(SDL::EventForAnalysisInterface& recoevent);
+    void setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& recoevent);
+    void setTrackCandidateBranches(SDL::EventForAnalysisInterface& recoevent);
 
 };
 

@@ -10,6 +10,8 @@
 #include "MiniDoublet.h"
 #include "Segment.h"
 #include "Tracklet.h"
+#include "MathUtil.h"
+#include "Layer.h"
 
 #include "SDL/Module.cuh"
 #include "SDL/Hit.cuh"
@@ -30,6 +32,12 @@ namespace SDL
             std::map<unsigned int, MiniDoublet*> miniDoublets_;
             std::map<unsigned int, Segment*> segments_;
             std::map<unsigned int, Tracklet*> tracklets_;
+
+            std::map<int, Layer> barrelLayers_;
+
+            // map of endcap layers (this holds the actual instances)
+            std::map<int, Layer> endcapLayers_;
+
         
             std::vector<Module*> modulePointers;
             std::vector<Module*> lowerModulePointers;
@@ -39,11 +47,16 @@ namespace SDL
             std::vector<Tracklet*> trackletPointers;
 
         public:
-	    EventForAnalysisInterface(struct modules& modulesInGPU, struct hits& hitsInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU);
+	    EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU);
 
             void addModulesToAnalysisInterface(struct modules& modulesInGPU);
             void getModule(unsigned int detId);
             void addHitsToAnalysisInterface(struct hits& hitsInGPU);
+
+            void createLayers();
+            Layer& getLayer(int layer, SDL::Layer::SubDet subdet);
+            const std::vector<Layer*> getLayerPtrs() const;
+
 
             void addMDsToAnalysisInterface(struct miniDoublets& mdsInGPU);
             void addSegmentsToAnalysisInterface(struct segments& segmentsInGPU);

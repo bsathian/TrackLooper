@@ -232,7 +232,7 @@ void WriteSDLNtuplev2::createTrackCandidateBranches()
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::doStudy(SDL::Event& event, std::vector<std::tuple<unsigned int, SDL::Event*>> simtrkevents)
+void WriteSDLNtuplev2::doStudy(SDL::EventForAnalysisInterface& event, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents)
 {
     setHitsSimHitsSimTracksBranches();
     setPixelSeedBranches();
@@ -391,7 +391,7 @@ void WriteSDLNtuplev2::setPixelSeedBranches()
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::Event& event)
+void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
@@ -518,7 +518,7 @@ void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::Event& event)
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setSegmentBranches(SDL::Event& event)
+void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
@@ -623,7 +623,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::Event& event)
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setTripletBranches(SDL::Event& event)
+void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
@@ -731,7 +731,7 @@ void WriteSDLNtuplev2::setTripletBranches(SDL::Event& event)
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setQuadrupletBranches(SDL::Event& event)
+void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
@@ -846,7 +846,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::Event& event)
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::Event& event)
+void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get pixel layer ptrs
@@ -951,7 +951,7 @@ void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::Event& event)
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setTrackCandidateBranches(SDL::Event& event)
+void WriteSDLNtuplev2::setTrackCandidateBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
