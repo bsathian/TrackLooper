@@ -32,12 +32,13 @@ bool hasAll12HitsWithNBarrel(unsigned int isimtrk, int nbarrel);
 bool hasAll12HitsWithNBarrelUsingModuleMap(unsigned int isimtrk, int nbarrel, bool usesimhits=false);
 bool checkModuleConnectionsAreGood(std::array<std::vector<unsigned int>, 6>& layers_good_paired_modules);
 bool goodEvent();
-void addOUterTrackerHits(SDL::Event& event);
-void runMinidoublet(SDL::Event& event);
+void addOuterTrackerHits(SDL::Event& event);
+void runMiniDoublet(SDL::Event& event);
 void runSegment(SDL::Event& event);
 void runTracklet(SDL::Event& event);
 std::vector<float> getPtBounds();
 bool inTimeTrackWithPdgId(int isimtrk, int pdgid);
 std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hittypes);
 bool isMTVMatch(unsigned int isimtrk, std::vector<unsigned int> hit_idxs, bool verbose);
+void loadMaps();
 #endif
