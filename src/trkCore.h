@@ -8,6 +8,7 @@
 #include "AnalysisConfig.h"
 #include "SDL/ModuleConnectionMap.h"
 #include "SDLMath.h"
+#include "SDL/Event.cuh"
 enum TrackletType {
     BB1BB3 = 0,
     BB2BB4,
@@ -42,7 +43,7 @@ std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hi
 std::vector<int> matchedSimTrkIdxs(SDL::Segment* sg, bool matchOnlyAnchor=false);
 std::vector<int> matchedSimTrkIdxs(SDL::Tracklet& tl);
 
-bool isMTVMatch(unsigned int isimtrk, std::vector<unsigned int> hit_idxs, bool verbose);
+bool isMTVMatch(unsigned int isimtrk, std::vector<unsigned int> hit_idxs, bool verbose=false);
 void loadMaps();
 float drfracSimHitConsistentWithHelix(int isimtrk, int isimhitidx);
 float drfracSimHitConsistentWithHelix(SDLMath::Helix& helix, int isimhitidx);
