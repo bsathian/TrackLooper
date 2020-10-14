@@ -17,7 +17,7 @@
 
 // Efficiency study modules
 #include "Study.h"
-
+#include "StudySDLEfficiencyv2.h"
 #include "constants.h"
 
 #include "AnalysisConfig.h"
