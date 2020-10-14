@@ -13,6 +13,7 @@ namespace SDL
     class Hit
     {  
         private:
+            int idx_;
             float x_;
             float y_;
             float z_;
@@ -23,9 +24,10 @@ namespace SDL
             const Module* modulePtr_;
 
         public:
-            Hit(float x, float y, float z, float phi, float rt, const Module* modulePtr);
+            Hit(float x, float y, float z, float phi, float rt, int idx, const Module* modulePtr);
             ~Hit();
             // accessor functions
+            const int& idx() const;
             const float& x() const;
             const float& y() const;
             const float& z() const;

@@ -362,7 +362,7 @@ int main(int argc, char** argv)
         studies.push_back(new StudySDLEfficiencyv2("eff_bbeeee", StudySDLEfficiencyv2::kStudySDLBBEEEE, pt_boundaries));
         studies.push_back(new StudySDLEfficiencyv2("eff_beeeee", StudySDLEfficiencyv2::kStudySDLBEEEEE, pt_boundaries));
     }
-    else if (ana.run_ineff_study)
+/*    else if (ana.run_ineff_study)
     {
         switch (ana.mode_write_ineff_study_debug_ntuple)
         {
@@ -384,7 +384,7 @@ int main(int argc, char** argv)
                     ana.pdg_id
                     ));
         studies.push_back(new StudyConditionalHitEfficiency("ConditionalHitEfficiency", pt_boundaries, ana.pdg_id));
-    }
+    }*/
 //    else
     {
 /*        studies.push_back(new StudyMDOccupancy("studyMDOccupancy"));
@@ -546,7 +546,7 @@ int main(int argc, char** argv)
 
         // run_eff_study == 0 then run all the reconstruction
       // 
-        if ((ana.run_eff_study == 0 and ana.run_ineff_study == 0) or ana.run_mtv_study)
+        //if ((ana.run_eff_study == 0 and ana.run_ineff_study == 0) or ana.run_mtv_study)
         {
 
             // Adding hits to modules
@@ -898,7 +898,7 @@ int main(int argc, char** argv)
                             
                             trackevent->addHitToEvent(
                                     // a hit
-                                    trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit], ihit,
+                                    trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit],
                                     // add to module with "detId"
                                     trk.ph2_detId()[ihit]);
                                     
@@ -958,16 +958,16 @@ int main(int argc, char** argv)
                     // trackevent->createTrackletsWithModuleMap();
                     trackevent->createTrackletsWithModuleMap();
                     if (ana.verbose != 0) std::cout << "Sim Triplet start" << std::endl;
-                    trackevent->createTriplets();
+//                    trackevent->createTriplets();
                     if (ana.verbose != 0) std::cout << "Sim TrackCandidate start" << std::endl;
-                    trackevent->createTrackCandidatesFromTracklets();
+//                    trackevent->createTrackCandidatesFromTracklets();
                     if (ana.verbose != 0) std::cout << "Sim SDL end" << std::endl;
                 }
 
 
                 // Push to the vector so we have a data-base of per hit, mini-doublets
                 simtrkevents.push_back(std::make_tuple(isimtrk, trackevent));
-                EventForAnalysisInterface* trackeventForAnalysisInterface = new EventForAnalysisInterface(SDL::modulesInGPU, trackevent->getHits(), trackevent->getMiniDoublets(), trackevent->getSegments(), trackevent->getTracklets);
+                SDL::EventForAnalysisInterface* trackeventForAnalysisInterface = new SDL::EventForAnalysisInterface(*SDL::modulesInGPU, *(trackevent->getHits()), *(trackevent->getMiniDoublets()), *(trackevent->getSegments()), *(trackevent->getTracklets()));
                 simtrkeventsForAnalysisInterface.push_back(std::make_tuple(isimtrk,trackeventForAnalysisInterface));
 
             }
@@ -980,7 +980,7 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
     //create the reco study analysis object
-        SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets());
+        SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(*SDL::modulesInGPU, *event.getHits(), *event.getMiniDoublets(), *event.getSegments(), *event.getTracklets());
 
 
 

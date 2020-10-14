@@ -1,18 +1,24 @@
 # include "Hit.h"
 
-SDL::Hit::Hit(float x, float y, float z, float phi, float rt, const Module* modulePtr)
+SDL::Hit::Hit(float x, float y, float z, float phi, float rt, int idx, const Module* modulePtr)
 {
     x_ = x;
     y_ = y;
     z_ = z;
     phi_ = phi;
     rt_ = rt;
+    idx_ = idx;
     modulePtr_ = modulePtr;
 }
 
 SDL::Hit::~Hit()
 {
 
+}
+
+const int& SDL::Hit::idx() const
+{
+    return idx_;
 }
 
 const float& SDL::Hit::x() const
