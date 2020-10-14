@@ -971,3 +971,88 @@ vector<int> matchedSimTrkIdxs(SDL::Segment* sg, bool matchOnlyAnchor)
     return matched_sim_trk_idxs;
 
 }
+
+float drfracSimHitConsistentWithHelix(int isimtrk, int isimhitidx)
+{
+    // Read track parameters
+    float vx = trk.simvtx_x()[0];
+    float vy = trk.simvtx_y()[0];
+    float vz = trk.simvtx_z()[0];
+    float pt = trk.sim_pt()[isimtrk];
+    float eta = trk.sim_eta()[isimtrk];
+    float phi = trk.sim_phi()[isimtrk];
+    float charge = trk.sim_q()[isimtrk];
+
+    // Construct helix object
+    SDLMath::Helix helix(pt, eta, phi, vx, vy, vz, charge);
+
+    return drfracSimHitConsistentWithHelix(helix, isimhitidx);
+
+}
+
+//__________________________________________________________________________________________
+float drfracSimHitConsistentWithHelix(SDLMath::Helix& helix, int isimhitidx)
+{
+
+    // Sim hit vector
+    std::vector<float> point = {trk.simhit_x()[isimhitidx], trk.simhit_y()[isimhitidx], trk.simhit_z()[isimhitidx]};
+
+    // Inferring parameter t of helix parametric function via z position
+    float t = helix.infer_t(point);
+
+    // If the best fit is more than pi parameter away then it's a returning hit and should be ignored
+    if (not (t <= M_PI))
+        return 999;
+
+    // Expected hit position with given z
+    auto [x, y, z, r] = helix.get_helix_point(t);
+
+    // ( expected_r - simhit_r ) / expected_r
+    float drfrac = abs(helix.compare_radius(point)) / r;
+
+    return drfrac;
+
+}
+
+//__________________________________________________________________________________________
+float distxySimHitConsistentWithHelix(int isimtrk, int isimhitidx)
+{
+    // Read track parameters
+    float vx = trk.simvtx_x()[0];
+    float vy = trk.simvtx_y()[0];
+    float vz = trk.simvtx_z()[0];
+    float pt = trk.sim_pt()[isimtrk];
+    float eta = trk.sim_eta()[isimtrk];
+    float phi = trk.sim_phi()[isimtrk];
+    float charge = trk.sim_q()[isimtrk];
+
+    // Construct helix object
+    SDLMath::Helix helix(pt, eta, phi, vx, vy, vz, charge);
+
+    return distxySimHitConsistentWithHelix(helix, isimhitidx);
+
+}
+
+//__________________________________________________________________________________________
+float distxySimHitConsistentWithHelix(SDLMath::Helix& helix, int isimhitidx)
+{
+
+    // Sim hit vector
+    std::vector<float> point = {trk.simhit_x()[isimhitidx], trk.simhit_y()[isimhitidx], trk.simhit_z()[isimhitidx]};
+
+    // Inferring parameter t of helix parametric function via z position
+    float t = helix.infer_t(point);
+
+    // If the best fit is more than pi parameter away then it's a returning hit and should be ignored
+    if (not (t <= M_PI))
+        return 999;
+
+    // Expected hit position with given z
+    auto [x, y, z, r] = helix.get_helix_point(t);
+
+    // ( expected_r - simhit_r ) / expected_r
+    float distxy = helix.compare_xy(point);
+
+    return distxy;
+
+}
