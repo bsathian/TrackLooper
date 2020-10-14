@@ -78,7 +78,7 @@ void addTrackletsToAnalysisInterface(struct tracklets& trackletsInGPU)
     }
 }
 
-SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules& modulesInGPU, struct hits& hitsInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU)
+SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU)
 {
     addModulesToAnalysisInterface(modulesInGPU);
     addHitsToAnalysisInterface(hitsInGPU);
