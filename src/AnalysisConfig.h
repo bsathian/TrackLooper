@@ -47,6 +47,9 @@ public:
     // pdg id of the particles to compute efficincies on
     int pdg_id;
 
+    // nmatch threshold of the hits to compute matching for MTV-like plots
+    int nmatch_threshold;
+
     // verbose of the particles to compute efficincies on
     int verbose;
 
@@ -86,6 +89,9 @@ public:
 
     // TTreeX to facilitate writing output to ttree
     RooUtil::TTreeX* tx;
+
+    // Boolean to control whether to write ntuple or not
+    bool write_sdl_ntuple;
 
     // Module boundaries related info
     std::map<int, std::array<float, 6>> moduleBoundaries;

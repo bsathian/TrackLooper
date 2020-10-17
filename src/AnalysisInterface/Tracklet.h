@@ -40,8 +40,8 @@ namespace SDL
             const float& getBetaInCut() const;
             const float& getBetaOut() const;
             const float& getBetaOutCut() const;
-            const Segment* getInnerSegmentPtr() const;
-            const Segment* getOuterSegmentPtr() const;
+            const Segment* innerSegmentPtr() const;
+            const Segment* outerSegmentPtr() const;
 
     };
 }

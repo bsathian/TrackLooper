@@ -9,6 +9,8 @@
 #include "SDL/ModuleConnectionMap.h"
 #include "SDLMath.h"
 #include "SDL/Event.cuh"
+#include <cppitertools/itertools.hpp>
+
 enum TrackletType {
     BB1BB3 = 0,
     BB2BB4,

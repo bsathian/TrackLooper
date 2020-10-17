@@ -213,13 +213,13 @@ int main(int argc, char** argv)
     // Run depending on the mode
     switch (ana.mode)
     {
-        case 0: build_module_map(); break;
-        case 1: print_module_centroid(); break;
-        case 2: mtv(); break;
-        case 3: algo_eff(); break;
-        case 4: tracklet(); break;
+        //case 0: build_module_map(); break;
+        //case 1: print_module_centroid(); break;
+        //case 2: mtv(); break;
+        //case 3: algo_eff(); break;
+        //case 4: tracklet(); break;
         case 5: write_sdl_ntuple(); break;
-        case 6: pixel_tracklet_eff(); break;
+        //case 6: pixel_tracklet_eff(); break;
         default:
                 std::cout << options.help() << std::endl;
                 std::cout << "ERROR: --mode was not recognized! Check your arguments." << std::endl;

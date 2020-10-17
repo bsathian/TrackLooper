@@ -46,12 +46,12 @@ const float& SDL::Tracklet::getBetaOutCut() const
     return betaOutCut_;
 }
 
-const SDL::Segment* SDL::Tracklet::getInnerSegmentPtr() const
+const SDL::Segment* SDL::Tracklet::innerSegmentPtr() const
 {
     return innerSegment_;
 }
 
-const SDL::Segment* SDL::Tracklet::getOuterSegmentPtr() const
+const SDL::Segment* SDL::Tracklet::outerSegmentPtr() const
 {
     return outerSegment_;
 }

@@ -1,6 +1,6 @@
 # include "Hit.h"
 
-SDL::Hit::Hit(float x, float y, float z, float phi, float rt, int idx, const Module* modulePtr)
+SDL::Hit::Hit(float x, float y, float z, float phi, float rt, int idx, Module* modulePtr)
 {
     x_ = x;
     y_ = y;
@@ -9,7 +9,15 @@ SDL::Hit::Hit(float x, float y, float z, float phi, float rt, int idx, const Mod
     rt_ = rt;
     idx_ = idx;
     modulePtr_ = modulePtr;
+    r3_ = sqrt(rt * rt + z * z);
     eta_ = ((z_ > 0) - ( z_ < 0)) * std::acosh(r3_ / rt_);
+}
+
+SDL::Hit::Hit(float x, float y, float z)
+{
+    x_ = x;
+    y_ = y;
+    z_ = z;
 }
 
 SDL::Hit::~Hit()
@@ -47,7 +55,7 @@ const float& SDL::Hit::phi() const
     return phi_;
 }
 
-const SDL::Module& SDL::Hit::getModule() const
+SDL::Module& SDL::Hit::getModule() const
 {
     return *modulePtr_;
 }
@@ -62,7 +70,7 @@ const SDL::Hit* SDL::Hit::getHitLowEdgePtr() const
     return hit_low_edge_;
 }
 
-const float SDL::Hit::eta() const
+const float& SDL::Hit::eta() const
 {
     return eta_;
 }

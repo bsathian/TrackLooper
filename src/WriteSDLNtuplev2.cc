@@ -238,10 +238,10 @@ void WriteSDLNtuplev2::doStudy(SDL::EventForAnalysisInterface& event, std::vecto
     setPixelSeedBranches();
     setMiniDoubletBranches(event);
     setSegmentBranches(event);
-    setTripletBranches(event);
+    //setTripletBranches(event);
     setQuadrupletBranches(event);
     // setPixelQuadrupletBranches(event);
-    setTrackCandidateBranches(event);
+    //setTrackCandidateBranches(event);
     ana.tx->fill();
     ana.tx->clear();
 }
@@ -489,13 +489,13 @@ void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& ev
             ana.tx->pushbackToBranch<float>("md_sim_phi", maxsimphi);
 
             float dz = minidoubletPtr->getDz();
-            float dzCut = minidoubletPtr->getRecoVar("dzCut");
-            float drt = minidoubletPtr->getRecoVar("drt");
-            float drtCut = minidoubletPtr->getRecoVar("drtCut");
-            float miniCut = minidoubletPtr->getRecoVar("miniCut");
+            float dzCut = 0;//minidoubletPtr->getRecoVar("dzCut");
+            float drt = 0;//minidoubletPtr->getRecoVar("drt");
+            float drtCut = 0;//minidoubletPtr->getRecoVar("drtCut");
+            float miniCut = 0;//minidoubletPtr->getRecoVar("miniCut");
             float dphi = minidoubletPtr->getDeltaPhi();
             float dphichange = minidoubletPtr->getDeltaPhiChange();
-            float type = minidoubletPtr->getRecoVar("type");
+            float type = 0;//minidoubletPtr->getRecoVar("type");
 
             ana.tx->pushbackToBranch<float>("md_type", type);
             ana.tx->pushbackToBranch<float>("md_dz", dz);
@@ -623,7 +623,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
+/*void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
@@ -728,7 +728,7 @@ void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
     ana.tx->setBranch<vector<vector<int>>>("sim_tpIdx", sim_tpIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_tpIdx_isMTVmatch", sim_tpIdx_isMTVmatch);
 
-}
+}*/
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& event)
@@ -846,7 +846,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& event)
+/*void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get pixel layer ptrs
@@ -1068,4 +1068,4 @@ void WriteSDLNtuplev2::setTrackCandidateBranches(SDL::EventForAnalysisInterface&
     ana.tx->setBranch<vector<vector<int>>>("sim_tcIdx", sim_tcIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_tcIdx_isMTVmatch", sim_tcIdx_isMTVmatch);
 
-}
+}*/

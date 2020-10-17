@@ -249,7 +249,7 @@ const unsigned int& SDL::Module::detId() const
     return detId_;
 }
 
-const short& SDL::Module::subdet() const
+const SDL::Module::SubDet& SDL::Module::subdet() const
 {
     return subdet_;
 }

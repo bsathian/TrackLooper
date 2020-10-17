@@ -13,8 +13,10 @@ from matplotlib.collections import PatchCollection
 # import mpl_toolkits.mplot3d as a3
 import pylab as pl
 
+import sdlmath
 from DetectorGeometry import DetectorGeometry
 from Module import Module
+from Centroid import Centroid
 
 # Displayer
 
@@ -22,6 +24,7 @@ class SDLDisplay:
 
     def __init__(self, det_geom):
         self.det_geom = det_geom
+        self.centroidDB = Centroid("data/centroid_2020_0428.txt")
 
     # def display_detector_xyz(self, ax, color=None):
 
@@ -38,12 +41,12 @@ class SDLDisplay:
 
     def display_detector_etaphi(self, ax, color=None):
 
-        p = PatchCollection(self.patches_etaphi, cmap=matplotlib.cm.jet, alpha=0.05, facecolors=color)
+        p = PatchCollection(self.patches_etaphi, cmap=matplotlib.cm.jet, alpha=0.15, facecolors=color)
 
         ax.add_collection(p)
         # ax.autoscale()
-        # ax.set_xlim(-2.6, 2.6)
-        ax.set_xlim(-1.0, 1.0)
+        ax.set_xlim(-2.6, 2.6)
+        # ax.set_xlim(-1.0, 1.0)
         ax.set_ylim(-math.pi, math.pi)
 
     def display_detector_xy(self, ax, color=None):
@@ -173,17 +176,22 @@ class SDLDisplay:
             module = Module(detid) 
 
             bound_points = self.det_geom.getData()[detid]
+            centroid = self.centroidDB.getCentroid(detid)
 
             points = []
             for bp in bound_points:
                 x = bp[1]
                 y = bp[2]
                 z = bp[0] # The index is weird because that's how it is saved in det_geom
-                phi = math.atan2(y, x)
-                print(x, y, phi)
-                # print(x, y, z)
-                eta = math.copysign(-math.log(math.tan(math.atan(math.sqrt(y**2+x**2) / abs(z)) / 2.)), z)
-                points.append([eta, phi])
+                refphi = math.atan2(centroid[1], centroid[0])
+                eta, phi = sdlmath.get_etaphi([x, y, z], refphi)
+                points.append([eta, phi+refphi])
+                # eta, phi = sdlmath.get_etaphi([x, y, z])
+                # points.append([eta, phi])
+                # phi = math.atan2(y, x)
+                # # print(x, y, phi)
+                # # print(x, y, z)
+                # eta = math.copysign(-math.log(math.tan(math.atan(math.sqrt(y**2+x**2) / abs(z)) / 2.)), z)
 
             polygon = Polygon(np.array(points), True)
             self.patches_etaphi.append(polygon)

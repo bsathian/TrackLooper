@@ -37,6 +37,7 @@ namespace SDL
 
             // map of endcap layers (this holds the actual instances)
             std::map<int, Layer> endcapLayers_;
+            std::vector<Layer*> layerPtrs_;
 
         
             std::vector<Module*> modulePointers;

@@ -448,7 +448,7 @@ void addOuterTrackerHits(SDL::Event& event)
     for (auto&& [ihit, data] : iter::enumerate(iter::zip(trk.ph2_x(), trk.ph2_y(), trk.ph2_z(), trk.ph2_subdet(), trk.ph2_detId())))
     {
 
-        auto&& [x, y, z, subdet, detid] = data;
+        auto&& [x, y, z, subdet, detId] = data;
 
         if (not (subdet == 5 or subdet == 4))
             continue;
@@ -483,7 +483,7 @@ void runMiniDoublet(SDL::Event& event)
 
 void runSegment(SDL::Event& event)
 {
-    TStopWatch my_timer;
+    TStopwatch my_timer;
     if (ana.verbose != 0) std::cout << "Reco Segment start" << std::endl;
     my_timer.Start(kFALSE);
     event.createSegmentsWithModuleMap();

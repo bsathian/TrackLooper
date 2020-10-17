@@ -31,7 +31,7 @@ public:
     WriteSDLNtuplev2(const char* studyName);
 
     virtual void bookStudy();
-    virtual void doStudy(SDL::Event& recoevent, std::vector<std::tuple<unsigned int, SDL::Event*>> simtrkevents);
+    virtual void doStudy(SDL::EventForAnalysisInterface& recoevent, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents);
 
     void createHitsSimHitsSimTracksBranches();
     void createPixelSeedBranches();

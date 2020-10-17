@@ -92,17 +92,14 @@ SDL::Hit SDL::MathUtil::getCenterFromThreePoints(SDL::Hit& hitA, SDL::Hit& hitB,
         std::cout <<  " slope_BC_inf: " << slope_BC_inf <<  std::endl;
         std::cout <<  " slope_AB: " << slope_AB <<  std::endl;
         std::cout <<  " slope_BC: " << slope_BC <<  std::endl;
-        std::cout << hitA << std::endl;
-        std::cout << hitB << std::endl;
-        std::cout << hitC << std::endl;
         std::cout << "SDL::MathUtil::getCenterFromThreePoints() function the three points are in straight line!" << std::endl;
-        return SDL::Hit(0,0,0,0,0,0,nullptr);
+        return SDL::Hit(0,0,0);
     }
 
     float x = (slope_AB * slope_BC * (yA - yC) + slope_BC * (xA + xB) - slope_AB * (xB + xC)) / (2. * (slope_BC - slope_AB));
     float y = slope_perp_AB * (x - x_mid_AB) + y_mid_AB;
 
-    return SDL::Hit(x, y, 0, 0, 0, 0, nullptr);
+    return SDL::Hit(x, y, 0);
 
 }
 

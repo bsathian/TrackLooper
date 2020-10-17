@@ -91,32 +91,22 @@ class Module:
         plusEtaDetId = int(self.detid)
 
         if self.isBarrelFlat():
-            if self.module() == self.maxBarrelFlatZModules[self.layer()]:
-                if self.layer() <= 3:
-                    plusEtaDetId -= 1<<18 #side changed from 3 to 2
-                    plusEtaDetId -= self.rod()<<10    #Rod reset
-                    plusEtaDetId -= self.module() <<2 #Module reset
-                    plusEtaDetId += self.rod()<<2   #rod of flat assigned to module of tilted
-                    plusEtaDetId += 1<<10 #rod of tilted reset to 1 (1st module in tilted)
-                else:
-                    print("Max eta range reached in flat barrel! Flat 2S Barrel to endcap transition not implemented yet!")
+            if self.module() == self.maxBarrelFlatZModules[self.layer()] and self.layer() <= 3:
+                plusEtaDetId -= 1<<18 #side changed from 3 to 2
+                plusEtaDetId -= self.rod()<<10    #Rod reset
+                plusEtaDetId -= self.module() <<2 #Module reset
+                plusEtaDetId += self.rod()<<2   #rod of flat assigned to module of tilted
+                plusEtaDetId += 1<<10 #rod of tilted reset to 1 (1st module in tilted)
+            elif self.layer() > 3:
+                print("Max eta range reached in flat barrel! Transition not implemented yet!")
             else:
                 plusEtaDetId += 1<<2
 
         elif self.isBarrelTilted():
             if self.rod() == self.maxBarrelTiltedZModules[self.layer()]:
-                #Left side - transition to flat
-                if module.side() == 1:
-                    plusEtaDetId += 2<<18 #Side changed from 1 to 3
-                    plusEtaDetId -= self.rod()<<10 #Rod reset
-                    plusEtaDetId -= self.module()<<2 #Module reset
-                    plusEtaDetId += self.module()<<10 #module of tilted assigned to rod of flat
-                    plusEtaDetId += 1<<2 #Module of flat reset to 1
-                else:
-                    print("Max eta range reached in tilted barrel! Tilted module to endcap transition not implemented yet!")
+                print("Max eta range reached in tilted barrel! Transition not implemented yet!")
             else:
                 plusEtaDetId += 1<<10
-
         else: #Endcap - jump to next layer
             if self.layer() < 5:
                 plusEtaDetId += 1<<18
@@ -127,29 +117,21 @@ class Module:
 
         minusEtaDetId = int(self.detid)
         if self.isBarrelFlat():
-            if self.module() == 1:
-                if self.layer() <=3 :
-                    #Implement the jump from barrel to tilted
-                    minusEtaDetId -= 2<<18 #side changed from 3 to 1
-                    minusEtaDetId -= self.rod()<<10    #Rod reset
-                    minusEtaDetId -= self.module() <<2 #Module reset
-                    minusEtaDetId += self.rod()<<2   #rod of flat assigned to module of tilted
-                    minusEtaDetId += 12<<10 #rod of tilted reset to 12 (last module in tilted)
-                else:
-                    print("Max eta range reached in flat barrel! Flat 2S barrel to endcap transition not implemented yet!")
+            if self.module() == 1 and self.layer() <=3 :
+                #Implement the jump from barrel to tilted
+                minusEtaDetId -= 2<<18 #side changed from 3 to 1
+                minusEtaDetId -= self.rod()<<10    #Rod reset
+                minusEtaDetId -= self.module() <<2 #Module reset
+                minusEtaDetId += self.rod()<<2   #rod of flat assigned to module of tilted
+                minusEtaDetId += 12<<10 #rod of tilted reset to 12 (last module in tilted)
+            elif self.layer() > 3:
+                print("Max eta range reached in flat barrel! Transition not implemented yet!")
             else:
                 minusEtaDetId -= 1<<2
 
         elif self.isBarrelTilted():
             if self.rod() == 1:
-                if module.side() == 2:
-                    minusEtaDetId += 1<<18 #side changed from 2 to 3
-                    minusEtaDetId -= self.rod()<<10 #Rod reset
-                    minusEtaDetId -= self.module()<<2 #Module reset
-                    minusEtaDetId += self.module()<<10 #Module of tilted assigned to rod of flat
-                    minusEtaDetId += (maxBarrelFlatZModules[self.layer()])<<2 #To the highest numbered module in the flat layer
-                else:
-                    print("Max eta range reached in tilted barrel! Tilted module to endcap transition not implemented yet!")
+                print("Max eta range reached in tilted barrel! Transition not implemented yet!")
             else:
                 minusEtaDetId -= 1<<10
         else: #Endcap - jump to previous layer

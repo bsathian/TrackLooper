@@ -78,7 +78,7 @@ namespace SDL
             // accessor functions
             const unsigned int& detId() const;
             const unsigned int& partnerDetId() const;
-            const short& subdet() const;
+            const SDL::Module::SubDet& subdet() const;
             const short& side() const;
             const short& layer() const;
             const short& rod() const;

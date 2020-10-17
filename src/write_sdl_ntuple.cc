@@ -21,10 +21,11 @@ void write_sdl_ntuple()
 
     // Load various maps used in the SDL reconstruction
     loadMaps();
-
+    SDL::initModules();
     // Looping input file
     while (ana.looper.nextEvent())
     {
+        std::cout<<"event number = "<<ana.looper.getCurrentEventIndex()<<std::endl;
 
         if (not goodEvent())
             continue;
@@ -83,7 +84,7 @@ void write_sdl_ntuple()
 
             // Push to the vector so we have a data-base of per hit, mini-doublets
             simtrkevents.push_back(std::make_tuple(isimtrk, trackevent));
-            SDL::EventForAnalysisInterface* trackeventForAnalysisInterface = new EventForAnalysisInterface(SDL::modulesInGPU, trackevent->getHits(), trackevent->getMiniDoublets(), trackevent->getSegments(), trackevent->getTracklets);
+            SDL::EventForAnalysisInterface* trackeventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, trackevent->getHits(), trackevent->getMiniDoublets(), trackevent->getSegments(), trackevent->getTracklets());
             simtrkeventsForAnalysisInterface.push_back(std::make_tuple(isimtrk,trackeventForAnalysisInterface));
 
         }
@@ -93,7 +94,7 @@ void write_sdl_ntuple()
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
         //analysis interface
-        SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments, event.getTracklets());
+        SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets());
         for (auto& study : studies)
         {
             study->doStudy(*eventForAnalysisInterface, simtrkeventsForAnalysisInterface);

@@ -11,7 +11,7 @@
 
 #include "SDL/Event.cuh" // SDL::Event
 #include "SDL/Module.cuh" // SDL::Module
-#include "SDL/EndcapGeometry.cuh" // SDL::EndcapGeometr
+#include "SDL/EndcapGeometry.h" // SDL::EndcapGeometr
 #include "SDL/ModuleConnectionMap.h" // SDL::ModuleConnectionMap
 
 // Efficiency study modules
