@@ -347,64 +347,7 @@ int main(int argc, char** argv)
 
     // List of studies to perform
     std::vector<Study*> studies;
-    if (ana.run_eff_study)
-    {
-        // studies.push_back(new StudySDLEfficiency("efficiency",
-        //             StudySDLEfficiency::kStudySDLMDEffBarrel,
-        //             StudySDLEfficiency::kStudySDLSGEffBB,
-        //             StudySDLEfficiency::kStudySDLTLEffBBBB,
-        //             StudySDLEfficiency::kStudySDLTCEffBBBBBB,
-        //             pt_boundaries));
-        studies.push_back(new StudySDLEfficiencyv2("eff_bbbbbb", StudySDLEfficiencyv2::kStudySDLBBBBBB, pt_boundaries));
-        studies.push_back(new StudySDLEfficiencyv2("eff_bbbbbe", StudySDLEfficiencyv2::kStudySDLBBBBBE, pt_boundaries));
-        studies.push_back(new StudySDLEfficiencyv2("eff_bbbbee", StudySDLEfficiencyv2::kStudySDLBBBBEE, pt_boundaries));
-        studies.push_back(new StudySDLEfficiencyv2("eff_bbbeee", StudySDLEfficiencyv2::kStudySDLBBBEEE, pt_boundaries));
-        studies.push_back(new StudySDLEfficiencyv2("eff_bbeeee", StudySDLEfficiencyv2::kStudySDLBBEEEE, pt_boundaries));
-        studies.push_back(new StudySDLEfficiencyv2("eff_beeeee", StudySDLEfficiencyv2::kStudySDLBEEEEE, pt_boundaries));
-    }
-/*    else if (ana.run_ineff_study)
-    {
-        switch (ana.mode_write_ineff_study_debug_ntuple)
-        {
-            case 0: studies.push_back(new StudySDLMiniDoubletDebugNtupleWriter()); break;
-            case 1: studies.push_back(new StudySDLSegmentDebugNtupleWriter()); break;
-            case 2: studies.push_back(new StudySDLTrackletDebugNtupleWriter()); break;
-            case 3: studies.push_back(new StudySDLTrackCandidateDebugNtupleWriter()); break;
-            default:
-                std::cout << options.help() << std::endl;
-                std::cout << "ERROR: ana.mode_write_ineff_study_debug_ntuple not recognized! value = " << ana.mode_write_ineff_study_debug_ntuple << std::endl;
-                exit(1);
-                break;
-        }
-    }
-    else if (ana.run_mtv_study)
-    {
-        studies.push_back(new StudyMTVEfficiency("MTVEfficiency",
-                    pt_boundaries,
-                    ana.pdg_id
-                    ));
-        studies.push_back(new StudyConditionalHitEfficiency("ConditionalHitEfficiency", pt_boundaries, ana.pdg_id));
-    }*/
-//    else
-    {
-/*        studies.push_back(new StudyMDOccupancy("studyMDOccupancy"));
-       studies.push_back(new StudyLinkedModule("studyLinkedModule"));
-        studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB1BB3", StudyTrackletSelection::kStudySelBB1BB3));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB2BB4", StudyTrackletSelection::kStudySelBB2BB4));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB3BB5", StudyTrackletSelection::kStudySelBB3BB5));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB1BE3", StudyTrackletSelection::kStudySelBB1BE3));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB2BE4", StudyTrackletSelection::kStudySelBB2BE4));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB3BE5", StudyTrackletSelection::kStudySelBB3BE5));
-        studies.push_back(new StudyTrackletSelection("studySelTlBB1EE3", StudyTrackletSelection::kStudySelBB1EE3));
-        studies.push_back(new StudyTrackletSelection("studySelTlEE1EE3", StudyTrackletSelection::kStudySelEE1EE3));
-        // studies.push_back(new StudyTripletSelection("studySelTPBB1BB2", StudyTripletSelection::kStudySelBB1BB2));
-        // studies.push_back(new StudyTripletSelection("studySelTPBB2BB3", StudyTripletSelection::kStudySelBB2BB3));
-        // studies.push_back(new StudyTripletSelection("studySelTPBB3BB4", StudyTripletSelection::kStudySelBB3BB4));
-        // studies.push_back(new StudyTripletSelection("studySelTPBB4BB5", StudyTripletSelection::kStudySelBB4BB5));
-        // studies.push_back(new StudyTrackCandidateSelection("studySelTCAll", StudyTrackCandidateSelection::kStudySelAll, pt_boundaries));*/
-        studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
-    }
+    studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
 
     // book the studies
     for (auto& study : studies)
