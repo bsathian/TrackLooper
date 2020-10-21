@@ -344,3 +344,33 @@ void SDL::Module::addTracklet(Tracklet* tp)
     tracklets_.push_back(tp);
 }
 
+const int SDL::Module::getNumberOfMiniDoublets() const
+{
+    return nMiniDoublets_;
+}
+
+const int SDL::Module::getNumberOfSegments() const
+{
+    return nSegments_;
+}
+
+const int SDL::Module::getNumberOfTracklets() const
+{
+    return nTracklets_;
+}
+
+void SDL::Module::setNumberOfMiniDoublets(unsigned int nMiniDoublets)
+{
+    nMiniDoublets_ = nMiniDoublets;
+}
+
+void SDL::Module::setNumberOfSegments(unsigned int nSegments)
+{
+    nSegments_ = nSegments;
+}
+
+void SDL::Module::setNumberOfTracklets(unsigned int nTracklets)
+{
+    nTracklets_ = nTracklets;
+}
+

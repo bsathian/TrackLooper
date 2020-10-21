@@ -7,7 +7,7 @@ const unsigned int MAX_CONNECTED_MODULES = 40;
 const unsigned int N_MAX_TRACKLETS_PER_MODULE = 5000;//temporary
 
 
-void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU)
+void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU)
 {
     for(unsigned int idx = 0; idx < *modulesInGPU.nModules; idx++)
     {
@@ -19,6 +19,10 @@ void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct module
             lowerModulePointers.push_back(moduleMapByIndex_[idx]);
         }
         detIdToIndex_[modulesInGPU.detIds[idx]] = idx;
+
+        moduleMapByIndex_[idx]->setNumberOfMiniDoublets(miniDoubletsInGPU.nMiniDoublets[idx]);
+        moduleMapByIndex_[idx]->setNumberOfSegments(segmentsInGPU.nSegments[idx]);
+        moduleMapByIndex_[idx]->setNumberOfTracklets(trackletsInGPU.nTracklets[idx]);
     }
 }
 
@@ -120,7 +124,7 @@ void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct trac
 SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU)
 {
     createLayers();
-    addModulesToAnalysisInterface(*modulesInGPU);
+    addModulesToAnalysisInterface(*modulesInGPU,*mdsInGPU,*segmentsInGPU,*trackletsInGPU);
     if(hitsInGPU != nullptr)
     {
         addHitsToAnalysisInterface(*hitsInGPU);

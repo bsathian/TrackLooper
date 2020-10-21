@@ -403,6 +403,7 @@ int main(int argc, char** argv)
         // studies.push_back(new StudyTripletSelection("studySelTPBB3BB4", StudyTripletSelection::kStudySelBB3BB4));
         // studies.push_back(new StudyTripletSelection("studySelTPBB4BB5", StudyTripletSelection::kStudySelBB4BB5));
         // studies.push_back(new StudyTrackCandidateSelection("studySelTCAll", StudyTrackCandidateSelection::kStudySelAll, pt_boundaries));*/
+        studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
     }
 
     // book the studies
@@ -728,6 +729,7 @@ int main(int argc, char** argv)
             my_timer.Start(kFALSE);
             // event.createTracklets();
              event.createTrackletsWithModuleMap();
+             event.createTrackletsWithAGapWithModuleMap();
             //event.createTrackletsViaNavigation();
             float tl_elapsed = my_timer.RealTime();
             if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << tl_elapsed - sg_elapsed << " secs" << std::endl;

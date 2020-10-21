@@ -69,6 +69,12 @@ namespace SDL
             std::vector<Segment*> segments_;
             std::vector<Tracklet*> tracklets_;
 
+            //to accommodate the fact that we will overshoot existing array limits and need another way to count object multiplicities
+            unsigned int nMiniDoublets_;
+            unsigned int nSegments_;
+            unsigned int nTracklets_;
+
+
         public:
             Module();
             Module(unsigned int detId);
@@ -92,6 +98,15 @@ namespace SDL
             const std::vector<MiniDoublet*>& getMiniDoubletPtrs() const;
             const std::vector<Segment*>& getSegmentPtrs() const;
             const std::vector<Tracklet*>& getTrackletPtrs() const;
+
+            const int getNumberOfMiniDoublets() const;
+            const int getNumberOfSegments() const;
+            const int getNumberOfTracklets() const;
+
+            void setNumberOfMiniDoublets(unsigned int);
+            void setNumberOfSegments(unsigned int);
+            void setNumberOfTracklets(unsigned int);
+
 
             // static functions to parse detId
             static unsigned short parseSubdet(unsigned int);
