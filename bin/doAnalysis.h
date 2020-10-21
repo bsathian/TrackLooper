@@ -9,7 +9,7 @@
 #include "trktree.h"
 #include "rooutil.h"
 #include "cxxopts.h"
-
+#include "trkCore.h"
 #include "SDL/Event.cuh" // SDL::Event
 #include "SDL/Module.cuh" // SDL::Module
 #include "SDL/EndcapGeometry.h" // SDL::EndcapGeometry

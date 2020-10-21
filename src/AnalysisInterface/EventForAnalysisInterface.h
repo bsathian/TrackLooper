@@ -50,7 +50,7 @@ namespace SDL
         public:
 	    EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU);
 
-            void addModulesToAnalysisInterface(struct modules& modulesInGPU);
+            void addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU);
             void getModule(unsigned int detId);
             void addHitsToAnalysisInterface(struct hits& hitsInGPU);
 
