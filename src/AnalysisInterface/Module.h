@@ -102,10 +102,12 @@ namespace SDL
             const int getNumberOfMiniDoublets() const;
             const int getNumberOfSegments() const;
             const int getNumberOfTracklets() const;
+            const int getNumberOfTriplets() const;
 
             void setNumberOfMiniDoublets(unsigned int);
             void setNumberOfSegments(unsigned int);
             void setNumberOfTracklets(unsigned int);
+            void setNumberOfTriplets(unsigned int);
 
 
             // static functions to parse detId
