@@ -99,7 +99,7 @@ namespace SDL
             const int& layerIdx() const;
             const std::vector<MiniDoublet*>& getMiniDoubletPtrs() const;
             const std::vector<Segment*>& getSegmentPtrs() const;
-  //          const std::vector<Triplet*>& getTripletPtrs() const;
+            const std::vector<Triplet*>& getTripletPtrs() const;
             const std::vector<Tracklet*>& getTrackletPtrs() const;
   //          const std::vector<TrackCandidate*>& getTrackCandidatePtrs() const;
             static const std::vector<std::pair<std::pair<int, SubDet>, std::pair<int, SubDet>>>& getListOfTrackletCompatibleLayerPairs();
@@ -110,7 +110,7 @@ namespace SDL
             void setSubDet(SubDet subdet);
             void addMiniDoublet(MiniDoublet* md);
             void addSegment(Segment* sg);
-    //        void addTriplet(Triplet* tp);
+            void addTriplet(Triplet* tp);
             void addTracklet(Tracklet* tl);
     //        void addTrackCandidate(TrackCandidate* tl);
 
