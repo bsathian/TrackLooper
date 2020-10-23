@@ -505,6 +505,7 @@ void runTracklet(SDL::Event& event)
     if (ana.verbose != 0) std::cout << "Reco Tracklet start" << std::endl;
     my_timer.Start(kFALSE);
     event.createTrackletsWithModuleMap();
+    event.createTrackletsWithAGapWithModuleMap();
     float tl_elapsed = my_timer.RealTime();
     if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << tl_elapsed << " secs" << std::endl;
     if (ana.verbose != 0) std::cout << "# of Tracklets produced: " << event.getNumberOfTracklets() << std::endl;

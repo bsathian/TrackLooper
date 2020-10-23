@@ -9,6 +9,7 @@ const unsigned int N_MAX_TRACKLETS_PER_MODULE = 5000;//temporary
 
 void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU)
 {
+    unsigned int lowerModuleIdx = 0;
     for(unsigned int idx = 0; idx < *modulesInGPU.nModules; idx++)
     {
         moduleMapByIndex_[idx] = new SDL::Module(modulesInGPU.detIds[idx],modulesInGPU.layers[idx], modulesInGPU.rings[idx], modulesInGPU.rods[idx], modulesInGPU.modules[idx], modulesInGPU.isInverted[idx], modulesInGPU.isLower[idx], modulesInGPU.subdets[idx], modulesInGPU.moduleType[idx], modulesInGPU.moduleLayerType[idx],modulesInGPU.sides[idx]);
@@ -17,12 +18,14 @@ void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct module
         if(modulesInGPU.isLower[idx])
         {
             lowerModulePointers.push_back(moduleMapByIndex_[idx]);
+            if(modulesInGPU.lowerModuleIndices[lowerModuleIdx] != idx) std::cout<<"wrong map!"<<std::endl;
+            moduleMapByIndex_[idx]->setNumberOfTracklets(trackletsInGPU.nTracklets[lowerModuleIdx]);
+            lowerModuleIdx++;
         }
         detIdToIndex_[modulesInGPU.detIds[idx]] = idx;
 
-        moduleMapByIndex_[idx]->setNumberOfMiniDoublets(miniDoubletsInGPU.nMiniDoublets[idx]);
+        moduleMapByIndex_[idx]->setNumberOfMiniDoublets(mdsInGPU.nMDs[idx]);
         moduleMapByIndex_[idx]->setNumberOfSegments(segmentsInGPU.nSegments[idx]);
-        moduleMapByIndex_[idx]->setNumberOfTracklets(trackletsInGPU.nTracklets[idx]);
     }
 }
 

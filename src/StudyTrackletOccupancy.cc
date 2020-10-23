@@ -7,40 +7,40 @@ StudyTrackletOccupancy::StudyTrackletOccupancy(const char* studyName)
 
 void StudyTrackletOccupancy::bookStudy()
 {
-    ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_barrel"),5000,0,5000,[&](){return occupancyInBarrel;});
+    ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_barrel"),5000,0,50000,[&](){return occupancyInBarrel;});
 
-    ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_barrel"),50000,0,5000,[&](){return averageOccupancyInBarrel;});
+    ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_barrel"),50000,0,50000,[&](){return averageOccupancyInBarrel;});
 
-    ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_endcap"),5000,0,5000,[&](){return occupancyInEndcap;});
+    ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_endcap"),5000,0,50000,[&](){return occupancyInEndcap;});
 
-    ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_endcap"),50000,0,5000,[&](){return averageOccupancyInEndcap;});
+    ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_endcap"),50000,0,50000,[&](){return averageOccupancyInEndcap;});
 
     for(int i = 0; i<6; i++)
     {
-        ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_layer_%d",i+1),50000,0,5000,[&,i](){return averageLayerOccupancy[i];});
+        ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_layer_%d",i+1),50000,0,50000,[&,i](){return averageLayerOccupancy[i];});
 
-        ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_layer_%d",i+1),5000,0,5000,[&,i](){return LayerOccupancy.at(i);});
+        ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_layer_%d",i+1),5000,0,50000,[&,i](){return LayerOccupancy.at(i);});
 
-        ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_barrel_for_layer_%d",i+1),50000,0,5000,[&,i](){return averageBarrelLayerOccupancy[i];});
+        ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_barrel_for_layer_%d",i+1),50000,0,50000,[&,i](){return averageBarrelLayerOccupancy[i];});
 
-        ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_barrel_for_layer_%d",i+1),5000,0,5000,[&,i](){return BarrelLayerOccupancy.at(i);});
+        ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_barrel_for_layer_%d",i+1),5000,0,50000,[&,i](){return BarrelLayerOccupancy.at(i);});
 
-        ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_endcap_for_layer_%d",i+1),50000,0,5000,[&,i](){return averageEndcapLayerOccupancy[i];});
+        ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_endcap_for_layer_%d",i+1),50000,0,50000,[&,i](){return averageEndcapLayerOccupancy[i];});
 
-        ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_endcap_for_layer_%d",i+1),5000,0,5000,[&,i](){return EndcapLayerOccupancy.at(i);});
+        ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_endcap_for_layer_%d",i+1),5000,0,50000,[&,i](){return EndcapLayerOccupancy.at(i);});
 
         for(int j = 0; j<15; j++)
         {
-            ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_layer_%d_ring_%d",i+1,j+1),5000,0,5000,[&,i,j](){return EndcapLayerRingTrackletOccupancy[i][j];});
+            ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_layer_%d_ring_%d",i+1,j+1),5000,0,50000,[&,i,j](){return EndcapLayerRingTrackletOccupancy[i][j];});
         }
 
     }
 
     for(int i=0;i<15;i++)
     {
-      ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_endcap_for_ring_%d",i+1),50000,0,5000,[&,i](){return averageEndcapRingOccupancy[i];});
+      ana.histograms.addHistogram(TString::Format("average_Tracklet_occupancy_in_endcap_for_ring_%d",i+1),50000,0,50000,[&,i](){return averageEndcapRingOccupancy[i];});
 
-      ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_endcap_for_ring_%d",i+1),5000,0,5000,[&,i](){return EndcapRingOccupancy.at(i);});
+      ana.histograms.addVecHistogram(TString::Format("Tracklet_occupancy_in_endcap_for_ring_%d",i+1),5000,0,50000,[&,i](){return EndcapRingOccupancy.at(i);});
     }
 
 }
