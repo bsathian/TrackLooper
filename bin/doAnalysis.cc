@@ -361,7 +361,10 @@ int main(int argc, char** argv)
     // SDL::endcapGeometry.load("scripts/endcap_orientation_data.txt");
     SDL::endcapGeometry.load("data/endcap_orientation_data_v2.txt"); // centroid values added to the map
     SDL::tiltedGeometry.load("data/tilted_orientation_data.txt");
-    SDL::moduleConnectionMap.load("data/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+//    SDL::moduleConnectionMap.load("data/module_connection_combined_2020_0520_helixray.txt");
+    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+
+
 //    SDL::moduleConnectionMap.load("data/module_connection_2020_0429.txt");
 
     // // Following maps to compute centroid of each modules
@@ -672,7 +675,7 @@ int main(int argc, char** argv)
             my_timer.Start(kFALSE);
             // event.createTracklets();
              event.createTrackletsWithModuleMap();
-             event.createTrackletsWithAGapWithModuleMap();
+//             event.createTrackletsWithAGapWithModuleMap();
             //event.createTrackletsViaNavigation();
             float tl_elapsed = my_timer.RealTime();
             if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << tl_elapsed - sg_elapsed << " secs" << std::endl;
