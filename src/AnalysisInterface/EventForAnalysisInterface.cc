@@ -5,9 +5,9 @@ const unsigned int N_MAX_MDS_PER_MODULE = 100;
 const unsigned int N_MAX_SEGMENTS_PER_MODULE = 600; //WHY!
 const unsigned int MAX_CONNECTED_MODULES = 40;
 const unsigned int N_MAX_TRACKLETS_PER_MODULE = 5000;//temporary
+const unsigned int N_MAX_TRIPLETS_PER_MODULE = 1000; 
 
-
-void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU, struct triplets& tripletsInGPU)
+void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU)
 {
     unsigned int lowerModuleIndex = 0;
 
@@ -19,14 +19,24 @@ void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct module
         if(modulesInGPU.isLower[idx])
         {
             lowerModulePointers.push_back(moduleMapByIndex_[idx]);
-            moduleMapByIndex_[idx]->setNumberOfTracklets(trackletsInGPU.nTracklets[lowerModuleIndex]);
-            moduleMapByIndex_[idx]->setNumberOfTriplets(tripletsInGPU.nTriplets[lowerModuleIndex]);
+            if(trackletsInGPU != nullptr)
+            {
+                moduleMapByIndex_[idx]->setNumberOfTracklets(trackletsInGPU->nTracklets[lowerModuleIndex]);
+            }
+            if(tripletsInGPU != nullptr)
+            {
+                moduleMapByIndex_[idx]->setNumberOfTriplets(tripletsInGPU->nTriplets[lowerModuleIndex]);
+            }
+
             lowerModuleIndex++;
         }
         detIdToIndex_[modulesInGPU.detIds[idx]] = idx;
-
-        moduleMapByIndex_[idx]->setNumberOfMiniDoublets(mdsInGPU.nMDs[idx]);
-        moduleMapByIndex_[idx]->setNumberOfSegments(segmentsInGPU.nSegments[idx]);
+        
+        if(tripletsInGPU != nullptr)
+        {
+            moduleMapByIndex_[idx]->setNumberOfMiniDoublets(mdsInGPU->nMDs[idx]);
+            moduleMapByIndex_[idx]->setNumberOfSegments(segmentsInGPU->nSegments[idx]); 
+        }
     }
 }
 
@@ -125,7 +135,7 @@ void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct trac
     }
 }
 
-SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct triplets* tripletsInGPU)
+void SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct triplets& tripletsInGPU)
 {
     for(unsigned int idx = 0; idx < lowerModulePointers.size(); idx++)
     {
@@ -134,7 +144,7 @@ SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct triplets* 
             unsigned int tripletIndex = idx * N_MAX_TRIPLETS_PER_MODULE + jdx;
             Segment* innerSegment = segments_[tripletsInGPU.segmentIndices[2 * tripletIndex]];
             Segment* outerSegment = segments_[tripletsInGPU.segmentIndices[2 * tripletIndex + 1]];
-            triplets_[tripletIndex] = new SDL::triplet(tripletsInGPU.zOut[tripletIndex], tripletsInGPU.rtOut[tripletIndex], tripletsInGPU.deltaPhiPos[tripletIndex], tripletsInGPU.deltaPhi[tripletIndex], tripletsInGPU.betaIn[tripletIndex], tripletsInGPU.betaOut[tripletIndex], tripletsInGPU.betaInCut[tripletIndex], tripletsInGPU.betaOutCut[tripletIndex], tripletsInGPU.dBetaCut[tripletIndex], innerSegment, outerSegment);
+            triplets_[tripletIndex] = new SDL::Triplet(tripletsInGPU.zOut[tripletIndex], tripletsInGPU.rtOut[tripletIndex], tripletsInGPU.deltaPhiPos[tripletIndex], tripletsInGPU.deltaPhi[tripletIndex], tripletsInGPU.betaIn[tripletIndex], tripletsInGPU.betaOut[tripletIndex], tripletsInGPU.betaInCut[tripletIndex], tripletsInGPU.betaOutCut[tripletIndex], tripletsInGPU.dBetaCut[tripletIndex], innerSegment, outerSegment);
 
             tripletPointers.push_back(triplets_[tripletIndex]);
             Module& innerInnerLowerModule = ((innerSegment->innerMiniDoubletPtr())->lowerHitPtr())->getModule();
@@ -156,7 +166,7 @@ SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct triplets* 
 SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU)
 {
     createLayers();
-    addModulesToAnalysisInterface(*modulesInGPU,*mdsInGPU,*segmentsInGPU,*trackletsInGPU);
+    addModulesToAnalysisInterface(*modulesInGPU,mdsInGPU,segmentsInGPU,trackletsInGPU, tripletsInGPU);
     if(hitsInGPU != nullptr)
     {
         addHitsToAnalysisInterface(*hitsInGPU);

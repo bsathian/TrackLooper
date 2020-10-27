@@ -518,6 +518,25 @@ void runTracklet(SDL::Event& event)
 
 }
 
+void runTriplet(SDL::Event& event)
+{
+    TStopwatch my_timer;
+    if (ana.verbose != 0) std::cout << "Reco Triplet start" << std::endl;
+    my_timer.Start(kFALSE);
+    event.createTriplets();
+    float tp_elapsed = my_timer.RealTime();
+    if (ana.verbose != 0) std::cout << "Reco Triplet processing time: " << tp_elapsed<< " secs" << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced: " << event.getNumberOfTriplets() << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced layer 1-2-3: " << event.getNumberOfTripletsByLayerBarrel(0) << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced layer 2-3-4: " << event.getNumberOfTripletsByLayerBarrel(1) << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced layer 3-4-5: " << event.getNumberOfTripletsByLayerBarrel(2) << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced layer 4-5-6: " << event.getNumberOfTripletsByLayerBarrel(3) << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced endcap layer 1-2-3: " << event.getNumberOfTripletsByLayerEndcap(0) << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced endcap layer 2-3-4: " << event.getNumberOfTripletsByLayerEndcap(1) << std::endl;
+    if (ana.verbose != 0) std::cout << "# of Triplets produced endcap layer 3-4-5: " << event.getNumberOfTripletsByLayerEndcap(2) << std::endl;
+
+}
+
 bool goodEvent()
 {
     if (ana.specific_event_index >= 0)
@@ -656,7 +675,7 @@ std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hi
     }
 
     // print
-    if (ana.verbose != 0)
+/*    if (ana.verbose != 0)
     {
         std::cout << "va print" << std::endl;
         for (auto& vec : simtrk_idxs)
@@ -668,7 +687,7 @@ std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hi
             std::cout << std::endl;
         }
         std::cout << "va print end" << std::endl;
-    }
+    }*/
 
     // Compute all permutations
     std::function<void(vector<vector<int>>&, vector<int>, size_t, vector<vector<int>>&)> perm =

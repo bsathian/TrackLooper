@@ -262,7 +262,7 @@ void WriteSDLNtuplev2::doStudy(SDL::EventForAnalysisInterface& event, std::vecto
     setMiniDoubletBranches(event);
     setSegmentBranches(event);
     //setPixelSegmentBranches(event);
-    //setTripletBranches(event);
+    setTripletBranches(event);
     setQuadrupletBranches(event);
     //setPixelQuadrupletBranches(event);
     //setTrackCandidateBranches(event);
@@ -741,7 +741,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
     ana.tx->setBranch<vector<vector<int>>>("sim_psgIdx", sim_psgIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_psgIdx_isMTVmatch", sim_psgIdx_isMTVmatch);
 
-}
+}*/
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
@@ -849,7 +849,7 @@ void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
     ana.tx->setBranch<vector<vector<int>>>("sim_tpIdx", sim_tpIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_tpIdx_isMTVmatch", sim_tpIdx_isMTVmatch);
 
-}*/
+}
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& event)

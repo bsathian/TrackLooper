@@ -344,6 +344,12 @@ void SDL::Module::addTracklet(Tracklet* tp)
     tracklets_.push_back(tp);
 }
 
+
+void SDL::Module::addTriplet(Triplet* tp)
+{
+    triplets_.push_back(tp);
+}
+
 const int SDL::Module::getNumberOfMiniDoublets() const
 {
     return nMiniDoublets_;
