@@ -18,7 +18,7 @@
 #include "SDL/MiniDoublet.cuh"
 #include "SDL/Segment.cuh"
 #include "SDL/Tracklet.cuh"
-
+#include "SDL/Triplet.cuh"
 
 namespace SDL
 {
@@ -52,7 +52,7 @@ namespace SDL
         public:
 	        EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU);
 
-            void addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets& mdsInGPU, struct segments& segmentsInGPU, struct tracklets& trackletsInGPU, struct triplets& tripletsInGPU);
+            void addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU);
             void getModule(unsigned int detId);
             void addHitsToAnalysisInterface(struct hits& hitsInGPU);
 

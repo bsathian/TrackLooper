@@ -70,7 +70,7 @@ namespace SDL
             std::vector<Segment*> segments_;
 
             // vector of triplets
-//            std::vector<Triplet*> triplets_;
+            std::vector<Triplet*> triplets_;
 
             // vector of tracklets
             std::vector<Tracklet*> tracklets_;

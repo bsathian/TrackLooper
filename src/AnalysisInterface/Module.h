@@ -9,6 +9,7 @@
 #include "MiniDoublet.h"
 #include "Segment.h"
 #include "Tracklet.h"
+#include "Triplet.h"
 #include "SDL/Module.cuh"
 
 namespace SDL
@@ -17,7 +18,7 @@ namespace SDL
     class MiniDoublet;
     class Segment;
     class Tracklet;
-
+    class Triplet;
     class Module
     {
         private:
@@ -68,12 +69,12 @@ namespace SDL
             std::vector<MiniDoublet*> miniDoublets_;
             std::vector<Segment*> segments_;
             std::vector<Tracklet*> tracklets_;
-
+            std::vector<Triplet*> triplets_;
             //to accommodate the fact that we will overshoot existing array limits and need another way to count object multiplicities
             unsigned int nMiniDoublets_;
             unsigned int nSegments_;
             unsigned int nTracklets_;
-
+            unsigned int nTriplets_;
 
         public:
             Module();
@@ -129,6 +130,7 @@ namespace SDL
             void addMiniDoublet(MiniDoublet* md);
             void addSegment(Segment* sg);
             void addTracklet(Tracklet* tp);
+            void addTriplet(Triplet* tp);
     };
 
 }

@@ -13,6 +13,7 @@ void WriteSDLNtuplev2::bookStudy()
     createPixelSeedBranches();
     createMiniDoubletBranches();
     createSegmentBranches();
+    createPixelSegmentBranches();
     createTripletBranches();
     createQuadrupletBranches();
     createPixelQuadrupletBranches();
@@ -52,6 +53,7 @@ void WriteSDLNtuplev2::createHitsSimHitsSimTracksBranches()
     ana.tx->createBranch<vector<int>>("sim_event");
     ana.tx->createBranch<vector<int>>("sim_pdgId");
     ana.tx->createBranch<vector<int>>("sim_bunchCrossing");
+    ana.tx->createBranch<vector<int>>("sim_hasAll12HitsInBarrel");
     ana.tx->createBranch<vector<vector<int>>>("sim_simHitIdx");
     ana.tx->createBranch<vector<vector<int>>>("sim_simHitLayer");
     ana.tx->createBranch<vector<vector<int>>>("sim_simHitBoth");
@@ -126,7 +128,6 @@ void WriteSDLNtuplev2::createSegmentBranches()
     // Segments
     ana.tx->createBranch<vector<vector<int>>>("sg_hitIdx");
     ana.tx->createBranch<vector<vector<int>>>("sg_simTrkIdx");
-    ana.tx->createBranch<vector<vector<int>>>("sg_simTrkIdx_anchorMatching");
     ana.tx->createBranch<vector<vector<int>>>("sg_layer");
     // ana.tx->createBranch<vector<int>>("sg_simHitIdx");
 
@@ -141,6 +142,28 @@ void WriteSDLNtuplev2::createSegmentBranches()
     // Sim track to Segment matching
     ana.tx->createBranch<vector<vector<int>>>("sim_sgIdx");
     ana.tx->createBranch<vector<vector<int>>>("sim_sgIdx_isMTVmatch");
+}
+
+//____________________________________________________________________________________________
+void WriteSDLNtuplev2::createPixelSegmentBranches()
+{
+    // Segments
+    ana.tx->createBranch<vector<vector<int>>>("psg_hitIdx");
+    ana.tx->createBranch<vector<vector<int>>>("psg_simTrkIdx");
+    ana.tx->createBranch<vector<vector<int>>>("psg_layer");
+    // ana.tx->createBranch<vector<int>>("psg_simHitIdx");
+
+    // Kinematic quantity
+    ana.tx->createBranch<vector<float>>("psg_pt");
+    ana.tx->createBranch<vector<float>>("psg_eta");
+    ana.tx->createBranch<vector<float>>("psg_phi");
+    ana.tx->createBranch<vector<float>>("psg_sim_pt");
+    ana.tx->createBranch<vector<float>>("psg_sim_eta");
+    ana.tx->createBranch<vector<float>>("psg_sim_phi");
+
+    // Sim track to Segment matching
+    ana.tx->createBranch<vector<vector<int>>>("sim_psgIdx");
+    ana.tx->createBranch<vector<vector<int>>>("sim_psgIdx_isMTVmatch");
 }
 
 //____________________________________________________________________________________________
@@ -235,12 +258,13 @@ void WriteSDLNtuplev2::createTrackCandidateBranches()
 void WriteSDLNtuplev2::doStudy(SDL::EventForAnalysisInterface& event, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents)
 {
     setHitsSimHitsSimTracksBranches();
-    setPixelSeedBranches();
+    //setPixelSeedBranches();
     setMiniDoubletBranches(event);
     setSegmentBranches(event);
-    //setTripletBranches(event);
+    //setPixelSegmentBranches(event);
+    setTripletBranches(event);
     setQuadrupletBranches(event);
-    // setPixelQuadrupletBranches(event);
+    //setPixelQuadrupletBranches(event);
     //setTrackCandidateBranches(event);
     ana.tx->fill();
     ana.tx->clear();
@@ -301,6 +325,10 @@ void WriteSDLNtuplev2::setHitsSimHitsSimTracksBranches()
     ana.tx->setBranch<vector<int>>("sim_event", trk.sim_event());
     ana.tx->setBranch<vector<int>>("sim_pdgId", trk.sim_pdgId());
     ana.tx->setBranch<vector<int>>("sim_bunchCrossing", trk.sim_bunchCrossing());
+    vector<int> hasAll12HitsWithNBarrel;
+    for (unsigned int isim = 0; isim < trk.sim_pt().size(); ++isim)
+        hasAll12HitsWithNBarrel.push_back(hasAll12HitsWithNBarrelUsingModuleMap(isim, 6));
+    ana.tx->setBranch<vector<int>>("sim_hasAll12HitsInBarrel", hasAll12HitsWithNBarrel);
     ana.tx->setBranch<vector<vector<int>>>("sim_simHitIdx", trk.sim_simHitIdx());
 
     // simvtx
@@ -368,7 +396,7 @@ void WriteSDLNtuplev2::setHitsSimHitsSimTracksBranches()
 }
 
 //____________________________________________________________________________________________
-void WriteSDLNtuplev2::setPixelSeedBranches()
+/*void WriteSDLNtuplev2::setPixelSeedBranches()
 {
     // Reco pixel seeds
     ana.tx->setBranch<vector<float>>("see_stateTrajGlbPx", trk.see_stateTrajGlbPx());
@@ -388,7 +416,7 @@ void WriteSDLNtuplev2::setPixelSeedBranches()
     ana.tx->setBranch<vector<vector<int>>>("see_hitType", trk.see_hitType());
     ana.tx->setBranch<vector<vector<int>>>("see_simTrkIdx", trk.see_simTrkIdx());
     ana.tx->setBranch<vector<unsigned int>>("see_algo", trk.see_algo());
-}
+}*/
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& event)
@@ -557,9 +585,6 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
             std::vector<int> matched_sim_trk_idxs = matchedSimTrkIdxs(hit_idx, hit_types);
             ana.tx->pushbackToBranch<vector<int>>("sg_simTrkIdx", matched_sim_trk_idxs);
 
-            std::vector<int> matched_sim_trk_idxs_anchorMatching = matchedSimTrkIdxs(segmentPtr, true);
-            ana.tx->pushbackToBranch<vector<int>>("sg_simTrkIdx_anchorMatching", matched_sim_trk_idxs_anchorMatching);
-
             // tracklet layers
             std::vector<int> layers;
             layers.push_back(segmentPtr->innerMiniDoubletPtr()->lowerHitPtr()->getModule().layer() + 6 * (segmentPtr->innerMiniDoubletPtr()->lowerHitPtr()->getModule().subdet() == SDL::Module::Endcap));
@@ -623,7 +648,103 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
 }
 
 //____________________________________________________________________________________________
-/*void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
+/*void WriteSDLNtuplev2::setPixelSegmentBranches(SDL::EventForAnalysisInterface& event)
+{
+
+    // sim track to segment matching
+    std::vector<vector<int>> sim_psgIdx(trk.sim_pt().size());
+    std::vector<vector<int>> sim_psgIdx_isMTVmatch(trk.sim_pt().size());
+
+    SDL::Layer* layerPtr = &event.getPixelLayer();
+
+    // Segment ptrs
+    const std::vector<SDL::Segment*>& segmentPtrs = layerPtr->getSegmentPtrs();
+
+    // Loop over segment ptrs
+    for (auto& segmentPtr : segmentPtrs)
+    {
+
+        // hit idx
+        std::vector<int> hit_idx;
+        hit_idx.push_back(segmentPtr->innerMiniDoubletPtr()->lowerHitPtr()->idx());
+        hit_idx.push_back(segmentPtr->innerMiniDoubletPtr()->upperHitPtr()->idx());
+        hit_idx.push_back(segmentPtr->outerMiniDoubletPtr()->lowerHitPtr()->idx());
+        hit_idx.push_back(segmentPtr->outerMiniDoubletPtr()->upperHitPtr()->idx());
+        ana.tx->pushbackToBranch<vector<int>>("psg_hitIdx", hit_idx);
+
+        std::vector<int> hit_types;
+        hit_types.push_back(0);
+        hit_types.push_back(0);
+        hit_types.push_back(0);
+        hit_types.push_back(0);
+
+        // sim track matched index
+        std::vector<int> matched_sim_trk_idxs = matchedSimTrkIdxs(hit_idx, hit_types);
+        ana.tx->pushbackToBranch<vector<int>>("psg_simTrkIdx", matched_sim_trk_idxs);
+
+        // tracklet layers
+        std::vector<int> layers;
+        layers.push_back(0);
+        layers.push_back(0);
+        layers.push_back(0);
+        layers.push_back(0);
+        ana.tx->pushbackToBranch<vector<int>>("psg_layer", layers);
+
+        // Sim track to Segment matching
+        int ipsg = ana.tx->getBranch<vector<vector<int>>>("psg_hitIdx").size() - 1;
+
+        // For matched sim track
+        for (auto& matched_sim_trk_idx : matched_sim_trk_idxs)
+        {
+            sim_psgIdx[matched_sim_trk_idx].push_back(ipsg);
+            std::vector<unsigned int> hit_idx_(hit_idx.begin(), hit_idx.end());
+            if (isMTVMatch(matched_sim_trk_idx, hit_idx_))
+                sim_psgIdx_isMTVmatch[matched_sim_trk_idx].push_back(ipsg);
+        }
+
+        SDL::Hit hitA(trk.ph2_x()[hit_idx[0]], trk.ph2_y()[hit_idx[0]], trk.ph2_z()[hit_idx[0]]);
+        SDL::Hit hitB(trk.ph2_x()[hit_idx[3]], trk.ph2_y()[hit_idx[3]], trk.ph2_z()[hit_idx[3]]);
+        SDL::Hit hitC(0, 0, 0);
+        SDL::Hit center = SDL::MathUtil::getCenterFromThreePoints(hitA, hitB, hitC);
+        float radius = center.rt();
+        float pt = SDL::MathUtil::ptEstimateFromRadius(radius);
+        float eta = hitB.eta();
+        float phi = hitA.phi();
+
+        float maxsimpt = -999;
+        float maxsimeta = 0;
+        float maxsimphi = 0;
+        for (auto& simtrkidx : matched_sim_trk_idxs)
+        {
+            float tmpsimpt = trk.sim_pt()[simtrkidx];
+            float tmpsimeta = trk.sim_eta()[simtrkidx];
+            float tmpsimphi = trk.sim_phi()[simtrkidx];
+            if (maxsimpt < tmpsimpt)
+            {
+                maxsimpt = tmpsimpt;
+                maxsimeta = tmpsimeta;
+                maxsimphi = tmpsimphi;
+            }
+        }
+
+        // Kinematic quantity
+        ana.tx->pushbackToBranch<float>("psg_pt", pt);
+        ana.tx->pushbackToBranch<float>("psg_eta", eta);
+        ana.tx->pushbackToBranch<float>("psg_phi", phi);
+        ana.tx->pushbackToBranch<float>("psg_sim_pt", maxsimpt);
+        ana.tx->pushbackToBranch<float>("psg_sim_eta", maxsimeta);
+        ana.tx->pushbackToBranch<float>("psg_sim_phi", maxsimphi);
+
+    }
+
+
+    ana.tx->setBranch<vector<vector<int>>>("sim_psgIdx", sim_psgIdx);
+    ana.tx->setBranch<vector<vector<int>>>("sim_psgIdx_isMTVmatch", sim_psgIdx_isMTVmatch);
+
+}*/
+
+//____________________________________________________________________________________________
+void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
@@ -728,7 +849,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
     ana.tx->setBranch<vector<vector<int>>>("sim_tpIdx", sim_tpIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_tpIdx_isMTVmatch", sim_tpIdx_isMTVmatch);
 
-}*/
+}
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& event)
@@ -853,8 +974,8 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
     const SDL::Layer& pixelLayer = event.getPixelLayer();
 
     // sim track to tracklet matching
-    std::vector<vector<int>> sim_qpIdx(trk.sim_pt().size());
-    std::vector<vector<int>> sim_qpIdx_isMTVmatch(trk.sim_pt().size());
+    std::vector<vector<int>> sim_pqpIdx(trk.sim_pt().size());
+    std::vector<vector<int>> sim_pqpIdx_isMTVmatch(trk.sim_pt().size());
 
     // Quadruplet ptrs
     const std::vector<SDL::Tracklet*>& trackletPtrs = pixelLayer.getTrackletPtrs();
@@ -873,7 +994,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
         hit_idx.push_back(trackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->upperHitPtr()->idx());
         hit_idx.push_back(trackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->idx());
         hit_idx.push_back(trackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->upperHitPtr()->idx());
-        ana.tx->pushbackToBranch<vector<int>>("qp_hitIdx", hit_idx);
+        ana.tx->pushbackToBranch<vector<int>>("pqp_hitIdx", hit_idx);
 
         std::vector<int> hit_types;
         hit_types.push_back(0);
@@ -887,7 +1008,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
 
         // sim track matched index
         std::vector<int> matched_sim_trk_idxs = matchedSimTrkIdxs(hit_idx, hit_types);
-        ana.tx->pushbackToBranch<vector<int>>("qp_simTrkIdx", matched_sim_trk_idxs);
+        ana.tx->pushbackToBranch<vector<int>>("pqp_simTrkIdx", matched_sim_trk_idxs);
 
         // tracklet layers
         std::vector<int> layers;
@@ -895,18 +1016,18 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
         layers.push_back(trackletPtr->innerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule().layer() + 6 * (trackletPtr->innerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule().subdet() == SDL::Module::Endcap));
         layers.push_back(trackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule().layer() + 6 * (trackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule().subdet() == SDL::Module::Endcap));
         layers.push_back(trackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule().layer() + 6 * (trackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule().subdet() == SDL::Module::Endcap));
-        ana.tx->pushbackToBranch<vector<int>>("qp_layer", layers);
+        ana.tx->pushbackToBranch<vector<int>>("pqp_layer", layers);
 
         // Sim track to Quadruplet matching
-        int iqp = ana.tx->getBranch<vector<vector<int>>>("qp_hitIdx").size() - 1;
+        int ipqp = ana.tx->getBranch<vector<vector<int>>>("pqp_hitIdx").size() - 1;
 
         // For matched sim track
         for (auto& matched_sim_trk_idx : matched_sim_trk_idxs)
         {
-            sim_qpIdx[matched_sim_trk_idx].push_back(iqp);
+            sim_pqpIdx[matched_sim_trk_idx].push_back(ipqp);
             std::vector<unsigned int> hit_idx_(hit_idx.begin(), hit_idx.end());
             if (isMTVMatch(matched_sim_trk_idx, hit_idx_))
-                sim_qpIdx_isMTVmatch[matched_sim_trk_idx].push_back(iqp);
+                sim_pqpIdx_isMTVmatch[matched_sim_trk_idx].push_back(ipqp);
         }
 
         SDL::Hit hitA(trk.ph2_x()[hit_idx[0]], trk.ph2_y()[hit_idx[0]], trk.ph2_z()[hit_idx[0]]);
@@ -935,18 +1056,18 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
         }
 
         // Kinematic quantity
-        ana.tx->pushbackToBranch<float>("qp_pt", pt);
-        ana.tx->pushbackToBranch<float>("qp_eta", eta);
-        ana.tx->pushbackToBranch<float>("qp_phi", phi);
-        ana.tx->pushbackToBranch<float>("qp_sim_pt", maxsimpt);
-        ana.tx->pushbackToBranch<float>("qp_sim_eta", maxsimeta);
-        ana.tx->pushbackToBranch<float>("qp_sim_phi", maxsimphi);
+        ana.tx->pushbackToBranch<float>("pqp_pt", pt);
+        ana.tx->pushbackToBranch<float>("pqp_eta", eta);
+        ana.tx->pushbackToBranch<float>("pqp_phi", phi);
+        ana.tx->pushbackToBranch<float>("pqp_sim_pt", maxsimpt);
+        ana.tx->pushbackToBranch<float>("pqp_sim_eta", maxsimeta);
+        ana.tx->pushbackToBranch<float>("pqp_sim_phi", maxsimphi);
 
     }
 
 
-    ana.tx->setBranch<vector<vector<int>>>("sim_qpIdx", sim_qpIdx);
-    ana.tx->setBranch<vector<vector<int>>>("sim_qpIdx_isMTVmatch", sim_qpIdx_isMTVmatch);
+    ana.tx->setBranch<vector<vector<int>>>("sim_pqpIdx", sim_pqpIdx);
+    ana.tx->setBranch<vector<vector<int>>>("sim_pqpIdx_isMTVmatch", sim_pqpIdx_isMTVmatch);
 
 }
 

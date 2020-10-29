@@ -1,6 +1,8 @@
 #ifndef WriteSDLNtuplev2_h
 #define WriteSDLNtuplev2_h
 
+//#include "SDL/Event.h"
+#include "AnalysisInterface/EventForAnalysisInterface.h"
 
 #include "Study.h"
 
@@ -15,10 +17,9 @@
 
 #include "trkCore.h"
 
-//#include "SDLMath.h"
+#include "SDLMath.h"
 
 #include "AnalysisInterface/MathUtil.h"
-#include "AnalysisInterface/EventForAnalysisInterface.h"
 
 #include <cppitertools/itertools.hpp>
 
@@ -37,6 +38,7 @@ public:
     void createPixelSeedBranches();
     void createMiniDoubletBranches();
     void createSegmentBranches();
+    void createPixelSegmentBranches();
     void createTripletBranches();
     void createQuadrupletBranches();
     void createPixelQuadrupletBranches();
@@ -46,6 +48,7 @@ public:
     void setPixelSeedBranches();
     void setMiniDoubletBranches(SDL::EventForAnalysisInterface& recoevent);
     void setSegmentBranches(SDL::EventForAnalysisInterface& recoevent);
+    void setPixelSegmentBranches(SDL::EventForAnalysisInterface& recoevent);
     void setTripletBranches(SDL::EventForAnalysisInterface& recoevent);
     void setQuadrupletBranches(SDL::EventForAnalysisInterface& recoevent);
     void setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& recoevent);
