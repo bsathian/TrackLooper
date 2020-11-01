@@ -19,6 +19,7 @@
 #include "Study.h"
 
 #include "StudyTrackletOccupancy.h"
+#include "StudyTripletOccupancy.h"
 
 #include "constants.h"
 
