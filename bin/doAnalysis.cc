@@ -495,26 +495,12 @@ int main(int argc, char** argv)
         // run_eff_study == 0 then run all the reconstruction
       // 
         //if ((ana.run_eff_study == 0 and ana.run_ineff_study == 0) or ana.run_mtv_study)
-        {
+        
 
             // Adding hits to modules
             for (unsigned int ihit = 0; ihit < trk.ph2_x().size(); ++ihit)
             {
-
-
-//                if (trk.ph2_subdet()[ihit] != 5)
-//                    continue;
-
-                // if (trk.ph2_subdet()[ihit] != 5)
-                //     continue;
-
-                // if (trk.sim_pt()[trk.simhit_simTrkIdx()[trk.ph2_simHitIdx()[ihit][0]]] < 2.5)
-                //     continue;
-
-                // Takes two arguments, SDL::Hit, and detId
-                // SDL::Event internally will structure whether we already have the module instance or we need to create a new one.
                 event.addHitToEvent(trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit],trk.ph2_detId()[ihit]);
-
             }
 
             float elapsed = 0;
@@ -560,7 +546,7 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 3: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(2) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 4: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(3) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 5: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(4) << std::endl;
-            if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 6: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(5) << std::endl;
+            if (ana.verbose != 0) std::cout << "# of Mini-doublets considered barrel layer 6: " << event.getNumberOfMiniDoubletCandidatesByLayerBarrel(5) << std::endl;*/
 
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced endcap layer 1: " << event.getNumberOfMiniDoubletsByLayerEndcap(0) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced endcap layer 2: " << event.getNumberOfMiniDoubletsByLayerEndcap(1) << std::endl;
@@ -568,7 +554,7 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced endcap layer 4: " << event.getNumberOfMiniDoubletsByLayerEndcap(3) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced endcap layer 5: " << event.getNumberOfMiniDoubletsByLayerEndcap(4) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets produced endcap layer 6: " << event.getNumberOfMiniDoubletsByLayerEndcap(5) << std::endl;
-            if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 1: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(0) << std::endl;
+/*            if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 1: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(0) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 2: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(1) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 3: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(2) << std::endl;
             if (ana.verbose != 0) std::cout << "# of Mini-doublets considered endcap layer 4: " << event.getNumberOfMiniDoubletCandidatesByLayerEndcap(3) << std::endl;
@@ -696,50 +682,9 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "# of Tracklets considered layer 3-4-5-6: " << event.getNumberOfTrackletCandidatesByLayerBarrel(2) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of Tracklets considered layer 4: " << event.getNumberOfTrackletCandidatesByLayerBarrel(3) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of Tracklets considered layer 5: " << event.getNumberOfTrackletCandidatesByLayerBarrel(4) << std::endl;
-            // if (ana.verbose != 0) std::cout << "# of Tracklets considered layer 6: " << event.getNumberOfTrackletCandidatesByLayerBarrel(5) << std::endl;
+            // if (ana.verbose != 0) std::cout << "# of Tracklets considered layer 6: " << event.getNumberOfTrackletCandidatesByLayerBarrel(5) << std::endl;*/
             // ----------------
 
-            // // ----------------
-            // multiplicities.clear();
-            // total_nmult = 0;
-            // for (auto& segmentPtr : event.getLayer(1, SDL::Layer::Barrel).getSegmentPtrs())
-            // {
-            //     int nmult = 0;
-            //     for (auto& tkl1 : segmentPtr->getListOfOutwardTrackletPtrs())
-            //     {
-            //         for (auto& tkl2 : tkl1->outerSegmentPtr()->getListOfOutwardTrackletPtrs())
-            //         {
-            //             nmult++;
-            //         }
-            //     }
-            //     multiplicities.push_back(nmult);
-            //     total_nmult += nmult;
-            // }
-            // std::cout <<  " total_nmult: " << total_nmult <<  std::endl;
-            // avg_mult = ((float) total_nmult) / ((float) multiplicities.size());
-            // std::cout <<  " avg_mult: " << avg_mult <<  std::endl;
-            // // ----------------
-
-            // // ----------------
-            // multiplicities.clear();
-            // total_nmult = 0;
-            // for (auto& segmentPtr : event.getLayer(5, SDL::Layer::Barrel).getSegmentPtrs())
-            // {
-            //     int nmult = 0;
-            //     for (auto& tkl1 : segmentPtr->getListOfInwardTrackletPtrs())
-            //     {
-            //         for (auto& tkl2 : tkl1->innerSegmentPtr()->getListOfInwardTrackletPtrs())
-            //         {
-            //             nmult++;
-            //         }
-            //     }
-            //     multiplicities.push_back(nmult);
-            //     total_nmult += nmult;
-            // }
-            // std::cout <<  " total_nmult: " << total_nmult <<  std::endl;
-            // avg_mult = ((float) total_nmult) / ((float) multiplicities.size());
-            // std::cout <<  " avg_mult: " << avg_mult <<  std::endl;
-            // // ----------------
 
             // ----------------
             if (ana.verbose != 0) std::cout << "Reco TrackCandidate start" << std::endl;
@@ -751,23 +696,22 @@ int main(int argc, char** argv)
             if (ana.verbose != 0) std::cout << "Reco TrackCandidate processing time: " << tc_elapsed - tl_elapsed << " secs" << std::endl;
             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced: " << event.getNumberOfTrackCandidates() << std::endl;
             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 1-2-3-4-5-6: " << event.getNumberOfTrackCandidatesByLayerBarrel(0) << std::endl;
-            // if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 2: " << event.getNumberOfTrackCandidatesByLayerBarrel(1) << std::endl;
-            // if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 3: " << event.getNumberOfTrackCandidatesByLayerBarrel(2) << std::endl;
-            // if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 4: " << event.getNumberOfTrackCandidatesByLayerBarrel(3) << std::endl;
-            // if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 5: " << event.getNumberOfTrackCandidatesByLayerBarrel(4) << std::endl;
-            // if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 6: " << event.getNumberOfTrackCandidatesByLayerBarrel(5) << std::endl;
+             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 2: " << event.getNumberOfTrackCandidatesByLayerBarrel(1) << std::endl;
+             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 3: " << event.getNumberOfTrackCandidatesByLayerBarrel(2) << std::endl;
+             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 4: " << event.getNumberOfTrackCandidatesByLayerBarrel(3) << std::endl;
+             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 5: " << event.getNumberOfTrackCandidatesByLayerBarrel(4) << std::endl;
+             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 6: " << event.getNumberOfTrackCandidatesByLayerBarrel(5) << std::endl;
             if (ana.verbose != 0) std::cout << "# of TrackCandidates considered: " << event.getNumberOfTrackCandidateCandidates() << std::endl;
-            if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 1-2-3-4-5-6: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(0) << std::endl;
+            //if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 1-2-3-4-5-6: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(0) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 2: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(1) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 3: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(2) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 4: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(3) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 5: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(4) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 6: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(5) << std::endl;
-            // ----------------*/
+            // ----------------
 
             if (ana.verbose != 0) std::cout << "Reco SDL end" << std::endl;
 
-        }
         // If efficiency is to be calculated
 
 
@@ -779,7 +723,7 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
     //create the reco study analysis object
-//        SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets());
+//       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets());
 
 
 
@@ -788,13 +732,7 @@ int main(int argc, char** argv)
         // ************************************************
 
         // Fill all the histograms
-  /*      for (auto& study : studies)
-        {
-            study->doStudy(*eventForAnalysisInterface, simtrkeventsForAnalysisInterface);
-        }
-
-        ana.cutflow.fill();
-        delete eventForAnalysisInterface;*/
+  //      delete eventForAnalysisInterface;
         // <--------------------------
         // <--------------------------
         // <--------------------------
