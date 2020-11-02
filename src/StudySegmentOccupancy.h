@@ -1,7 +1,7 @@
 #ifndef StudySegmentOccupancy_h
 #define StudySegmentOccupancy_h
 
-#include "AnalysisInterface/AnalysisInterface.h"
+#include "AnalysisInterface/EventForAnalysisInterface.h"
 #include "Study.h"
 #include <vector>
 #include <tuple>
