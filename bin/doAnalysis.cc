@@ -347,6 +347,7 @@ int main(int argc, char** argv)
 
     // List of studies to perform
     std::vector<Study*> studies;
+    studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
     studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
     studies.push_back(new StudyTripletOccupancy("studyTripletOccupancy"));
 
@@ -362,8 +363,8 @@ int main(int argc, char** argv)
     // SDL::endcapGeometry.load("scripts/endcap_orientation_data.txt");
     SDL::endcapGeometry.load("data/endcap_orientation_data_v2.txt"); // centroid values added to the map
     SDL::tiltedGeometry.load("data/tilted_orientation_data.txt");
-//    SDL::moduleConnectionMap.load("data/module_connection_combined_2020_0520_helixray.txt");
-    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
+    SDL::moduleConnectionMap.load("data/module_connection_combined_2020_0520_helixray.txt");
+//    SDL::moduleConnectionMap.load("/home/users/phchang/public_html/analysis/sdl/TrackLooper_/scripts/module_connection_map_data_10_e0_200_100_pt0p8_2p0_400_pt0p8_2p0_nolossers_dxy35cm_endcaplayer2.txt");
 
 
 //    SDL::moduleConnectionMap.load("data/module_connection_2020_0429.txt");
@@ -691,7 +692,7 @@ int main(int argc, char** argv)
             my_timer.Start(kFALSE);
             // event.createTrackCandidatesFromTriplets();
             // event.createTrackCandidates();
-            event.createTrackCandidatesFromTracklets();
+            event.createTrackCandidates();
             float tc_elapsed = my_timer.RealTime();
             if (ana.verbose != 0) std::cout << "Reco TrackCandidate processing time: " << tc_elapsed - tl_elapsed << " secs" << std::endl;
             if (ana.verbose != 0) std::cout << "# of TrackCandidates produced: " << event.getNumberOfTrackCandidates() << std::endl;
@@ -701,7 +702,7 @@ int main(int argc, char** argv)
              if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 4: " << event.getNumberOfTrackCandidatesByLayerBarrel(3) << std::endl;
              if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 5: " << event.getNumberOfTrackCandidatesByLayerBarrel(4) << std::endl;
              if (ana.verbose != 0) std::cout << "# of TrackCandidates produced layer 6: " << event.getNumberOfTrackCandidatesByLayerBarrel(5) << std::endl;
-            if (ana.verbose != 0) std::cout << "# of TrackCandidates considered: " << event.getNumberOfTrackCandidateCandidates() << std::endl;
+//            if (ana.verbose != 0) std::cout << "# of TrackCandidates considered: " << event.getNumberOfTrackCandidateCandidates() << std::endl;
             //if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 1-2-3-4-5-6: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(0) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 2: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(1) << std::endl;
             // if (ana.verbose != 0) std::cout << "# of TrackCandidates considered layer 3: " << event.getNumberOfTrackCandidateCandidatesByLayerBarrel(2) << std::endl;
