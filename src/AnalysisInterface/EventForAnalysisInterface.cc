@@ -4,8 +4,8 @@ const unsigned int N_MAX_HITS_PER_MODULE = 100;
 const unsigned int N_MAX_MDS_PER_MODULE = 100;
 const unsigned int N_MAX_SEGMENTS_PER_MODULE = 600; //WHY!
 const unsigned int MAX_CONNECTED_MODULES = 40;
-const unsigned int N_MAX_TRACKLETS_PER_MODULE = 5000;//temporary
-const unsigned int N_MAX_TRIPLETS_PER_MODULE = 1000; 
+const unsigned int N_MAX_TRACKLETS_PER_MODULE = 8000;//temporary
+const unsigned int N_MAX_TRIPLETS_PER_MODULE = 5000; 
 
 void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU)
 {
@@ -117,7 +117,7 @@ void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct trac
             unsigned int trackletIndex = idx * N_MAX_TRACKLETS_PER_MODULE + jdx;
             Segment* innerSegment = segments_[trackletsInGPU.segmentIndices[2 * trackletIndex]];
             Segment* outerSegment = segments_[trackletsInGPU.segmentIndices[2 * trackletIndex + 1]];
-            tracklets_[trackletIndex] = new SDL::Tracklet(trackletsInGPU.zOut[trackletIndex], trackletsInGPU.rtOut[trackletIndex], trackletsInGPU.deltaPhiPos[trackletIndex], trackletsInGPU.deltaPhi[trackletIndex], trackletsInGPU.betaIn[trackletIndex], trackletsInGPU.betaOut[trackletIndex], trackletsInGPU.betaInCut[trackletIndex], trackletsInGPU.betaOutCut[trackletIndex], trackletsInGPU.dBetaCut[trackletIndex], innerSegment, outerSegment);
+            tracklets_[trackletIndex] = new SDL::Tracklet(trackletsInGPU.zOut[trackletIndex], trackletsInGPU.rtOut[trackletIndex], trackletsInGPU.deltaPhiPos[trackletIndex], trackletsInGPU.deltaPhi[trackletIndex], trackletsInGPU.betaIn[trackletIndex], trackletsInGPU.betaOut[trackletIndex], innerSegment, outerSegment);
 
             trackletPointers.push_back(tracklets_[trackletIndex]);
             Module& innerInnerLowerModule = ((innerSegment->innerMiniDoubletPtr())->lowerHitPtr())->getModule();
@@ -144,7 +144,7 @@ void SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct tripl
             unsigned int tripletIndex = idx * N_MAX_TRIPLETS_PER_MODULE + jdx;
             Segment* innerSegment = segments_[tripletsInGPU.segmentIndices[2 * tripletIndex]];
             Segment* outerSegment = segments_[tripletsInGPU.segmentIndices[2 * tripletIndex + 1]];
-            triplets_[tripletIndex] = new SDL::Triplet(tripletsInGPU.zOut[tripletIndex], tripletsInGPU.rtOut[tripletIndex], tripletsInGPU.deltaPhiPos[tripletIndex], tripletsInGPU.deltaPhi[tripletIndex], tripletsInGPU.betaIn[tripletIndex], tripletsInGPU.betaOut[tripletIndex], tripletsInGPU.betaInCut[tripletIndex], tripletsInGPU.betaOutCut[tripletIndex], tripletsInGPU.dBetaCut[tripletIndex], innerSegment, outerSegment);
+            triplets_[tripletIndex] = new SDL::Triplet(tripletsInGPU.zOut[tripletIndex], tripletsInGPU.rtOut[tripletIndex], tripletsInGPU.deltaPhiPos[tripletIndex], tripletsInGPU.deltaPhi[tripletIndex], tripletsInGPU.betaIn[tripletIndex], tripletsInGPU.betaOut[tripletIndex], innerSegment, outerSegment);
 
             tripletPointers.push_back(triplets_[tripletIndex]);
             Module& innerInnerLowerModule = ((innerSegment->innerMiniDoubletPtr())->lowerHitPtr())->getModule();
