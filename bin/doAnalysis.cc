@@ -733,7 +733,7 @@ int main(int argc, char** argv)
         // ************************************************
         for(auto& study : studies)
         {
-            study->doStudy();
+            study->doStudy(eventForAnalysisInterface,simtrkeventsForAnalysisInterface);
         }
         // Fill all the histograms
         delete eventForAnalysisInterface;
