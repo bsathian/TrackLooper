@@ -20,6 +20,11 @@ void SDL::Layer::addTriplet(SDL::Triplet* tp)
     triplets_.push_back(tp);
 }
 
+void SDL::Layer::addTrackCandidate(SDL::TrackCandidate* tl)
+{
+    trackcandidates_.push_back(tc);
+}
+
 const std::vector<std::pair<std::pair<int, SDL::Layer::SubDet>, std::pair<int, SDL::Layer::SubDet>>> SDL::Layer::tracklet_compatible_layer_pairs_ =
 {
     // {{1, SDL::Layer::Barrel},{2, SDL::Layer::Barrel}},
@@ -112,10 +117,10 @@ const std::vector<SDL::Triplet*>& SDL::Layer::getTripletPtrs() const
     return triplets_;
 }
 
-/*const std::vector<SDL::TrackCandidate*>& SDL::Layer::getTrackCandidatePtrs() const
+const std::vector<SDL::TrackCandidate*>& SDL::Layer::getTrackCandidatePtrs() const
 {
     return trackcandidates_;
-}*/
+}
 
 const std::vector<std::pair<std::pair<int, SDL::Layer::SubDet>, std::pair<int, SDL::Layer::SubDet>>>& SDL::Layer::getListOfTrackletCompatibleLayerPairs()
 {
