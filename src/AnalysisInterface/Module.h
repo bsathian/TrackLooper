@@ -75,6 +75,7 @@ namespace SDL
             unsigned int nSegments_;
             unsigned int nTracklets_;
             unsigned int nTriplets_;
+            unsigned int nTrackCandidates_;
 
         public:
             Module();

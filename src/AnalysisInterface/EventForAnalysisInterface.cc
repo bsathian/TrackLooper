@@ -5,7 +5,7 @@ const unsigned int N_MAX_MDS_PER_MODULE = 100;
 const unsigned int N_MAX_SEGMENTS_PER_MODULE = 600; //WHY!
 const unsigned int MAX_CONNECTED_MODULES = 40;
 const unsigned int N_MAX_TRACKLETS_PER_MODULE = 5000;//temporary
-const unsigned int N_MAX_TRIPLETS_PER_MODULE = 1000; 
+const unsigned int N_MAX_TRIPLETS_PER_MODULE = 1000;
 
 void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct modules& modulesInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU)
 {
@@ -26,6 +26,10 @@ void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct module
             if(tripletsInGPU != nullptr)
             {
                 moduleMapByIndex_[idx]->setNumberOfTriplets(tripletsInGPU->nTriplets[lowerModuleIndex]);
+            }
+            if(trackCandidatesInGPU != nullptr)
+            {
+                moduleMapByIndex_[idx]->setNumberOfTrackCandidates(trackCandidatesInGPU->nTrackCandidates[lowerModuleIndex]);
             }
 
             lowerModuleIndex++;
