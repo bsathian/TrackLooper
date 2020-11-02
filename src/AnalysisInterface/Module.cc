@@ -370,6 +370,11 @@ const int SDL::Module::getNumberOfTriplets() const
     return nTriplets_;
 }
 
+const int SDL::Module::getNumberOfTrackCandidates() const
+{
+    return nTrackCandidates_;
+}
+
 void SDL::Module::setNumberOfMiniDoublets(unsigned int nMiniDoublets)
 {
     nMiniDoublets_ = nMiniDoublets;
@@ -388,4 +393,9 @@ void SDL::Module::setNumberOfTracklets(unsigned int nTracklets)
 void SDL::Module::setNumberOfTriplets(unsigned int nTriplets)
 {
     nTriplets_ = nTriplets;
+}
+
+void SDL::Module::setNumberOfTrackCandidates(unsigned int nTrackCandidates)
+{
+    nTrackCandidates_ = nTrackCandidates;
 }

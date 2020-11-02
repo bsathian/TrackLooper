@@ -27,6 +27,10 @@ void SDL::EventForAnalysisInterface::addModulesToAnalysisInterface(struct module
             {
                 moduleMapByIndex_[idx]->setNumberOfTriplets(tripletsInGPU->nTriplets[lowerModuleIndex]);
             }
+            if(trackCandidatesInGPU != nullptr)
+            {
+                moduleMapByIndex_[idx]->setNumberOfTrackCandidates(trackCandidatesInGPU->nTrackCandidates[lowerModuleIndex]);
+            }
 
             lowerModuleIndex++;
         }
