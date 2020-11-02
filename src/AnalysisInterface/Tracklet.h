@@ -8,6 +8,7 @@
 #include "Module.h"
 #include "Hit.h"
 #include "MiniDoublet.h"
+#include "TrackletBase.h"
 
 namespace SDL
 {
@@ -15,8 +16,9 @@ namespace SDL
     class Hit;
     class MiniDoublet;
     class Segment;
+    class TrackletBase;
 
-    class Tracklet
+    class Tracklet : public TrackletBase
     {
         private:
             float zOut_;
@@ -28,8 +30,6 @@ namespace SDL
             float betaInCut_;
             float betaOutCut_;
             float deltaBetaCut_;
-            Segment* innerSegment_;
-            Segment* outerSegment_;
         public:
             Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, float betaInCut, float betaOutCut, float deltaBetaCut, Segment* innerSegment, Segment* outerSegment);
             ~Tracklet();
@@ -40,8 +40,6 @@ namespace SDL
             const float& getBetaInCut() const;
             const float& getBetaOut() const;
             const float& getBetaOutCut() const;
-            const Segment* innerSegmentPtr() const;
-            const Segment* outerSegmentPtr() const;
 
     };
 }

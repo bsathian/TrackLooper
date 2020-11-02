@@ -2,6 +2,7 @@
 
 SDL::Triplet::Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, float betaInCut, float betaOutCut, float deltaBetaCut, SDL::Segment* innerSegment, SDL::Segment* outerSegment)
 {
+    TrackletBase(innerSegment, outerSegment);
     zOut_ = zOut;
     rtOut_ = rtOut;
     dPhiPos_ = dPhiPos;
@@ -11,8 +12,6 @@ SDL::Triplet::Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float 
     betaInCut_ = betaInCut;
     betaOutCut_ = betaOutCut;
     deltaBetaCut_ = deltaBetaCut;
-    innerSegment_ = innerSegment;
-    outerSegment_ = outerSegment;
 }
 
 const float& SDL::Triplet::getDeltaBeta() const
@@ -45,13 +44,4 @@ const float& SDL::Triplet::getBetaOutCut() const
     return betaOutCut_;
 }
 
-const SDL::Segment* SDL::Triplet::innerSegmentPtr() const
-{
-    return innerSegment_;
-}
-
-const SDL::Segment* SDL::Triplet::outerSegmentPtr() const
-{
-    return outerSegment_;
-}
 

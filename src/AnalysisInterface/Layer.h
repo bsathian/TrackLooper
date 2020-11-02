@@ -76,7 +76,7 @@ namespace SDL
             std::vector<Tracklet*> tracklets_;
 
             // vector of trackcandidates
-//            std::vector<TrackCandidate*> trackcandidates_;
+            std::vector<TrackCandidate*> trackcandidates_;
 
         private:
 
@@ -112,7 +112,7 @@ namespace SDL
             void addSegment(Segment* sg);
             void addTriplet(Triplet* tp);
             void addTracklet(Tracklet* tl);
-    //        void addTrackCandidate(TrackCandidate* tl);
+            void addTrackCandidate(TrackCandidate* tl);
 
             // printing
             friend std::ostream& operator<<(std::ostream& os, const Layer& layer);

@@ -167,6 +167,53 @@ void SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct tripl
 
 }
 
+
+void SDL::EventForAnalysisInterface::addTrackCandidatesToAnalysisInterface(struct trackCandidates& trackCandidatesInGPU)
+{
+    for(unsigned idx = 0; idx < lowerModulePointers.size(); idx++)
+    {
+        for(unsigned int jdx = 0; jdx < trackCandidatesInGPU.nTrackCandidates[idx]; jdx++)
+        {
+            unsigned int trackCandidateIndex = idx * N_MAX_TRIPLETS_PER_MODULE + jdx;
+            short trackCandidateType = trackCandidatesInGPU.trackCandidateType[trackCandidateIndex];
+            TrackletBase* innerTrackletPtr;
+            TrackletBase* outerTrackletPtr;
+            if(trackCandidateType == 0) //T4T4
+            {
+                innerTrackletPtr = dynamic_cast<TrackletBase*>(tracklets_[trackCandidatesInGPU.objectIndices[2 * trackCandidateIndex]]);
+                outerTrackletPtr = dynamic_cast<TrackletBase*>(tracklets_[trackCandidatesInGPU.objectIndices[2 * trackCandidateIndex + 1]]);
+            }
+            else if(trackCandidateType == 1) //T4T3
+            {
+                innerTrackletPtr = dynamic_cast<TrackletBase*>(tracklets_[trackCandidatesInGPU.objectIndices[2 * trackCandidateIndex]]);
+                outerTrackletPtr = dynamic_cast<TrackletBase*>(triplets_[trackCandidatesInGPU.objectIndices[2 * trackCandidateIndex + 1]]);
+
+            }
+            else if(trackCandidateType == 2) //T3T4
+            {
+                innerTrackletPtr = dynamic_cast<TrackletBase*>(triplets_[trackCandidatesInGPU.objectIndices[2 * trackCandidateIndex]]);
+                outerTrackletPtr = dynamic_cast<TrackletBase*>(tracklets_[trackCandidatesInGPU.objectIndices[2 * trackCandidateIndex + 1]]);
+            }
+            else
+            {
+                std::cout<<"Issue in TrackCandidatesInGPU struct!!! TrackCandidateType "<<trackCandidateType<<" not one of the approved types!"<<std::endl;
+            }
+
+           trackCandidates_[trackCandidateIndex] = new SDL::TrackCandidate(innerTrackletPtr, outerTrackletPtr, trackCandidateType);
+           Module& innerInnerInnerLowerModule = (innerTrackletPtr->innerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr())->getModule();
+
+           innerInnerInnerLowerModule.addTrackCandidate(trackCandiates_[trackCandidateIndex]);
+            if(innerInnerInnerLowerModule.subdet() == SDL::Module::Barrel)
+            {
+                getLayer(innerInnerInnerLowerModule.layer(),SDL::Layer::Barrel).addTrackCandidate(trackCandidates_[trackCandidateIndex]);
+            }
+            else
+            {
+                getLayer(innerInnerInnerLowerModule.layer(),SDL::Layer::Endcap).addTrackCandidate(trackCandidates_[trackletIndex]);
+            }
+        }
+    }
+}
 SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU)
 {
     createLayers();

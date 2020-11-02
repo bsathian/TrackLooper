@@ -11,6 +11,7 @@
 #include "Segment.h"
 #include "Tracklet.h"
 #include "MathUtil.h"
+#include "TrackCandidate.h"
 #include "Layer.h"
 
 #include "SDL/Module.cuh"
@@ -19,6 +20,7 @@
 #include "SDL/Segment.cuh"
 #include "SDL/Tracklet.cuh"
 #include "SDL/Triplet.cuh"
+#include "SDL/TrackCandidate.cuh"
 
 namespace SDL
 {
@@ -33,6 +35,7 @@ namespace SDL
             std::map<unsigned int, Segment*> segments_;
             std::map<unsigned int, Tracklet*> tracklets_;
             std::map<unsigned int, Triplet*> triplets_;
+            std::map<unsigned int, TrackCandidate*> trackCandidates_;
 
             std::map<int, Layer> barrelLayers_;
 
@@ -48,6 +51,7 @@ namespace SDL
             std::vector<Segment*> segmentPointers;
             std::vector<Tracklet*> trackletPointers;
             std::vector<Triplet*> tripletPointers;
+            std::vector<TrackCandidate*> trackCandidatePointers;
 
         public:
 	        EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU);
@@ -65,6 +69,7 @@ namespace SDL
             void addSegmentsToAnalysisInterface(struct segments& segmentsInGPU);
             void addTrackletsToAnalysisInterface(struct tracklets& trackletsInGPU);
             void addTripletsToAnalysisInterface(struct triplets& tripletsInGPU);
+            void addTrackCandidatesToAnalysisInterface(struct trackCandidates& trackCandidatesInGPU);
 
         //add the get list of functions here
         const std::vector<Module*> getModulePtrs() const;
