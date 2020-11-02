@@ -346,7 +346,7 @@ int main(int argc, char** argv)
         // pt_boundaries = {0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7, 0.72, 0.74, 0.76, 0.78, 0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1.0, 1.02, 1.04, 1.06, 1.08, 1.1, 1.12, 1.14, 1.16, 1.18, 1.2, 1.22, 1.24, 1.26, 1.28, 1.3, 1.32, 1.34, 1.36, 1.38, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.5, 5.0}; // lowpt
 
     // List of studies to perform
-/*    std::vector<Study*> studies;
+    std::vector<Study*> studies;
     studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
     studies.push_back(new StudyTripletOccupancy("studyTripletOccupancy"));
 
@@ -354,7 +354,7 @@ int main(int argc, char** argv)
     for (auto& study : studies)
     {
         study->bookStudy();
-    }*/
+    }
 
     // Book Histograms
     ana.cutflow.bookHistograms(ana.histograms); // if just want to book everywhere
@@ -723,16 +723,19 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
     //create the reco study analysis object
-//       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets());
+       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets());
 
 
 
         // ************************************************
         // Now fill all the histograms booked by each study
         // ************************************************
-
+        for(auto& study : studies)
+        {
+            study->doStudy();
+        }
         // Fill all the histograms
-  //      delete eventForAnalysisInterface;
+        delete eventForAnalysisInterface;
         // <--------------------------
         // <--------------------------
         // <--------------------------
