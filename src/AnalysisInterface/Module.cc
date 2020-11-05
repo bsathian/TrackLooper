@@ -385,6 +385,21 @@ const int SDL::Module::getNumberOfTriplets() const
     return nTriplets_;
 }
 
+const int SDL::Module::getNumberOfTrackCandidatesT4T4() const
+{
+    return nTrackCandidatesT4T4_;
+}
+
+const int SDL::Module::getNumberOfTrackCandidatesT4T3() const
+{
+    return nTrackCandidatesT4T3_;
+}
+
+const int SDL::Module::getNumberOfTrackCandidatesT3T4() const
+{
+    return nTrackCandidatesT3T4_;
+}
+
 const int SDL::Module::getNumberOfTrackCandidates() const
 {
     return nTrackCandidates_;
@@ -413,4 +428,19 @@ void SDL::Module::setNumberOfTriplets(unsigned int nTriplets)
 void SDL::Module::setNumberOfTrackCandidates(unsigned int nTrackCandidates)
 {
     nTrackCandidates_ = nTrackCandidates;
+}
+
+void SDL::Module::setNumberOfTrackCandidatesT4T4(unsigned int nTrackCandidates)
+{
+    nTrackCandidatesT4T4_ = nTrackCandidates;
+}
+
+void SDL::Module::setNumberOfTrackCandidatesT4T3(unsigned int nTrackCandidates)
+{
+    nTrackCandidatesT4T3_ = nTrackCandidates;
+}
+
+void SDL::Module::setNumberOfTrackCandidatesT3T4(unsigned int nTrackCandidates)
+{
+    nTrackCandidatesT3T4_ = nTrackCandidates;
 }

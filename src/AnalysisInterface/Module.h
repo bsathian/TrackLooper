@@ -77,6 +77,9 @@ namespace SDL
             unsigned int nTracklets_;
             unsigned int nTriplets_;
             unsigned int nTrackCandidates_;
+            unsigned int nTrackCandidatesT4T4_;
+            unsigned int nTrackCandidatesT4T3_;
+            unsigned int nTrackCandidatesT3T4_;
 
         public:
             Module();
@@ -109,12 +112,18 @@ namespace SDL
             const int getNumberOfTracklets() const;
             const int getNumberOfTriplets() const;
             const int getNumberOfTrackCandidates() const;
+            const int getNumberOfTrackCandidatesT4T4() const;
+            const int getNumberOfTrackCandidatesT4T3() const;
+            const int getNumberOfTrackCandidatesT3T4() const;
 
             void setNumberOfMiniDoublets(unsigned int);
             void setNumberOfSegments(unsigned int);
             void setNumberOfTracklets(unsigned int);
             void setNumberOfTriplets(unsigned int);
             void setNumberOfTrackCandidates(unsigned int);
+            void setNumberOfTrackCandidatesT4T4(unsigned int);
+            void setNumberOfTrackCandidatesT4T3(unsigned int);
+            void setNumberOfTrackCandidatesT3T4(unsigned int);
 
 
             // static functions to parse detId
