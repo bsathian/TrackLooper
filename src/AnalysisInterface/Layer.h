@@ -101,7 +101,7 @@ namespace SDL
             const std::vector<Segment*>& getSegmentPtrs() const;
             const std::vector<Triplet*>& getTripletPtrs() const;
             const std::vector<Tracklet*>& getTrackletPtrs() const;
-  //          const std::vector<TrackCandidate*>& getTrackCandidatePtrs() const;
+            const std::vector<TrackCandidate*>& getTrackCandidatePtrs() const;
             static const std::vector<std::pair<std::pair<int, SubDet>, std::pair<int, SubDet>>>& getListOfTrackletCompatibleLayerPairs();
             static const std::vector<std::pair<std::pair<int, SubDet>, std::pair<int, SubDet>>>& getListOfSegmentCompatibleLayerPairs();
 

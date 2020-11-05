@@ -9,12 +9,15 @@
 namespace SDL
 {
     class Module;
+}
 
+namespace SDL
+{
     class TrackCandidate
     {
         private:
             TrackletBase* innerTrackletPtr_;
-            TrackletBase* outerTrackletPtr;
+            TrackletBase* outerTrackletPtr_;
             short trackCandidateType_;
 
         public:

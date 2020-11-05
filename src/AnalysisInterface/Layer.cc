@@ -22,7 +22,7 @@ void SDL::Layer::addTriplet(SDL::Triplet* tp)
 
 void SDL::Layer::addTrackCandidate(SDL::TrackCandidate* tl)
 {
-    trackcandidates_.push_back(tc);
+    trackcandidates_.push_back(tl);
 }
 
 const std::vector<std::pair<std::pair<int, SDL::Layer::SubDet>, std::pair<int, SDL::Layer::SubDet>>> SDL::Layer::tracklet_compatible_layer_pairs_ =

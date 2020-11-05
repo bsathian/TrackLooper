@@ -1,6 +1,6 @@
 #include "TrackCandidate.h"
 
-SDL::TrackCandidate::TrackCandidate(TrackletBase* innerTrackletPtr, TrackletBase* outerTrackletPtr, short TrackCandidateType)
+SDL::TrackCandidate::TrackCandidate(TrackletBase* innerTrackletPtr, TrackletBase* outerTrackletPtr, short trackCandidateType)
 {
     innerTrackletPtr_ = innerTrackletPtr;
     outerTrackletPtr_ = outerTrackletPtr;
@@ -9,12 +9,12 @@ SDL::TrackCandidate::TrackCandidate(TrackletBase* innerTrackletPtr, TrackletBase
 
 SDL::TrackletBase* SDL::TrackCandidate::innerTrackletBasePtr() const
 {
-    return innerTrackletPtr;
+    return innerTrackletPtr_;
 }
 
-SDL::TrackletBase* SDL::TrackCandidate::outerTrackletBasePtr()
+SDL::TrackletBase* SDL::TrackCandidate::outerTrackletBasePtr() const
 {
-    return outerTrackletPtr;
+    return outerTrackletPtr_;
 }
 
 SDL::Tracklet* SDL::TrackCandidate::innerTrackletPtr() const
@@ -71,7 +71,7 @@ SDL::Triplet* SDL::TrackCandidate::outerTripletPtr() const
     }
 }
 
-short SDL::trackCandidateType() const
+short SDL::TrackCandidate::trackCandidateType() const
 {
     return trackCandidateType_;
 }

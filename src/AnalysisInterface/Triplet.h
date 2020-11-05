@@ -6,17 +6,18 @@
 #include <tuple>
 
 #include "Module.h"
-#include "Hit.h"
-#include "MiniDoublet.h"
 #include "TrackletBase.h"
 
 namespace SDL
 {
     class Module;
-    class Hit;
-    class MiniDoublet;
+    class Triplet;
     class Segment;
     class TrackletBase;
+}
+
+namespace SDL
+{
 
     class Triplet : public TrackletBase
     {
@@ -27,19 +28,13 @@ namespace SDL
             float dPhi_;
             float betaIn_;
             float betaOut_;
-            float betaInCut_;
-            float betaOutCut_;
-            float deltaBetaCut_;
         public:
-            Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, float betaInCut, float betaOutCut, float deltaBetaCut, Segment* innerSegment, Segment* outerSegment);
+            Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, Segment* innerSegment, Segment* outerSegment);
             ~Triplet();
 
             const float& getDeltaBeta() const;
-            const float& getDeltaBetaCut() const;
             const float& getBetaIn() const;
-            const float& getBetaInCut() const;
             const float& getBetaOut() const;
-            const float& getBetaOutCut() const;
 
     };
 }

@@ -324,6 +324,16 @@ const std::vector<SDL::Tracklet*>& SDL::Module::getTrackletPtrs() const
     return tracklets_;
 }
 
+const std::vector<SDL::Triplet*>& SDL::Module::getTripletPtrs() const
+{
+    return triplets_;
+}
+
+const std::vector<SDL::TrackCandidate*>& SDL::Module::getTrackCandidatePtrs() const
+{
+    return trackCandidates_;
+}
+
 void SDL::Module::addHit(Hit* hit)
 {
     hits_.push_back(hit);
@@ -348,6 +358,11 @@ void SDL::Module::addTracklet(Tracklet* tp)
 void SDL::Module::addTriplet(Triplet* tp)
 {
     triplets_.push_back(tp);
+}
+
+void SDL::Module::addTrackCandidate(TrackCandidate* tc)
+{
+    trackCandidates_.push_back(tc);
 }
 
 const int SDL::Module::getNumberOfMiniDoublets() const

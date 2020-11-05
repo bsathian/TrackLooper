@@ -8,8 +8,6 @@
 #include "Hit.h"
 #include "MiniDoublet.h"
 #include "Segment.h"
-#include "Tracklet.h"
-#include "Triplet.h"
 #include "SDL/Module.cuh"
 
 namespace SDL
@@ -19,6 +17,8 @@ namespace SDL
     class Segment;
     class Tracklet;
     class Triplet;
+    class TrackCandidate;
+
     class Module
     {
         private:
@@ -70,6 +70,7 @@ namespace SDL
             std::vector<Segment*> segments_;
             std::vector<Tracklet*> tracklets_;
             std::vector<Triplet*> triplets_;
+            std::vector<TrackCandidate*> trackCandidates_;
             //to accommodate the fact that we will overshoot existing array limits and need another way to count object multiplicities
             unsigned int nMiniDoublets_;
             unsigned int nSegments_;
@@ -100,16 +101,20 @@ namespace SDL
             const std::vector<MiniDoublet*>& getMiniDoubletPtrs() const;
             const std::vector<Segment*>& getSegmentPtrs() const;
             const std::vector<Tracklet*>& getTrackletPtrs() const;
+            const std::vector<Triplet*>& getTripletPtrs() const;
+            const std::vector<TrackCandidate*>& getTrackCandidatePtrs() const;
 
             const int getNumberOfMiniDoublets() const;
             const int getNumberOfSegments() const;
             const int getNumberOfTracklets() const;
             const int getNumberOfTriplets() const;
+            const int getNumberOfTrackCandidates() const;
 
             void setNumberOfMiniDoublets(unsigned int);
             void setNumberOfSegments(unsigned int);
             void setNumberOfTracklets(unsigned int);
             void setNumberOfTriplets(unsigned int);
+            void setNumberOfTrackCandidates(unsigned int);
 
 
             // static functions to parse detId
@@ -132,6 +137,7 @@ namespace SDL
             void addSegment(Segment* sg);
             void addTracklet(Tracklet* tp);
             void addTriplet(Triplet* tp);
+            void addTrackCandidate(TrackCandidate* tc);
     };
 
 }
