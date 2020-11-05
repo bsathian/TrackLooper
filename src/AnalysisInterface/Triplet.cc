@@ -1,8 +1,8 @@
 #include "Triplet.h"
 
-SDL::Triplet::Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, SDL::Segment* innerSegment, SDL::Segment* outerSegment)
+SDL::Triplet::Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, SDL::Segment* innerSegment, SDL::Segment* outerSegment) :     TrackletBase(innerSegment, outerSegment)
+
 {
-    TrackletBase(innerSegment, outerSegment);
     zOut_ = zOut;
     rtOut_ = rtOut;
     dPhiPos_ = dPhiPos;
@@ -26,4 +26,6 @@ const float& SDL::Triplet::getBetaOut() const
 {
     return betaOut_;
 }
-
+SDL::Triplet::~Triplet()
+{
+}

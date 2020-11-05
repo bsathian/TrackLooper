@@ -12,6 +12,10 @@ namespace SDL
     class Module;
     class TrackletBase;
     class Segment;
+}
+
+namespace SDL
+{
 
     class TrackletBase
     {
@@ -24,7 +28,7 @@ namespace SDL
         public:
             TrackletBase();
             TrackletBase(Segment* innerSegmentPtr, Segment* outerSegmentPtr);
-            virtual ~TrackletBse();
+            virtual ~TrackletBase();
 
             Segment* innerSegmentPtr() const;
             Segment* outerSegmentPtr() const;

@@ -1,8 +1,8 @@
 #include "Tracklet.h"
 
-SDL::Tracklet::Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, SDL::Segment* innerSegment, SDL::Segment* outerSegment)
+SDL::Tracklet::Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, SDL::Segment* innerSegment, SDL::Segment* outerSegment) :     TrackletBase(innerSegment, outerSegment)
+
 {
-    TrackletBase(innerSegmentPtr, outerSegmentPtr);
     zOut_ = zOut;
     rtOut_ = rtOut;
     dPhiPos_ = dPhiPos;
@@ -10,6 +10,10 @@ SDL::Tracklet::Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, floa
     betaIn_ = betaIn;
     betaOut_ = betaOut;
     
+}
+
+SDL::Tracklet::~Tracklet()
+{
 }
 
 const float& SDL::Tracklet::getDeltaBeta() const

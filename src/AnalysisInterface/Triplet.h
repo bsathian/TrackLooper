@@ -6,17 +6,18 @@
 #include <tuple>
 
 #include "Module.h"
-#include "Hit.h"
-#include "MiniDoublet.h"
 #include "TrackletBase.h"
 
 namespace SDL
 {
     class Module;
-    class Hit;
-    class MiniDoublet;
+    class Triplet;
     class Segment;
     class TrackletBase;
+}
+
+namespace SDL
+{
 
     class Triplet : public TrackletBase
     {
