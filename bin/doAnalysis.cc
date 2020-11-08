@@ -350,6 +350,10 @@ int main(int argc, char** argv)
     studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
     studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
     studies.push_back(new StudyTripletOccupancy("studyTripletOccupancy"));
+    studies.push_back(new StudyTrackCandidateOccupancy("studyTrackCandidateOccupancy"));
+    studies.push_back(new StudyTrackCandidateOccupancyT4T4("studyTrackCandidateOccupancyT4T4"));
+    studies.push_back(new StudyTrackCandidateOccupancyT4T3("studyTrackCandidateOccupancyT4T3"));
+    studies.push_back(new StudyTrackCandidateOccupancyT3T4("studyTrackCandidateOccupancyT3T4"));
 
     // book the studies
     for (auto& study : studies)
@@ -724,7 +728,7 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
     //create the reco study analysis object
-       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets());
+       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets(),event.getTrackCandidates());
 
 
 
@@ -733,9 +737,11 @@ int main(int argc, char** argv)
         // ************************************************
         for(auto& study : studies)
         {
-            study->doStudy(eventForAnalysisInterface,simtrkeventsForAnalysisInterface);
+            study->doStudy(*eventForAnalysisInterface,simtrkeventsForAnalysisInterface);
         }
         // Fill all the histograms
+        ana.cutflow.fill();
+
         delete eventForAnalysisInterface;
         // <--------------------------
         // <--------------------------
