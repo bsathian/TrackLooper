@@ -765,13 +765,13 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
         float seedSD_dr = (r3LH - r3PCA).Pt();
         float seedSD_d = seedSD_rt - r3PCA.Pt();
         float seedSD_zeta = seedSD_p3.Pt() / seedSD_p3.Z();
-
+        struct hits* hitsInGPU = event.getHits();
         // Inner most hit
         //FIXME:There is no SDL::Hit now!
 //        int hitidx0 = trk.see_hitIdx()[iSeed][0];
         int hittype0 = trk.see_hitType()[iSeed][0];
         event.addHitToEvent(r3PCA.X(),r3PCA.Y(), r3PCA.Z(),1);
-        unsigned int hitIdx0 = *(event.hitsInGPU->nHits) - 1; //last hit index
+        unsigned int hitIdx0 = *(hitsInGPU->nHits) - 1; //last hit index
 
 //        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx0));
 //
@@ -779,7 +779,7 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
         int hittype1 = trk.see_hitType()[iSeed][1];
 //        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx1));
         event.addHitToEvent(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), 1);
-        unsigned int hitIdx1 = *(event.hitsInGPU->nHits) - 1;
+        unsigned int hitIdx1 = *(hitsInGPU->nHits) - 1;
 
 //        int hitidx2 = trk.see_hitIdx()[iSeed][2];
 //        int hittype2 = trk.see_hitType()[iSeed][2];
@@ -787,7 +787,7 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
 //        hits.push_back(SDL::Hit(r3LH.X(), r3LH.Y(), r3LH.Z(), hitidx2));
 
         event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
-        unsigned int hitIdx2 = *(event.hitsInGPU->nHits) - 1;
+        unsigned int hitIdx2 = *(hitsInGPU->nHits) - 1;
 
         //int hitidx3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitIdx()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
         //int hittype3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitType()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
@@ -800,7 +800,7 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
         else
         {
             event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
-            hitIdx3 = *(event.hitsInGPU->nHits) - 1;
+            hitIdx3 = *(hitsInGPU->nHits) - 1;
         }
 
         float pixelSegmentDeltaPhiChange = r3LH.DeltaPhi(p3LH);
