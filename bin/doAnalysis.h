@@ -31,5 +31,4 @@ void printModuleConnectionInfo(std::ofstream&);
 // bool hasAll12HitsInBarrel(unsigned int);
 void processModuleBoundaryInfo();
 int layer(int lay, int det);
-
 #endif

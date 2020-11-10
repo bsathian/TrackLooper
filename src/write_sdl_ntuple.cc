@@ -36,8 +36,6 @@ void write_sdl_ntuple()
         // Add hits to the event
         addOuterTrackerHits(event);
 
-        // Add pixel segments
-        //addPixelSegments(event);
 
         // Print hit summary
 //        printHitSummary(event);
@@ -47,6 +45,10 @@ void write_sdl_ntuple()
 
         // Run Segment
         runSegment(event);
+
+        // Add pixel segments
+        addPixelSegments(event);
+
 
         // Run Tracklet
         runTracklet(event);
