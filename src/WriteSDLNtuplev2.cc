@@ -258,13 +258,13 @@ void WriteSDLNtuplev2::createTrackCandidateBranches()
 void WriteSDLNtuplev2::doStudy(SDL::EventForAnalysisInterface& event, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents)
 {
     setHitsSimHitsSimTracksBranches();
-    //setPixelSeedBranches();
+    setPixelSeedBranches();
     setMiniDoubletBranches(event);
     setSegmentBranches(event);
-    //setPixelSegmentBranches(event);
+    setPixelSegmentBranches(event);
     setTripletBranches(event);
     setQuadrupletBranches(event);
-    //setPixelQuadrupletBranches(event);
+    setPixelQuadrupletBranches(event);
     setTrackCandidateBranches(event);
     ana.tx->fill();
     ana.tx->clear();
@@ -396,7 +396,7 @@ void WriteSDLNtuplev2::setHitsSimHitsSimTracksBranches()
 }
 
 //____________________________________________________________________________________________
-/*void WriteSDLNtuplev2::setPixelSeedBranches()
+void WriteSDLNtuplev2::setPixelSeedBranches()
 {
     // Reco pixel seeds
     ana.tx->setBranch<vector<float>>("see_stateTrajGlbPx", trk.see_stateTrajGlbPx());
@@ -416,7 +416,7 @@ void WriteSDLNtuplev2::setHitsSimHitsSimTracksBranches()
     ana.tx->setBranch<vector<vector<int>>>("see_hitType", trk.see_hitType());
     ana.tx->setBranch<vector<vector<int>>>("see_simTrkIdx", trk.see_simTrkIdx());
     ana.tx->setBranch<vector<unsigned int>>("see_algo", trk.see_algo());
-}*/
+}
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& event)
@@ -648,7 +648,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
 }
 
 //____________________________________________________________________________________________
-/*void WriteSDLNtuplev2::setPixelSegmentBranches(SDL::EventForAnalysisInterface& event)
+void WriteSDLNtuplev2::setPixelSegmentBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // sim track to segment matching
@@ -741,7 +741,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
     ana.tx->setBranch<vector<vector<int>>>("sim_psgIdx", sim_psgIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_psgIdx_isMTVmatch", sim_psgIdx_isMTVmatch);
 
-}*/
+}
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
@@ -967,7 +967,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
 }
 
 //____________________________________________________________________________________________
-/*void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& event)
+void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get pixel layer ptrs
@@ -1069,7 +1069,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
     ana.tx->setBranch<vector<vector<int>>>("sim_pqpIdx", sim_pqpIdx);
     ana.tx->setBranch<vector<vector<int>>>("sim_pqpIdx_isMTVmatch", sim_pqpIdx_isMTVmatch);
 
-}*/
+}
 
 //____________________________________________________________________________________________
 void WriteSDLNtuplev2::setTrackCandidateBranches(SDL::EventForAnalysisInterface& event)

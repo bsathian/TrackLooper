@@ -33,6 +33,7 @@ namespace SDL
         public:
             enum SubDet
             {
+                InnerPixel = 0,
                 Barrel = 5,
                 Endcap = 4
             };
@@ -42,7 +43,8 @@ namespace SDL
             enum ModuleType
             {
                 PS,
-                TwoS
+                TwoS,
+                PixelModule
             };
         private:
 
@@ -51,7 +53,8 @@ namespace SDL
             enum ModuleLayerType
             {
                 Pixel,
-                Strip
+                Strip,
+                InnerPixelLayer
             };
         private:
             ModuleLayerType moduleLayerType_;
