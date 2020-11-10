@@ -41,9 +41,10 @@ namespace SDL
 
             // map of endcap layers (this holds the actual instances)
             std::map<int, Layer> endcapLayers_;
+            Layer pixelLayer_;
             std::vector<Layer*> layerPtrs_;
 
-        
+                    
             std::vector<Module*> modulePointers;
             std::vector<Module*> lowerModulePointers;
             std::vector<Hit*> hitPointers;
@@ -63,7 +64,7 @@ namespace SDL
             void createLayers();
             Layer& getLayer(int layer, SDL::Layer::SubDet subdet);
             const std::vector<Layer*> getLayerPtrs() const;
-
+            Layer& getPixelLayer();
 
             void addMDsToAnalysisInterface(struct miniDoublets& mdsInGPU);
             void addSegmentsToAnalysisInterface(struct segments& segmentsInGPU);

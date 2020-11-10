@@ -80,10 +80,15 @@ void SDL::EventForAnalysisInterface::addMDsToAnalysisInterface(struct miniDouble
             {
                 getLayer(lowerModule.layer(),SDL::Layer::Barrel).addMiniDoublet(miniDoublets_[mdIndex]);
             }
-            else
+            else if(lowerModule.subdet() == SDL::Module::Endcap)
             {
                 getLayer(lowerModule.layer(),SDL::Layer::Endcap).addMiniDoublet(miniDoublets_[mdIndex]);
             }
+            else
+            {
+                getPixelLayer().addMiniDoublet(miniDoublets_[mdIndex]);
+            }
+
         }
     }
 }
@@ -108,9 +113,13 @@ void SDL::EventForAnalysisInterface::addSegmentsToAnalysisInterface(struct segme
             {
                 getLayer(innerLowerModule.layer(),SDL::Layer::Barrel).addSegment(segments_[segmentIndex]);
             }
-            else
+            else if(innerLowerModule.subdet() == SDL::Module::Endcap)
             {
                 getLayer(innerLowerModule.layer(),SDL::Layer::Endcap).addSegment(segments_[segmentIndex]);
+            }
+            else
+            {
+                getPixelLayer().addSegment(segments_[segmentIndex]);
             }
         }
     }
@@ -118,7 +127,7 @@ void SDL::EventForAnalysisInterface::addSegmentsToAnalysisInterface(struct segme
 
 void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct tracklets& trackletsInGPU)
 {
-    for(unsigned int idx = 0; idx < lowerModulePointers.size(); idx++)
+    for(unsigned int idx = 0; idx <= lowerModulePointers.size(); idx++) //cheating for pixel module
     {
         for(unsigned int jdx = 0; jdx < trackletsInGPU.nTracklets[idx]; jdx++)
         {
@@ -135,9 +144,13 @@ void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct trac
             {
                 getLayer(innerInnerLowerModule.layer(),SDL::Layer::Barrel).addTracklet(tracklets_[trackletIndex]);
             }
-            else
+            else if(innerInnerLowerModule.subdet() == SDL::Module::Endcap)
             {
                 getLayer(innerInnerLowerModule.layer(),SDL::Layer::Endcap).addTracklet(tracklets_[trackletIndex]);
+            }
+            else
+            {
+                getPixelLayer().addTracklet(tracklets_[trackletIndex]);
             }
         }
     }
@@ -162,10 +175,11 @@ void SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct tripl
             {
                 getLayer(innerInnerLowerModule.layer(),SDL::Layer::Barrel).addTriplet(triplets_[tripletIndex]);
             }
-            else
+            else if(innerInnerLowerModule.subdet() == SDL::Module::Endcap)
             {
                 getLayer(innerInnerLowerModule.layer(),SDL::Layer::Endcap).addTriplet(triplets_[tripletIndex]);
             }
+            //no pixel triplets
         }
     }
 
@@ -174,7 +188,7 @@ void SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct tripl
 
 void SDL::EventForAnalysisInterface::addTrackCandidatesToAnalysisInterface(struct trackCandidates& trackCandidatesInGPU)
 {
-    for(unsigned int idx = 0; idx < lowerModulePointers.size(); idx++)
+    for(unsigned int idx = 0; idx <= lowerModulePointers.size(); idx++) //cheating to include pixel track candidate lower module
     {
         for(unsigned int jdx = 0; jdx < trackCandidatesInGPU.nTrackCandidates[idx]; jdx++)
         {
@@ -211,57 +225,93 @@ void SDL::EventForAnalysisInterface::addTrackCandidatesToAnalysisInterface(struc
             {
                 getLayer(innerInnerInnerLowerModule.layer(),SDL::Layer::Barrel).addTrackCandidate(trackCandidates_[trackCandidateIndex]);
             }
-            else
+            else if(innerInnerInnerLowerModule.subdet() == SDL::Module::Endcap)
             {
                 getLayer(innerInnerInnerLowerModule.layer(),SDL::Layer::Endcap).addTrackCandidate(trackCandidates_[trackCandidateIndex]);
             }
+            else
+            {
+                getPixelLayer().addTrackCandidate(trackCandidates_[trackCandidateIndex]);
+            }
 
-/*        std::cout<<"[";
-        if(innerInnerInnerLowerModule.subdet() == SDL::Module::Barrel)
-            std::cout<<innerInnerInnerLowerModule.layer()<<", ";
-        else
-            std::cout<<6 + innerInnerInnerLowerModule.layer()<<", ";
-        
-       Module& innerInnerOuterLowerModule = (innerTrackletPtr->innerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
+            printTrackCandidateLayers(trackCandidats_[trackCandidateIndex]);    
 
-        if(innerInnerOuterLowerModule.subdet() == SDL::Module::Barrel)
-            std::cout<<innerInnerOuterLowerModule.layer()<<", ";
-        else
-            std::cout<<6 + innerInnerOuterLowerModule.layer()<<", ";
-      
-       Module& innerOuterInnerLowerModule = (innerTrackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule());
-
-        if(innerOuterInnerLowerModule.subdet() == SDL::Module::Barrel)
-            std::cout<<innerOuterInnerLowerModule.layer()<<", ";
-        else
-            std::cout<<6 + innerOuterInnerLowerModule.layer()<<", ";
-
-       Module& innerOuterOuterLowerModule = (innerTrackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
-
-        if(innerOuterOuterLowerModule.subdet() == SDL::Module::Barrel)
-            std::cout<<innerOuterOuterLowerModule.layer()<<", ";
-        else
-            std::cout<<6 + innerOuterOuterLowerModule.layer()<<", ";
-
-       Module& outerOuterInnerLowerModule = (outerTrackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule());
-
-        if(outerOuterInnerLowerModule.subdet() == SDL::Module::Barrel)
-            std::cout<<outerOuterInnerLowerModule.layer()<<", ";
-        else
-            std::cout<<6 + outerOuterInnerLowerModule.layer()<<", ";
-
-       Module& outerOuterOuterLowerModule = (outerTrackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
-
-        if(outerOuterOuterLowerModule.subdet() == SDL::Module::Barrel)
-            std::cout<<outerOuterOuterLowerModule.layer()<<"]"<<std::endl;
-        else
-            std::cout<<6 + outerOuterOuterLowerModule.layer()<<"]"<<std::endl;*/
-
-        }
-        
-        
+        } 
     }
 }
+
+
+void SDL::EventForAnalysisInterface::printTrackCandidateLayers(TrackCandidate& tc)
+{
+    Tracklet* innerTrackletPtr = tc->innerTrackletPtr();
+    Tracklet* outerTrackletPtr = tc->outerTrackletPtr();
+    //start printing
+
+    std::cout<<"[";
+    Module& innerInnerInnerLowerModule = (innerTrackletPtr->innerSegmentPtr())->innerMiniDoubletPtr()->lowerHitPtr()->getModule();
+    if(innerInnerLowerModule.subdet() == SDL::Module::Endcap)
+    {
+        std::cout<<6 + innerInnerInnerLowerModule.layer()<<",";
+    }
+    else
+    {
+        std::cout<<innerInnerInnerLowerModule.layer()<<",";
+    }
+                
+    Module& innerInnerOuterLowerModule = (innerTrackletPtr->innerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
+
+    if(innerInnerOuterLowerModule.subdet() == SDL::Module::Endcap)
+    {
+        std::cout<<6 + innerInnerOuterLowerModule.layer()<<",";
+    }
+    else
+    {
+        std::cout<<innerInnerOuterLowerModule.layer()<<",";
+    }
+                  
+    Module& innerOuterInnerLowerModule = (innerTrackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule());
+
+    if(innerOuterInnerLowerModule.subdet() == SDL::Module::Endcap)
+    {
+        std::cout<<6 + innerOuterInnerLowerModule.layer()<<",";
+    }
+    else
+    {
+        std::cout<<innerOuterInnerLowerModule.layer()<<",";
+    }
+                
+    Module& innerOuterOuterLowerModule = (innerTrackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
+    if(innerOuterOuterLowerModule.subdet() == SDL::Module::Endcap)
+    {
+        std::cout<<6 + innerOuterOuterLowerModule.layer()<<",";
+    }
+    else
+    {
+        std::cout<<innerOuterOuterLowerModule.layer()<<",";
+    }
+    
+    Module& outerOuterInnerLowerModule = (outerTrackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule());
+    if(outerOuterInnerLowerModule.subdet() == SDL::Module::Endcap)
+    {
+        std::cout<<6 + outerOuterInnerLowerModule.layer()<<",";
+    }
+    else
+    {
+        std::cout<<outerOuterInnerLowerModule.layer()<<",";
+    }
+        
+    Module& outerOuterOuterLowerModule = (outerTrackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
+
+    if(outerOuterOuterLowerModule.subdet() == SDL::Endcap::Layer)
+    {
+        std::cout<<6 + outerOuterOuterLowerModule.layer()<<"]"<<std::endl;
+    }
+    else
+    {
+        std::cout<<outerOuterOuterLowerModule.layer()<<"]"<<std::endl;
+    } 
+}
+
 
 SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules* modulesInGPU, struct hits* hitsInGPU, struct miniDoublets* mdsInGPU, struct segments* segmentsInGPU, struct tracklets* trackletsInGPU, struct triplets* tripletsInGPU, struct trackCandidates* trackCandidatesInGPU)
 {
@@ -301,6 +351,11 @@ const std::vector<SDL::Module*> SDL::EventForAnalysisInterface::getModulePtrs() 
 const std::vector<SDL::Module*> SDL::EventForAnalysisInterface::getLowerModulePtrs() const
 {
     return lowerModulePointers;
+}
+
+SDL::Layer& SDL::EventForAnalysisInterface::getPixelLayer()
+{
+    return pixelLayer_;
 }
 
 void SDL::EventForAnalysisInterface::createLayers()
