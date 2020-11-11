@@ -122,6 +122,15 @@ bool isMuonCurlingHit(unsigned int isimtrk, unsigned int ith_hit)
 
 }
 
+TVector3 r3FromPCA(const TVector3& p3, const float dxy, const float dz){
+  const float pt = p3.Pt();
+  const float p = p3.Mag();
+  const float vz = dz*pt*pt/p/p;
+
+  const float vx = -dxy*p3.y()/pt - p3.x()/p*p3.z()/p*dz;
+  const float vy =  dxy*p3.x()/pt - p3.y()/p*p3.z()/p*dz;
+  return TVector3(vx, vy, vz);
+}
 
 
 
@@ -505,7 +514,7 @@ void runTracklet(SDL::Event& event)
     if (ana.verbose != 0) std::cout << "Reco Tracklet start" << std::endl;
     my_timer.Start(kFALSE);
     event.createTrackletsWithModuleMap();
-    event.createTrackletsWithAGapWithModuleMap();
+//    event.createTrackletsWithAGapWithModuleMap();
     event.createPixelTracklets();
     float tl_elapsed = my_timer.RealTime();
     if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << tl_elapsed << " secs" << std::endl;
@@ -698,7 +707,7 @@ std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hi
     }
 
     // print
-/*    if (ana.verbose != 0)
+    if (ana.verbose != 0)
     {
         std::cout << "va print" << std::endl;
         for (auto& vec : simtrk_idxs)
@@ -710,7 +719,7 @@ std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hi
             std::cout << std::endl;
         }
         std::cout << "va print end" << std::endl;
-    }*/
+    }
 
     // Compute all permutations
     std::function<void(vector<vector<int>>&, vector<int>, size_t, vector<vector<int>>&)> perm =
@@ -1167,44 +1176,10 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
         float seedSD_dr = (r3LH - r3PCA).Pt();
         float seedSD_d = seedSD_rt - r3PCA.Pt();
         float seedSD_zeta = seedSD_p3.Pt() / seedSD_p3.Z();
-        struct hits* hitsInGPU = event.getHits();
+        struct SDL::hits* hitsInGPU = event.getHits();
         // Inner most hit
         //FIXME:There is no SDL::Hit now!
 //        int hitidx0 = trk.see_hitIdx()[iSeed][0];
-        int hittype0 = trk.see_hitType()[iSeed][0];
-        event.addHitToEvent(r3PCA.X(),r3PCA.Y(), r3PCA.Z(),1);
-        unsigned int hitIdx0 = *(hitsInGPU->nHits) - 1; //last hit index
-
-//        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx0));
-//
-        //int hitidx1 = trk.see_hitIdx()[iSeed][1];
-        int hittype1 = trk.see_hitType()[iSeed][1];
-//        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx1));
-        event.addHitToEvent(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), 1);
-        unsigned int hitIdx1 = *(hitsInGPU->nHits) - 1;
-
-//        int hitidx2 = trk.see_hitIdx()[iSeed][2];
-//        int hittype2 = trk.see_hitType()[iSeed][2];
-
-//        hits.push_back(SDL::Hit(r3LH.X(), r3LH.Y(), r3LH.Z(), hitidx2));
-
-        event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
-        unsigned int hitIdx2 = *(hitsInGPU->nHits) - 1;
-
-        //int hitidx3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitIdx()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
-        //int hittype3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitType()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
-        // hits.push_back(SDL::Hit(trk.pix_x()[hitidx3], trk.pix_y()[hitidx3], trk.pix_z()[hitidx3], hitidx3));
-        unsigned int hitIdx3;
-        if(trk.see_hitIdx[iSeed].size() <= 3)
-        {   
-            hitIdx3 = hitIdx2;
-        }
-        else
-        {
-            event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
-            hitIdx3 = *(hitsInGPU->nHits) - 1;
-        }
-
         float pixelSegmentDeltaPhiChange = r3LH.DeltaPhi(p3LH);
         float ptIn = p3LH.Pt();
         float ptErr = trk.see_ptErr()[iSeed];
@@ -1213,11 +1188,37 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
         float py = p3LH.Y();
         float pz = p3LH.Z();
 
-        std::vector<unsigned int> hitIndices(hitIdx0, hitIdx1, hitIdx2, hitIdx3); 
-    
         if ((ptIn > 0.7) and (fabs(p3LH.Eta()) < 3))
         {
+            int hittype0 = trk.see_hitType()[iSeed][0];
+            event.addHitToEvent(r3PCA.X(),r3PCA.Y(), r3PCA.Z(),1);
+            unsigned int hitIdx0 = *(hitsInGPU->nHits) - 1; //last hit index
+
+            int hittype1 = trk.see_hitType()[iSeed][1];
+            event.addHitToEvent(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), 1);
+            unsigned int hitIdx1 = *(hitsInGPU->nHits) - 1;
+
+            event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
+            unsigned int hitIdx2 = *(hitsInGPU->nHits) - 1;
+
+            unsigned int hitIdx3;
+            if(trk.see_hitIdx()[iSeed].size() <= 3)
+            {   
+                hitIdx3 = hitIdx2;
+            }
+            else
+            {
+                event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
+                hitIdx3 = *(hitsInGPU->nHits) - 1;
+            }
+
+
+            std::vector<unsigned int> hitIndices = {hitIdx0, hitIdx1, hitIdx2, hitIdx3}; 
+
             event.addPixelSegmentToEvent(hitIndices, pixelSegmentDeltaPhiChange, ptIn, ptErr, px, py, pz, etaErr);
-        }
+
+
+       } 
     }
 }
+
