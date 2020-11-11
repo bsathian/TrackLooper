@@ -54,7 +54,7 @@ void SDL::EventForAnalysisInterface::addHitsToAnalysisInterface(struct hits&  hi
     {
         Module* lowerModule = moduleMapByIndex_[hitsInGPU.moduleIndices[idx]];
 
-        hits_[idx] = new SDL::Hit(hitsInGPU.xs[idx],hitsInGPU.ys[idx],hitsInGPU.zs[idx],hitsInGPU.rts[idx],hitsInGPU.phis[idx], idx, lowerModule);
+        hits_[idx] = new SDL::Hit(hitsInGPU.xs[idx],hitsInGPU.ys[idx],hitsInGPU.zs[idx],hitsInGPU.rts[idx],hitsInGPU.phis[idx], hitsInGPU.idxs[idx], lowerModule);
         hitPointers.push_back(hits_[idx]);
         lowerModule->addHit(hits_[idx]);
     }
