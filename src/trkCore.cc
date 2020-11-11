@@ -706,20 +706,20 @@ std::vector<int> matchedSimTrkIdxs(std::vector<int> hitidxs, std::vector<int> hi
         simtrk_idxs.push_back(simtrk_idxs_per_hit);
     }
 
-    // print
-    if (ana.verbose != 0)
-    {
-        std::cout << "va print" << std::endl;
-        for (auto& vec : simtrk_idxs)
-        {
-            for (auto& idx : vec)
-            {
-                std::cout << idx << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "va print end" << std::endl;
-    }
+    // // print
+    // if (ana.verbose != 0)
+    // {
+    //     std::cout << "va print" << std::endl;
+    //     for (auto& vec : simtrk_idxs)
+    //     {
+    //         for (auto& idx : vec)
+    //         {
+    //             std::cout << idx << " ";
+    //         }
+    //         std::cout << std::endl;
+    //     }
+    //     std::cout << "va print end" << std::endl;
+    // }
 
     // Compute all permutations
     std::function<void(vector<vector<int>>&, vector<int>, size_t, vector<vector<int>>&)> perm =
@@ -1179,7 +1179,42 @@ void addPixelSegments(SDL::Event& event, int isimtrk)
         struct SDL::hits* hitsInGPU = event.getHits();
         // Inner most hit
         //FIXME:There is no SDL::Hit now!
-//        int hitidx0 = trk.see_hitIdx()[iSeed][0];
+        int hitIdx0InNtuple = trk.see_hitIdx()[iSeed][0];
+        int hittype0 = trk.see_hitType()[iSeed][0];
+        event.addHitToEvent(r3PCA.X(),r3PCA.Y(), r3PCA.Z(),1, hitIdx0InNtuple);
+        unsigned int hitIdx0 = *(hitsInGPU->nHits) - 1; //last hit index
+
+//        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx0));
+//
+        int hitIdx1InNtuple = trk.see_hitIdx()[iSeed][1];
+        int hittype1 = trk.see_hitType()[iSeed][1];
+//        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx1));
+        event.addHitToEvent(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), 1, hitIdx1InNtuple);
+        unsigned int hitIdx1 = *(hitsInGPU->nHits) - 1;
+
+        int hitIdx2InNtuple = trk.see_hitIdx()[iSeed][2];
+//        int hittype2 = trk.see_hitType()[iSeed][2];
+
+//        hits.push_back(SDL::Hit(r3LH.X(), r3LH.Y(), r3LH.Z(), hitidx2));
+
+        event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1,hitIdx2InNtuple);
+        unsigned int hitIdx2 = *(hitsInGPU->nHits) - 1;
+
+        int hitIdx3InNtuple = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitIdx()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
+        //int hittype3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitType()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
+        // hits.push_back(SDL::Hit(trk.pix_x()[hitidx3], trk.pix_y()[hitidx3], trk.pix_z()[hitidx3], hitidx3));
+        unsigned int hitIdx3;
+        if(trk.see_hitIdx[iSeed].size() <= 3)
+        {   
+            hitIdx3 = hitIdx2;
+        }
+        else
+        {
+            event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1,hitIdx3InNtuple);
+            hitIdx3 = *(hitsInGPU->nHits) - 1;
+        }
+
+>>>>>>> c6d3d5074216a50087071959ebf4ea2e55150a6b
         float pixelSegmentDeltaPhiChange = r3LH.DeltaPhi(p3LH);
         float ptIn = p3LH.Pt();
         float ptErr = trk.see_ptErr()[iSeed];

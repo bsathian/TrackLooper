@@ -659,7 +659,6 @@ void WriteSDLNtuplev2::setPixelSegmentBranches(SDL::EventForAnalysisInterface& e
 
     // Segment ptrs
     const std::vector<SDL::Segment*>& segmentPtrs = layerPtr->getSegmentPtrs();
-
     // Loop over segment ptrs
     for (auto& segmentPtr : segmentPtrs)
     {

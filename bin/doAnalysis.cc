@@ -619,7 +619,7 @@ int main(int argc, char** argv)
             // Adding hits to modules
             for (unsigned int ihit = 0; ihit < trk.ph2_x().size(); ++ihit)
             {
-                event.addHitToEvent(trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit],trk.ph2_detId()[ihit]);
+                event.addHitToEvent(trk.ph2_x()[ihit], trk.ph2_y()[ihit], trk.ph2_z()[ihit],trk.ph2_detId()[ihit], ihit);
             }
 
             float elapsed = 0;

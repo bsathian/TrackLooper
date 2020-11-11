@@ -1,6 +1,6 @@
 # include "StudyTrackCandidateOccupancyT3T4.h"
 
-StudyTrackCandidateOccupancyT3T4::StudyTrackCandidateOccupancy(const char* studyName)
+StudyTrackCandidateOccupancyT3T4::StudyTrackCandidateOccupancyT3T4(const char* studyName)
 {
     studyname = studyName;
 }
@@ -31,7 +31,7 @@ void StudyTrackCandidateOccupancyT3T4::bookStudy()
 
         for(int j = 0; j<15; j++)
         {
-            ana.histograms.addVecHistogram(TString::Format("TrackCandidateT3T4_occupancy_layer_%d_ring_%d",i+1,j+1),5000,0,50000,[&,i,j](){return EndcapLayerRingTrackCandidateT4T4Occupancy[i][j];});
+            ana.histograms.addVecHistogram(TString::Format("TrackCandidateT3T4_occupancy_layer_%d_ring_%d",i+1,j+1),5000,0,50000,[&,i,j](){return EndcapLayerRingTrackCandidateT3T4Occupancy[i][j];});
         }
 
     }
@@ -160,7 +160,7 @@ void StudyTrackCandidateOccupancyT3T4::doStudy(SDL::EventForAnalysisInterface&ev
 
             EndcapRingOccupancy.at(module->ring()-1).push_back((module->getNumberOfTrackCandidatesT3T4()));
 
-            EndcapLayerRingTrackCandidateT3T4Occupancy[module->layer()-1][module->ring()-1].push_back(module->getNumberOfTrackCandidatesT4T4());
+            EndcapLayerRingTrackCandidateT3T4Occupancy[module->layer()-1][module->ring()-1].push_back(module->getNumberOfTrackCandidatesT3T4());
 
         }
     }
