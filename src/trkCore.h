@@ -53,5 +53,6 @@ float drfracSimHitConsistentWithHelix(int isimtrk, int isimhitidx);
 float drfracSimHitConsistentWithHelix(SDLMath::Helix& helix, int isimhitidx);
 float distxySimHitConsistentWithHelix(int isimtrk, int isimhitidx);
 float distxySimHitConsistentWithHelix(SDLMath::Helix& helix, int isimhitidx);
-
+TVector3 r3FromPCA(const TVector3&, const float, const float);
+void addPixelSegments(SDL::Event& event, int isimtrk = -1);
 #endif

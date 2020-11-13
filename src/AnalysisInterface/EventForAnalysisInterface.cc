@@ -234,22 +234,22 @@ void SDL::EventForAnalysisInterface::addTrackCandidatesToAnalysisInterface(struc
                 getPixelLayer().addTrackCandidate(trackCandidates_[trackCandidateIndex]);
             }
 
-            printTrackCandidateLayers(trackCandidats_[trackCandidateIndex]);    
+            //printTrackCandidateLayers(trackCandidates_[trackCandidateIndex]);    
 
         } 
     }
 }
 
 
-void SDL::EventForAnalysisInterface::printTrackCandidateLayers(TrackCandidate& tc)
+void SDL::EventForAnalysisInterface::printTrackCandidateLayers(TrackCandidate* tc)
 {
-    Tracklet* innerTrackletPtr = tc->innerTrackletPtr();
-    Tracklet* outerTrackletPtr = tc->outerTrackletPtr();
+    TrackletBase* innerTrackletPtr = tc->innerTrackletBasePtr();
+    TrackletBase* outerTrackletPtr = tc->outerTrackletBasePtr();
     //start printing
 
     std::cout<<"[";
     Module& innerInnerInnerLowerModule = (innerTrackletPtr->innerSegmentPtr())->innerMiniDoubletPtr()->lowerHitPtr()->getModule();
-    if(innerInnerLowerModule.subdet() == SDL::Module::Endcap)
+    if(innerInnerInnerLowerModule.subdet() == SDL::Module::Endcap)
     {
         std::cout<<6 + innerInnerInnerLowerModule.layer()<<",";
     }
@@ -302,7 +302,7 @@ void SDL::EventForAnalysisInterface::printTrackCandidateLayers(TrackCandidate& t
         
     Module& outerOuterOuterLowerModule = (outerTrackletPtr->outerSegmentPtr()->outerMiniDoubletPtr()->lowerHitPtr()->getModule());
 
-    if(outerOuterOuterLowerModule.subdet() == SDL::Endcap::Layer)
+    if(outerOuterOuterLowerModule.subdet() == SDL::Module::Endcap)
     {
         std::cout<<6 + outerOuterOuterLowerModule.layer()<<"]"<<std::endl;
     }

@@ -1,6 +1,6 @@
 # include "StudyTrackCandidateOccupancyT4T4.h"
 
-StudyTrackCandidateOccupancyT4T4::StudyTrackCandidateOccupancy(const char* studyName)
+StudyTrackCandidateOccupancyT4T4::StudyTrackCandidateOccupancyT4T4(const char* studyName)
 {
     studyname = studyName;
 }

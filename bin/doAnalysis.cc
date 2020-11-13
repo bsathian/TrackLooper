@@ -1,6 +1,120 @@
 #include "doAnalysis.h"
 
 // ./process INPUTFILEPATH OUTPUTFILE [NEVENTS]
+//
+
+/*void addPixelSegments(SDL::Event& event, int isimtrk)
+{
+    for (auto&& [iSeed, _] : iter::enumerate(trk.see_stateTrajGlbPx()))
+    {
+
+        if (isimtrk >= 0)
+        {
+            bool match = false;
+            for (auto& seed_simtrkidx : trk.see_simTrkIdx()[iSeed])
+            {
+                if (seed_simtrkidx == isimtrk)
+                {
+                    match = true;
+                }
+            }
+            if (not match)
+                continue;
+        }
+
+        TVector3 p3LH(trk.see_stateTrajGlbPx()[iSeed], trk.see_stateTrajGlbPy()[iSeed], trk.see_stateTrajGlbPz()[iSeed]);
+        TVector3 r3LH(trk.see_stateTrajGlbX()[iSeed], trk.see_stateTrajGlbY()[iSeed], trk.see_stateTrajGlbZ()[iSeed]);
+        TVector3 p3PCA(trk.see_px()[iSeed], trk.see_py()[iSeed], trk.see_pz()[iSeed]);
+        TVector3 r3PCA(r3FromPCA(p3PCA, trk.see_dxy()[iSeed], trk.see_dz()[iSeed]));
+        auto const& seedHitsV = trk.see_hitIdx()[iSeed];
+        auto const& seedHitTypesV = trk.see_hitType()[iSeed];
+
+        bool good_seed_type = false;
+        if (trk.see_algo()[iSeed] == 4) good_seed_type = true;
+        if (trk.see_algo()[iSeed] == 5) good_seed_type = true;
+        if (trk.see_algo()[iSeed] == 7) good_seed_type = true;
+        if (trk.see_algo()[iSeed] == 22) good_seed_type = true;
+        if (trk.see_algo()[iSeed] == 23) good_seed_type = true;
+        if (trk.see_algo()[iSeed] == 24) good_seed_type = true;
+        if (not good_seed_type)
+            continue;
+
+        int nHits = seedHitsV.size();
+
+        int seedSD_mdRef_pixL = trk.see_hitIdx()[iSeed][0];
+        int seedSD_mdRef_pixU = trk.see_hitIdx()[iSeed][1];
+        TVector3 seedSD_mdRef_r3 = r3PCA;
+        float seedSD_mdRef_rt = r3PCA.Pt();
+        float seedSD_mdRef_z = r3PCA.Z();
+        float seedSD_mdRef_r = r3PCA.Mag();
+        float seedSD_mdRef_phi = r3PCA.Phi();
+        float seedSD_mdRef_alpha = r3PCA.DeltaPhi(p3PCA);
+
+        int seedSD_mdOut_pixL = trk.see_hitIdx()[iSeed][2];
+        int seedSD_mdOut_pixU = trk.see_hitIdx()[iSeed][3];
+        TVector3 seedSD_mdOut_r3 = r3LH;
+        float seedSD_mdOut_rt = r3LH.Pt();
+        float seedSD_mdOut_z = r3LH.Z();
+        float seedSD_mdOut_r = r3LH.Mag();
+        float seedSD_mdOut_phi = r3LH.Phi();
+        float seedSD_mdOut_alpha = r3LH.DeltaPhi(p3LH);
+
+        float seedSD_iRef = iSeed;
+        float seedSD_iOut = iSeed;
+        TVector3 seedSD_r3 = r3LH;
+        float seedSD_rt = r3LH.Pt();
+        float seedSD_rtInv = 1.f / seedSD_rt;
+        float seedSD_z = seedSD_r3.Z();
+        TVector3 seedSD_p3 = p3LH;
+        float seedSD_alpha = r3LH.DeltaPhi(p3LH);
+        float seedSD_dr = (r3LH - r3PCA).Pt();
+        float seedSD_d = seedSD_rt - r3PCA.Pt();
+        float seedSD_zeta = seedSD_p3.Pt() / seedSD_p3.Z();
+        struct SDL::hits* hitsInGPU = event.getHits();
+        // Inner most hit
+        //FIXME:There is no SDL::Hit now!
+//        int hitidx0 = trk.see_hitIdx()[iSeed][0];
+        float pixelSegmentDeltaPhiChange = r3LH.DeltaPhi(p3LH);
+        float ptIn = p3LH.Pt();
+        float ptErr = trk.see_ptErr()[iSeed];
+        float etaErr = trk.see_etaErr()[iSeed];
+        float px = p3LH.X();
+        float py = p3LH.Y();
+        float pz = p3LH.Z();
+
+        if ((ptIn > 0.7) and (fabs(p3LH.Eta()) < 3))
+        {
+            int hittype0 = trk.see_hitType()[iSeed][0];
+            event.addHitToEvent(r3PCA.X(),r3PCA.Y(), r3PCA.Z(),1);
+            unsigned int hitIdx0 = *(hitsInGPU->nHits) - 1; //last hit index
+
+            int hittype1 = trk.see_hitType()[iSeed][1];
+            event.addHitToEvent(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), 1);
+            unsigned int hitIdx1 = *(hitsInGPU->nHits) - 1;
+
+            event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
+            unsigned int hitIdx2 = *(hitsInGPU->nHits) - 1;
+
+            unsigned int hitIdx3;
+            if(trk.see_hitIdx()[iSeed].size() <= 3)
+            {   
+                hitIdx3 = hitIdx2;
+            }
+            else
+            {
+                event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
+                hitIdx3 = *(hitsInGPU->nHits) - 1;
+            }
+
+
+            std::vector<unsigned int> hitIndices = {hitIdx0, hitIdx1, hitIdx2, hitIdx3}; 
+
+            event.addPixelSegmentToEvent(hitIndices, pixelSegmentDeltaPhiChange, ptIn, ptErr, px, py, pz, etaErr);
+
+
+       } 
+    }
+}*/
 int main(int argc, char** argv)
 {
 
@@ -350,6 +464,10 @@ int main(int argc, char** argv)
     studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
     studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
     studies.push_back(new StudyTripletOccupancy("studyTripletOccupancy"));
+    studies.push_back(new StudyTrackCandidateOccupancy("studyTrackCandidateOccupancy"));
+    studies.push_back(new StudyTrackCandidateOccupancyT4T4("studyTrackCandidateOccupancyT4T4"));
+    studies.push_back(new StudyTrackCandidateOccupancyT4T3("studyTrackCandidateOccupancyT4T3"));
+    studies.push_back(new StudyTrackCandidateOccupancyT3T4("studyTrackCandidateOccupancyT3T4"));
 
     // book the studies
     for (auto& study : studies)
@@ -671,7 +789,7 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
     //create the reco study analysis object
-       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets());
+       SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets(),event.getTrackCandidates());
 
 
 
@@ -680,9 +798,11 @@ int main(int argc, char** argv)
         // ************************************************
         for(auto& study : studies)
         {
-            study->doStudy(eventForAnalysisInterface,simtrkeventsForAnalysisInterface);
+            study->doStudy(*eventForAnalysisInterface,simtrkeventsForAnalysisInterface);
         }
         // Fill all the histograms
+        ana.cutflow.fill();
+
         delete eventForAnalysisInterface;
         // <--------------------------
         // <--------------------------
@@ -699,124 +819,4 @@ int main(int argc, char** argv)
     delete ana.output_tfile;
 }
 
-void addPixelSegments(SDL::Event& event, int isimtrk)
-{
-    for (auto&& [iSeed, _] : iter::enumerate(trk.see_stateTrajGlbPx()))
-    {
 
-        if (isimtrk >= 0)
-        {
-            bool match = false;
-            for (auto& seed_simtrkidx : trk.see_simTrkIdx()[iSeed])
-            {
-                if (seed_simtrkidx == isimtrk)
-                {
-                    match = true;
-                }
-            }
-            if (not match)
-                continue;
-        }
-
-        TVector3 p3LH(trk.see_stateTrajGlbPx()[iSeed], trk.see_stateTrajGlbPy()[iSeed], trk.see_stateTrajGlbPz()[iSeed]);
-        TVector3 r3LH(trk.see_stateTrajGlbX()[iSeed], trk.see_stateTrajGlbY()[iSeed], trk.see_stateTrajGlbZ()[iSeed]);
-        TVector3 p3PCA(trk.see_px()[iSeed], trk.see_py()[iSeed], trk.see_pz()[iSeed]);
-        TVector3 r3PCA(r3FromPCA(p3PCA, trk.see_dxy()[iSeed], trk.see_dz()[iSeed]));
-        auto const& seedHitsV = trk.see_hitIdx()[iSeed];
-        auto const& seedHitTypesV = trk.see_hitType()[iSeed];
-
-        bool good_seed_type = false;
-        if (trk.see_algo()[iSeed] == 4) good_seed_type = true;
-        if (trk.see_algo()[iSeed] == 5) good_seed_type = true;
-        if (trk.see_algo()[iSeed] == 7) good_seed_type = true;
-        if (trk.see_algo()[iSeed] == 22) good_seed_type = true;
-        if (trk.see_algo()[iSeed] == 23) good_seed_type = true;
-        if (trk.see_algo()[iSeed] == 24) good_seed_type = true;
-        if (not good_seed_type)
-            continue;
-
-        int nHits = seedHitsV.size();
-
-        int seedSD_mdRef_pixL = trk.see_hitIdx()[iSeed][0];
-        int seedSD_mdRef_pixU = trk.see_hitIdx()[iSeed][1];
-        TVector3 seedSD_mdRef_r3 = r3PCA;
-        float seedSD_mdRef_rt = r3PCA.Pt();
-        float seedSD_mdRef_z = r3PCA.Z();
-        float seedSD_mdRef_r = r3PCA.Mag();
-        float seedSD_mdRef_phi = r3PCA.Phi();
-        float seedSD_mdRef_alpha = r3PCA.DeltaPhi(p3PCA);
-
-        int seedSD_mdOut_pixL = trk.see_hitIdx()[iSeed][2];
-        int seedSD_mdOut_pixU = trk.see_hitIdx()[iSeed][3];
-        TVector3 seedSD_mdOut_r3 = r3LH;
-        float seedSD_mdOut_rt = r3LH.Pt();
-        float seedSD_mdOut_z = r3LH.Z();
-        float seedSD_mdOut_r = r3LH.Mag();
-        float seedSD_mdOut_phi = r3LH.Phi();
-        float seedSD_mdOut_alpha = r3LH.DeltaPhi(p3LH);
-
-        float seedSD_iRef = iSeed;
-        float seedSD_iOut = iSeed;
-        TVector3 seedSD_r3 = r3LH;
-        float seedSD_rt = r3LH.Pt();
-        float seedSD_rtInv = 1.f / seedSD_rt;
-        float seedSD_z = seedSD_r3.Z();
-        TVector3 seedSD_p3 = p3LH;
-        float seedSD_alpha = r3LH.DeltaPhi(p3LH);
-        float seedSD_dr = (r3LH - r3PCA).Pt();
-        float seedSD_d = seedSD_rt - r3PCA.Pt();
-        float seedSD_zeta = seedSD_p3.Pt() / seedSD_p3.Z();
-        struct hits* hitsInGPU = event.getHits();
-        // Inner most hit
-        //FIXME:There is no SDL::Hit now!
-//        int hitidx0 = trk.see_hitIdx()[iSeed][0];
-        int hittype0 = trk.see_hitType()[iSeed][0];
-        event.addHitToEvent(r3PCA.X(),r3PCA.Y(), r3PCA.Z(),1);
-        unsigned int hitIdx0 = *(hitsInGPU->nHits) - 1; //last hit index
-
-//        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx0));
-//
-        //int hitidx1 = trk.see_hitIdx()[iSeed][1];
-        int hittype1 = trk.see_hitType()[iSeed][1];
-//        hits.push_back(SDL::Hit(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), hitidx1));
-        event.addHitToEvent(r3PCA.X(), r3PCA.Y(), r3PCA.Z(), 1);
-        unsigned int hitIdx1 = *(hitsInGPU->nHits) - 1;
-
-//        int hitidx2 = trk.see_hitIdx()[iSeed][2];
-//        int hittype2 = trk.see_hitType()[iSeed][2];
-
-//        hits.push_back(SDL::Hit(r3LH.X(), r3LH.Y(), r3LH.Z(), hitidx2));
-
-        event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
-        unsigned int hitIdx2 = *(hitsInGPU->nHits) - 1;
-
-        //int hitidx3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitIdx()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
-        //int hittype3 = trk.see_hitIdx()[iSeed].size() > 3 ? trk.see_hitType()[iSeed][3] : trk.see_hitIdx()[iSeed][2]; // repeat last one if triplet
-        // hits.push_back(SDL::Hit(trk.pix_x()[hitidx3], trk.pix_y()[hitidx3], trk.pix_z()[hitidx3], hitidx3));
-        unsigned int hitIdx3;
-        if(trk.see_hitIdx[iSeed].size() <= 3)
-        {   
-            hitIdx3 = hitIdx2;
-        }
-        else
-        {
-            event.addHitToEvent(r3LH.X(), r3LH.Y(), r3LH.Z(),1);
-            hitIdx3 = *(hitsInGPU->nHits) - 1;
-        }
-
-        float pixelSegmentDeltaPhiChange = r3LH.DeltaPhi(p3LH);
-        float ptIn = p3LH.Pt();
-        float ptErr = trk.see_ptErr()[iSeed];
-        float etaErr = trk.see_etaErr()[iSeed];
-        float px = p3LH.X();
-        float py = p3LH.Y();
-        float pz = p3LH.Z();
-
-        std::vector<unsigned int> hitIndices(hitIdx0, hitIdx1, hitIdx2, hitIdx3); 
-    
-        if ((ptIn > 0.7) and (fabs(p3LH.Eta()) < 3))
-        {
-            event.addPixelSegmentToEvent(hitIndices, pixelSegmentDeltaPhiChange, ptIn, ptErr, px, py, pz, etaErr);
-        }
-    }
-}
