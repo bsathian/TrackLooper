@@ -603,9 +603,10 @@ int main(int argc, char** argv)
             
             if(ana.verbose != 0) std::cout<<" Reco pixel tracklet start"<<std::endl;
             my_timer.Start(kFALSE);
+            float ptl_start_time = my_timer.RealTime();
             event.createPixelTracklets();
             float ptl_elapsed = my_timer.RealTime();
-            if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << ptl_elapsed - sg_elapsed << " secs" << std::endl;
+            if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << ptl_elapsed - ptl_start_time << " secs" << std::endl;
 
             // ----------------
             if (ana.verbose != 0) std::cout << "Reco Tracklet start" << std::endl;
