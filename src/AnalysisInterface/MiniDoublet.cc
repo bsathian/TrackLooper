@@ -72,6 +72,11 @@ const float& SDL::MiniDoublet::getDrt() const
     return drt_;
 }
 
+const float& SDL::MiniDoublet::getMiniCut() const
+{
+    return miniCut_;
+}
+
 void SDL::MiniDoublet::setAnchorHit()
 {
     const SDL::Module& lowerModule = lowerHitPtr()->getModule();

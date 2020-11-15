@@ -24,7 +24,7 @@ namespace SDL
             float dphichangenoshift_;
             float dzCut_;
             float drtCut_;
-            float miniCUt_;
+            float miniCut_;
 
             Hit* lowerHitPtr_;
             Hit* upperHitPtr_;
