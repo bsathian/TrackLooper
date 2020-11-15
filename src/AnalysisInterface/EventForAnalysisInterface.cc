@@ -71,7 +71,7 @@ void SDL::EventForAnalysisInterface::addMDsToAnalysisInterface(struct miniDouble
             Hit* lowerHitPtr = hits_[mdsInGPU.hitIndices[2 * mdIndex]];
             Hit* upperHitPtr = hits_[mdsInGPU.hitIndices[2 * mdIndex + 1]];
 
-            miniDoublets_[mdIndex] = new SDL::MiniDoublet(mdsInGPU.dzs[mdIndex], mdsInGPU.dphis[mdIndex], mdsInGPU.dphichanges[mdIndex], mdsInGPU.noShiftedDphis[mdIndex], mdsInGPU.noShiftedDphiChanges[mdIndex], lowerHitPtr, upperHitPtr);
+            miniDoublets_[mdIndex] = new SDL::MiniDoublet(mdsInGPU.dzs[mdIndex], mdsInGPU.drts[mdIndex], mdsInGPU.dphis[mdIndex], mdsInGPU.dphichanges[mdIndex], mdsInGPU.noShiftedDphis[mdIndex], mdsInGPU.noShiftedDphiChanges[mdIndex], mdsInGPU.dzCuts[mdIndex], mdsInGPU.drtCuts[mdIndex], mdsInGPU.miniCuts[mdIndex], lowerHitPtr, upperHitPtr);
 
             mdPointers.push_back(miniDoublets_[mdIndex]);
             Module& lowerModule = lowerHitPtr->getModule();
