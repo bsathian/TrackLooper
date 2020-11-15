@@ -17,25 +17,34 @@ namespace SDL
     {   
         private:
             float dz_;
+            float drt_;
             float dphi_;
             float dphichange_;
             float dphinoshift_;
             float dphichangenoshift_;
+            float dzCut_;
+            float drtCut_;
+            float miniCUt_;
+
             Hit* lowerHitPtr_;
             Hit* upperHitPtr_;
             Hit* anchorHitPtr_;
         public:
-            MiniDoublet(float dz, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, Hit* lowerHitPtr, Hit* upperHitPtr);
+            MiniDoublet(float dz, float drt, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, float dzCut, float drtCut, float miniCut, Hit* lowerHitPtr, Hit* upperHitPtr);
             void setAnchorHit();
             ~MiniDoublet();
             Hit* lowerHitPtr() const;
             Hit* upperHitPtr() const;
             Hit* anchorHitPtr() const;
             const float& getDz() const;
+            const float& getDrt() const;
             const float& getDeltaPhi() const;
             const float& getDeltaPhiChange() const;
             const float& getDeltaPhiNoShift() const;
             const float& getDeltaPhiChangeNoShift() const;
+            const float& getDzCut() const;
+            const float& getDrtCut() const;
+            const float& getMiniCut() const;
 
     };
 }

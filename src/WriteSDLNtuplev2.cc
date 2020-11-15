@@ -517,10 +517,10 @@ void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& ev
             ana.tx->pushbackToBranch<float>("md_sim_phi", maxsimphi);
 
             float dz = minidoubletPtr->getDz();
-            float dzCut = 0;//minidoubletPtr->getRecoVar("dzCut");
-            float drt = 0;//minidoubletPtr->getRecoVar("drt");
-            float drtCut = 0;//minidoubletPtr->getRecoVar("drtCut");
-            float miniCut = 0;//minidoubletPtr->getRecoVar("miniCut");
+            float dzCut = minidoubletPtr->getDzCut();//minidoubletPtr->getRecoVar("dzCut");
+            float drt = minidoubletPtr->getDrt();//minidoubletPtr->getRecoVar("drt");
+            float drtCut = minidoubletPtr->getDrtCut();//minidoubletPtr->getRecoVar("drtCut");
+            float miniCut = minidoubletPtr->getMiniCut();//minidoubletPtr->getRecoVar("miniCut");
             float dphi = minidoubletPtr->getDeltaPhi();
             float dphichange = minidoubletPtr->getDeltaPhiChange();
             float type = 0;//minidoubletPtr->getRecoVar("type");

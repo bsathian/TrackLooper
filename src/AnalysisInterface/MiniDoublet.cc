@@ -1,12 +1,16 @@
 # include "MiniDoublet.h"
 
-SDL::MiniDoublet::MiniDoublet(float dz, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, SDL::Hit* lowerHitPtr, SDL::Hit* upperHitPtr)
+SDL::MiniDoublet::MiniDoublet(float dz, float drt, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, float dzCut, float drtCut, float miniCut, SDL::Hit* lowerHitPtr, SDL::Hit* upperHitPtr)
 {
     dz_ = dz;
+    drt_ = drt;
     dphi_ = dphi;
     dphichange_ = dphichange;
     dphinoshift_ = dphinoshift;
     dphichangenoshift_ = dphichangenoshift;
+    dzCut_  = dzCut;
+    drtCut_ = drtCut;
+    miniCut_ = miniCut;
     lowerHitPtr_ = lowerHitPtr;
     upperHitPtr_ = upperHitPtr;
 
@@ -51,6 +55,21 @@ const float& SDL::MiniDoublet::getDeltaPhiNoShift() const
 const float& SDL::MiniDoublet::getDeltaPhiChangeNoShift() const
 {
     return dphichangenoshift_;
+}
+
+const float& SDL::MiniDoublet::getDzCut() const
+{
+    return dzCut_;
+}
+
+const float& SDL::MiniDoublet::getDrtCut() const
+{
+    return drtCut_;
+}
+
+const float& SDL::MiniDoublet::getDrt() const
+{
+    return drt_;
 }
 
 void SDL::MiniDoublet::setAnchorHit()
