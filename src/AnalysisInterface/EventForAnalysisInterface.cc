@@ -103,9 +103,8 @@ void SDL::EventForAnalysisInterface::addSegmentsToAnalysisInterface(struct segme
             MiniDoublet* lowerMD =miniDoublets_[segmentsInGPU.mdIndices[segmentIndex * 2]];
             MiniDoublet* upperMD = miniDoublets_[segmentsInGPU.mdIndices[segmentIndex * 2 + 1]];
 
-            segments_[segmentIndex] = new SDL::Segment(segmentsInGPU.zIns[segmentIndex], segmentsInGPU.zOuts[segmentIndex], segmentsInGPU.rtIns[segmentIndex], segmentsInGPU.rtOuts[segmentIndex], segmentsInGPU.dPhis[segmentIndex], segmentsInGPU.dPhiMins[segmentIndex], segmentsInGPU.dPhiMaxs[segmentIndex], segmentsInGPU.dPhiChanges[segmentIndex], segmentsInGPU.dPhiChangeMins[segmentIndex], segmentsInGPU.dAlphaInnerMDSegments[segmentIndex], segmentsInGPU.dAlphaOuterMDSegments[segmentIndex], segmentsInGPU.dAlphaInnerMDOuterMDs[segmentIndex], segmentsInGPU.dPhiChangeMaxs[segmentIndex], lowerMD, upperMD);
+            segments_[segmentIndex] = new SDL::Segment(segmentsInGPU.zIns[segmentIndex], segmentsInGPU.zOuts[segmentIndex], segmentsInGPU.rtIns[segmentIndex], segmentsInGPU.rtOuts[segmentIndex], segmentsInGPU.dPhis[segmentIndex], segmentsInGPU.dPhiMins[segmentIndex], segmentsInGPU.dPhiMaxs[segmentIndex], segmentsInGPU.dPhiChanges[segmentIndex], segmentsInGPU.dPhiChangeMins[segmentIndex], segmentsInGPU.dAlphaInnerMDSegments[segmentIndex], segmentsInGPU.dAlphaOuterMDSegments[segmentIndex], segmentsInGPU.dAlphaInnerMDOuterMDs[segmentIndex], segmentsInGPU.dPhiChangeMaxs[segmentIndex], segmentsInGPU.zLo[segmentIndex], segmentsInGPU.zHi[segmentIndex], segmentsInGPU.rtLo[segmentIndex], segmentsInGPU.rtHi[segmentIndex], segmentsInGPU.sdCut[segmentIndex], segmentsInGPU.dAlphaInnerMDSegmentThreshold[segmentIndex], segmentsInGPU.dAlphaOuterMDSegmentThreshold[segmentIndex], segmentsInGPU.dAlphaInnerMDOuterMDThreshold[segmentIndex], lowerMD, upperMD);
             
-
             segmentPointers.push_back(segments_[segmentIndex]);
             Module& innerLowerModule = (lowerMD->lowerHitPtr())->getModule();
             innerLowerModule.addSegment(segments_[segmentIndex]);
@@ -120,6 +119,7 @@ void SDL::EventForAnalysisInterface::addSegmentsToAnalysisInterface(struct segme
             else
             {
                 getPixelLayer().addSegment(segments_[segmentIndex]);
+                segments_[segmentIndex]->setPixelVariables(segmentsInGPU.ptIn[jdx],segmentsInGPU.ptErr[jdx], segmentsInGPU.px[jdx], segmentsInGPU.py[jdx], segmentsInGPU.pz[jdx], segmentsInGPU.etaErr[jdx]);
             }
         }
     }

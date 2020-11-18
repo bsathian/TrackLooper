@@ -29,8 +29,21 @@ namespace SDL
             float dPhi_;
             float betaIn_;
             float betaOut_;
+            
+            float zLo_;
+            float zHi_;
+            float zLoPointed_;
+            float zHiPointed_;
+            float sdlCut_;
+            float betaInCut_;
+            float betaOutCut_;
+            float deltaBetaCut_;
+            float rtLo_;
+            float rtHi_;
+            float kZ_;
+
         public:
-            Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, Segment* innerSegment, Segment* outerSegment);
+            Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, float zLo, float zHi, float zLoPointed, float zHiPointed, float sdlCut, float betaInCut, float betaOutCut, float deltaBetaCut, float rtLo, float rtHi, float kZ, Segment* innerSegment, Segment* outerSegment);
             ~Tracklet();
 
             const float& getDeltaBeta() const;
