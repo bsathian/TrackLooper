@@ -165,7 +165,8 @@ void SDL::EventForAnalysisInterface::addTripletsToAnalysisInterface(struct tripl
             unsigned int tripletIndex = idx * N_MAX_TRIPLETS_PER_MODULE + jdx;
             Segment* innerSegment = segments_[tripletsInGPU.segmentIndices[2 * tripletIndex]];
             Segment* outerSegment = segments_[tripletsInGPU.segmentIndices[2 * tripletIndex + 1]];
-            triplets_[tripletIndex] = new SDL::Triplet(tripletsInGPU.zOut[tripletIndex], tripletsInGPU.rtOut[tripletIndex], tripletsInGPU.deltaPhiPos[tripletIndex], tripletsInGPU.deltaPhi[tripletIndex], tripletsInGPU.betaIn[tripletIndex], tripletsInGPU.betaOut[tripletIndex], innerSegment, outerSegment);
+
+            triplets_[tripletIndex] = new SDL::Triplet(tripletsInGPU.zOut[tripletIndex], tripletsInGPU.rtOut[tripletIndex], tripletsInGPU.deltaPhiPos[tripletIndex], tripletsInGPU.deltaPhi[tripletIndex], tripletsInGPU.betaIn[tripletIndex], tripletsInGPU.betaOut[tripletIndex], tripletsInGPU.zLo[tripletIndex], tripletsInGPU.zHi[tripletIndex], tripletsInGPU.zLoPointed[tripletIndex], tripletsInGPU.zHiPointed[tripletIndex], tripletsInGPU.sdlCut[tripletIndex], tripletsInGPU.betaInCut[tripletIndex], tripeltsInGPU.betaOutCut[tripletIndex], tripletsInGPU.rtLo[tripletIndex], tripletsInGPU.rtHi[tripletIndex], tripletsInGPU.kZ[tripletIndex], innerSegment, outerSegment);
 
             tripletPointers.push_back(triplets_[tripletIndex]);
             Module& innerInnerLowerModule = ((innerSegment->innerMiniDoubletPtr())->lowerHitPtr())->getModule();

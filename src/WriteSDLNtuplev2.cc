@@ -213,6 +213,27 @@ void WriteSDLNtuplev2::createTripletBranches()
     ana.tx->createBranch<vector<float>>("tp_sim_eta");
     ana.tx->createBranch<vector<float>>("tp_sim_phi");
 
+    ana.tx->createBranch<vector<float>>("tp_zOut");
+    ana.tx->createBranch<vector<float>>("tp_RtOut");
+    ana.tx->createBranch<vector<float>>("tp_deltaPhiPos");
+    ana.tx->createBranch<vector<float>>("tp_deltaPhi");
+    ana.tx->createBranch<vector<float>>("tp_betaIn");
+    ana.tx->createBranch<vector<float>>("tp_betaOut");
+    ana.tx->createBranch<vector<float>>("tp_deltaBeta");
+
+    ana.tx->createBranch<vector<float>>("tp_zLo");
+    ana.tx->createBranch<vector<float>>("tp_zHi");
+    ana.tx->createBranch<vector<float>>("tp_RtLo");
+    ana.tx->createBranch<vector<float>>("tp_RtHi");
+    ana.tx->createBranch<vector<float>>("tp_kZ");
+    ana.tx->createBranch<vector<float>>("tp_zLoPointed");
+    ana.tx->createBranch<vector<float>>("tp_zHiPointed");
+    ana.tx->createBranch<vector<float>>("tp_sdlCut");
+    ana.tx->createBranch<vector<float>>("tp_betaInCut");
+    ana.tx->createBranch<vector<float>>("tp_betaOutCut");
+    ana.tx->createBranch<vector<float>>("tp_deltaBetaCut");
+
+
     // Sim track to Triplets matching
     ana.tx->createBranch<vector<vector<int>>>("sim_tpIdx");
     ana.tx->createBranch<vector<vector<int>>>("sim_tpIdx_isMTVmatch");
@@ -939,6 +960,27 @@ void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
             ana.tx->pushbackToBranch<float>("tp_sim_pt", maxsimpt);
             ana.tx->pushbackToBranch<float>("tp_sim_eta", maxsimeta);
             ana.tx->pushbackToBranch<float>("tp_sim_phi", maxsimphi);
+
+            ana.tx->pushbackToBranch<float>("tp_zOut",tripletPtr->getZOut());
+            ana.tx->pushbackToBranch<float>("tp_RtOut",tripletPtr->getRtOut());
+            ana.tx->pushbackToBranch<float>("tp_deltaPhiPos",tripletPtr->getDeltaPhiPos());
+            ana.tx->pushbackToBranch<float>("tp_deltaPhi",tripletPtr->getDeltaPhi());
+            ana.tx->pushbackToBranch<float>("tp_betaIn",tripletPtr->getBetaIn());
+            ana.tx->pushbackToBranch<float>("tp_betaOut",tripletPtr->getBetaOut());
+            ana.tx->pushbackToBranch<float>("tp_deltaBeta",tripletPtr->getDeltaBeta());
+
+            
+            ana.tx->pushbackToBranch<float>("tp_zLo",tripletPtr->getZLo());
+            ana.tx->pushbackToBranch<float>("tp_zHi",tripletPtr->getZHi());
+            ana.tx->pushbackToBranch<float>("tp_RtLo",tripletPtr->getRtLo());
+            ana.tx->pushbackToBranch<float>("tp_RtHi",tripletPtr->getRtHi());
+            ana.tx->pushbackToBranch<float>("tp_kZ",tripletPtr->getKZ());
+            ana.tx->pushbackToBranch<float>("tp_zLoPointed",tripletPtr->getZLoPointed());
+            ana.tx->pushbackToBranch<float>("tp_zHiPointed",tripletPtr->getZHiPointed());
+            ana.tx->pushbackToBranch<float>("tp_sdlCut",tripletPtr->getSDLCut());
+            ana.tx->pushbackToBranch<float>("tp_betaInCut",tripletPtr->getBetaInCut());
+            ana.tx->pushbackToBranch<float>("tp_betaOutCut",tripletPtr->getBetaOutCut());
+            ana.tx->pushbackToBranch<float>("tp_deltaBetaCut",tripletPtr->getDeltaBetaCut());
 
         }
 

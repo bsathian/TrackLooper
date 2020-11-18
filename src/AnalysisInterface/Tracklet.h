@@ -50,9 +50,9 @@ namespace SDL
 	    const float& getRtOut() const;
 	    const float& getDeltaPhiPos() const;
 	    const float& getDeltaPhi() const;
-            const float& getDeltaBeta() const;
-            const float& getBetaIn() const;
-            const float& getBetaOut() const;
+        const float& getDeltaBeta() const;
+        const float& getBetaIn() const;
+        const float& getBetaOut() const;
 
 	    const float& getZLo() const;
 	    const float& getRtLo() const;
