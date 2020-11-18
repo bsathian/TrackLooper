@@ -712,12 +712,12 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
             ana.tx->pushbackToBranch<float>("sg_deltaPhiMin",segmentPtr->getDeltaPhiMin());
             ana.tx->pushbackToBranch<float>("sg_deltaPhiMax",segmentPtr->getDeltaPhiMax());
             ana.tx->pushbackToBranch<float>("sg_deltaPhiChange",segmentPtr->getDeltaPhiChange());
-            ana.tx->pushbackToBranch<float>("sg_deltaPhiChangeMin",segmentPtr->getDeltaPhiChangeMin());
-            ana.tx->pushbackToBranch<float>("sg_deltaPhiChangeMax",segmentPtr->getDeltaPhiChangeMax());
+            ana.tx->pushbackToBranch<float>("sg_deltaPhiChangeMin",segmentPtr->getDeltaPhiMinChange());
+            ana.tx->pushbackToBranch<float>("sg_deltaPhiChangeMax",segmentPtr->getDeltaPhiMaxChange());
             ana.tx->pushbackToBranch<float>("sg_zIn",segmentPtr->getZIn());
             ana.tx->pushbackToBranch<float>("sg_zOut",segmentPtr->getZOut());
             ana.tx->pushbackToBranch<float>("sg_rtIn",segmentPtr->getRtIn());
-            ana.tx->pushbackToBrnach<float>("sg_rtOut",segmentPTr->getRtOut());
+            ana.tx->pushbackToBranch<float>("sg_rtOut",segmentPtr->getRtOut());
             ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDSegment",segmentPtr->getDAlphaInnerMDSegment());
             ana.tx->pushbackToBranch<float>("sg_dAlphaOuterMDSegment",segmentPtr->getDAlphaOuterMDSegment());
             ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDOuterMD",segmentPtr->getDAlphaInnerMDOuterMD());
@@ -728,9 +728,9 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
             ana.tx->pushbackToBranch<float>("sg_zLo",segmentPtr->getZLo());
             ana.tx->pushbackToBranch<float>("sg_zHi",segmentPtr->getZHi());
             ana.tx->pushbackToBranch<float>("sg_sdCut",segmentPtr->getSDCut());
-            ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDSegmentThreshold",segmentPtr->getdAlphaInnerMDSegmentThreshold());
-            ana.tx->pushbackToBranch<float>("sg_dAlphaOuterMDSegmentThreshold",segmentPtr->getdAlphaOuterMDSegmentThreshold());
-            ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDOuterMDThreshold",segmentPtr->getdAlphaInnerMDOuterMDThreshold());
+            ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDSegmentThreshold",segmentPtr->getDAlphaInnerMDSegmentThreshold());
+            ana.tx->pushbackToBranch<float>("sg_dAlphaOuterMDSegmentThreshold",segmentPtr->getDAlphaOuterMDSegmentThreshold());
+            ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDOuterMDThreshold",segmentPtr->getDAlphaInnerMDOuterMDThreshold());
              
         }
     }
@@ -1066,7 +1066,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
             ana.tx->pushbackToBranch<float>("qp_kZ",trackletPtr->getKZ());
             ana.tx->pushbackToBranch<float>("qp_zLoPointed",trackletPtr->getZLoPointed());
             ana.tx->pushbackToBranch<float>("qp_zHiPointed",trackletPtr->getZHiPointed());
-            ana.tx->pushbackToBranch<float>("qp_sdlCut",trackletPtr->getsdlCut());
+            ana.tx->pushbackToBranch<float>("qp_sdlCut",trackletPtr->getSDLCut());
             ana.tx->pushbackToBranch<float>("qp_betaInCut",trackletPtr->getBetaInCut());
             ana.tx->pushbackToBranch<float>("qp_betaOutCut",trackletPtr->getBetaOutCut());
             ana.tx->pushbackToBranch<float>("qp_deltaBetaCut",trackletPtr->getDeltaBetaCut());
@@ -1199,7 +1199,7 @@ void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface
         ana.tx->pushbackToBranch<float>("pqp_kZ",trackletPtr->getKZ());
         ana.tx->pushbackToBranch<float>("pqp_zLoPointed",trackletPtr->getZLoPointed());
         ana.tx->pushbackToBranch<float>("pqp_zHiPointed",trackletPtr->getZHiPointed());
-        ana.tx->pushbackToBranch<float>("pqp_sdlCut",trackletPtr->getsdlCut());
+        ana.tx->pushbackToBranch<float>("pqp_sdlCut",trackletPtr->getSDLCut());
         ana.tx->pushbackToBranch<float>("pqp_betaOutCut",trackletPtr->getBetaOutCut());
         ana.tx->pushbackToBranch<float>("pqp_deltaBetaCut",trackletPtr->getDeltaBetaCut());
         

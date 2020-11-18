@@ -57,6 +57,11 @@ const float& SDL::Segment::getDeltaPhiMin() const
     return dphiMin_;
 }
 
+const float& SDL::Segment::getDeltaPhiMax() const
+{
+    return dphiMax_;
+}
+
 const float& SDL::Segment::getDeltaPhiChange() const
 {
     return dphichange_;

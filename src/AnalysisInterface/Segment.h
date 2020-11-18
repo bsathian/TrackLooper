@@ -77,7 +77,7 @@ namespace SDL
             const float& getPtErr() const;
             const float& getPx() const;
             const float& getPy() const;
-            const float& get Pz() const;
+            const float& getPz() const;
             const float& getEtaErr() const;
 
             const float& getZLo() const;

@@ -134,7 +134,7 @@ void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct trac
             unsigned int trackletIndex = idx * N_MAX_TRACKLETS_PER_MODULE + jdx;
             Segment* innerSegment = segments_[trackletsInGPU.segmentIndices[2 * trackletIndex]];
             Segment* outerSegment = segments_[trackletsInGPU.segmentIndices[2 * trackletIndex + 1]];
-            tracklets_[trackletIndex] = new SDL::Tracklet(trackletsInGPU.zOut[trackletIndex], trackletsInGPU.rtOut[trackletIndex], trackletsInGPU.deltaPhiPos[trackletIndex], trackletsInGPU.deltaPhi[trackletIndex], trackletsInGPU.betaIn[trackletIndex], trackletsInGPU.betaOut[trackletIndex], innerSegment, outerSegment);
+            tracklets_[trackletIndex] = new SDL::Tracklet(trackletsInGPU.zOut[trackletIndex], trackletsInGPU.rtOut[trackletIndex], trackletsInGPU.deltaPhiPos[trackletIndex], trackletsInGPU.deltaPhi[trackletIndex], trackletsInGPU.betaIn[trackletIndex], trackletsInGPU.betaOut[trackletIndex], trackletsInGPU.zLo[trackletIndex], trackletsInGPU.zHi[trackletIndex], trackletsInGPU.zLoPointed[trackletIndex], trackletsInGPU.zHiPointed[trackletIndex], trackletsInGPU.sdlCut[trackletIndex], trackletsInGPU.betaInCut[trackletIndex], trackletsInGPU.betaOutCut[trackletIndex], trackletsInGPU.deltaBetaCut[trackletIndex], trackletsInGPU.rtLo[trackletIndex], trackletsInGPU.rtHi[trackletIndex], trackletsInGPU.kZ[trackletIndex], innerSegment, outerSegment);
 
             trackletPointers.push_back(tracklets_[trackletIndex]);
             Module& innerInnerLowerModule = ((innerSegment->innerMiniDoubletPtr())->lowerHitPtr())->getModule();

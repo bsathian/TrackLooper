@@ -16,7 +16,7 @@ SDL::Tracklet::Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, floa
     zHiPointed_ = zHiPointed;
     sdlCut_ = sdlCut;
     betaInCut_ = betaInCut;
-    betaOutcut_ = betaOutcut;
+    betaOutCut_ = betaOutCut;
     deltaBetaCut_ = deltaBetaCut;
     rtLo_ = rtLo;
     rtHi_ = rtHi;
@@ -25,6 +25,27 @@ SDL::Tracklet::Tracklet(float zOut, float rtOut, float dPhiPos, float dPhi, floa
 
 SDL::Tracklet::~Tracklet()
 {
+}
+
+
+const float& SDL::Tracklet::getZOut() const
+{
+    return zOut_;
+}
+
+const float& SDL::Tracklet::getRtOut() const
+{
+    return rtOut_;
+}
+
+const float& SDL::Tracklet::getDeltaPhiPos() const
+{
+    return dPhiPos_;
+}
+
+const float& SDL::Tracklet::getDeltaPhi() const
+{
+    return dPhi_;
 }
 
 const float& SDL::Tracklet::getDeltaBeta() const
@@ -93,7 +114,7 @@ const float& SDL::Tracklet::getRtHi() const
     return rtHi_;
 }
 
-const float& SDL::Tracklet::getKZ()
+const float& SDL::Tracklet::getKZ() const
 {
     return kZ_;
 }
