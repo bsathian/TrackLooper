@@ -1,5 +1,5 @@
 #ifndef StudyPixelTrackletOuterSegmentOccupancy_h
-#define StudyTrackletOuterSegmentOccupancy_h
+#define StudyPixelTrackletOuterSegmentOccupancy_h
 
 #include "AnalysisInterface/EventForAnalysisInterface.h"
 #include "Study.h"
@@ -24,7 +24,7 @@ public:
 
     std::vector<std::vector<float>> EndcapLayerRingTrackletOccupancy;
 
-    StudyTrackletOccupancy(const char* studyName);
+    StudyPixelTrackletOccupancy(const char* studyName);
     virtual void bookStudy();
     void resetArrays();
     virtual void doStudy(SDL::EventForAnalysisInterface& recoevent, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents);

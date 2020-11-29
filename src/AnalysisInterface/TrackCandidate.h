@@ -16,20 +16,20 @@ namespace SDL
     class TrackCandidate
     {
         private:
-            TrackletBase* innerTrackletPtr_;
-            TrackletBase* outerTrackletPtr_;
+            std::shared_ptr<TrackletBase> innerTrackletPtr_;
+            std::shared_ptr<TrackletBase> outerTrackletPtr_;
             short trackCandidateType_;
 
         public:
-            TrackCandidate(TrackletBase* innerTrackletPtr, TrackletBase* outerTrackletPtr, short trackCandidateType);
+            TrackCandidate(std::shared_ptr<TrackletBase> innerTrackletPtr, std::shared_ptr<TrackletBase> outerTrackletPtr, short trackCandidateType);
             ~TrackCandidate();
 
-            TrackletBase* innerTrackletBasePtr() const;
-            TrackletBase* outerTrackletBasePtr() const;
-            Tracklet* innerTrackletPtr() const;
-            Tracklet* outerTrackletPtr() const;
-            Triplet* innerTripletPtr() const;
-            Triplet* outerTripletPtr() const;
+            std::shared_ptr<TrackletBase> innerTrackletBasePtr() const;
+            std::shared_ptr<TrackletBase> outerTrackletBasePtr() const;
+            std::shared_ptr<Tracklet> innerTrackletPtr() const;
+            std::shared_ptr<Tracklet> outerTrackletPtr() const;
+            std::shared_ptr<Triplet> innerTripletPtr() const;
+            std::shared_ptr<Triplet> outerTripletPtr() const;
             short trackCandidateType() const;
 
     };

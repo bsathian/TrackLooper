@@ -1,6 +1,6 @@
 #include "Triplet.h"
 
-SDL::Triplet::Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, float zLo, float zHi, float zLoPointed, float zHiPointed, float sdlCut, float betaInCut, float betaOutCut, float deltaBetaCut, float rtLo, float rtHi, float kZ, SDL::Segment* innerSegment, SDL::Segment* outerSegment) :     TrackletBase(innerSegment, outerSegment)
+SDL::Triplet::Triplet(float zOut, float rtOut, float dPhiPos, float dPhi, float betaIn, float betaOut, float zLo, float zHi, float zLoPointed, float zHiPointed, float sdlCut, float betaInCut, float betaOutCut, float deltaBetaCut, float rtLo, float rtHi, float kZ, std::shared_ptr<SDL::Segment> innerSegment, std::shared_ptr<SDL::Segment> outerSegment) :     TrackletBase(innerSegment, outerSegment)
 
 {
     zOut_ = zOut;
@@ -45,7 +45,7 @@ const float& SDL::Triplet::getDeltaPhi() const
 }
 
 
-const float& SDL::Triplet::getDeltaBeta() const
+const float SDL::Triplet::getDeltaBeta() const
 {
     return fabs(betaIn_ - betaOut_);
 }

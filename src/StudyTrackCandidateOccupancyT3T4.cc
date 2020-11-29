@@ -47,7 +47,7 @@ void StudyTrackCandidateOccupancyT3T4::bookStudy()
 
 void StudyTrackCandidateOccupancyT3T4::doStudy(SDL::EventForAnalysisInterface&event, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents)
 {
-    std::vector<SDL::Module*> moduleList = event.getLowerModulePtrs();
+    auto moduleList = event.getLowerModulePtrs();
 
     averageOccupancyInBarrel = 0;
     averageOccupancyInEndcap = 0;

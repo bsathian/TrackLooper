@@ -1,27 +1,27 @@
 #include "TrackCandidate.h"
 
-SDL::TrackCandidate::TrackCandidate(TrackletBase* innerTrackletPtr, TrackletBase* outerTrackletPtr, short trackCandidateType)
+SDL::TrackCandidate::TrackCandidate(std::shared_ptr<TrackletBase> innerTrackletPtr, std::shared_ptr<TrackletBase> outerTrackletPtr, short trackCandidateType)
 {
     innerTrackletPtr_ = innerTrackletPtr;
     outerTrackletPtr_ = outerTrackletPtr;
     trackCandidateType_ = trackCandidateType;
 }
 
-SDL::TrackletBase* SDL::TrackCandidate::innerTrackletBasePtr() const
+std::shared_ptr<SDL::TrackletBase> SDL::TrackCandidate::innerTrackletBasePtr() const
 {
     return innerTrackletPtr_;
 }
 
-SDL::TrackletBase* SDL::TrackCandidate::outerTrackletBasePtr() const
+std::shared_ptr<SDL::TrackletBase> SDL::TrackCandidate::outerTrackletBasePtr() const
 {
     return outerTrackletPtr_;
 }
 
-SDL::Tracklet* SDL::TrackCandidate::innerTrackletPtr() const
+std::shared_ptr<SDL::Tracklet> SDL::TrackCandidate::innerTrackletPtr() const
 {
-    if (dynamic_cast<Tracklet*>(innerTrackletPtr_))
+    if (std::dynamic_pointer_cast<Tracklet>(innerTrackletPtr_))
     {
-        return dynamic_cast<Tracklet*>(innerTrackletPtr_);
+        return std::dynamic_pointer_cast<Tracklet>(innerTrackletPtr_);
     }
     else
     {
@@ -31,11 +31,11 @@ SDL::Tracklet* SDL::TrackCandidate::innerTrackletPtr() const
 
 }
 
-SDL::Tracklet* SDL::TrackCandidate::outerTrackletPtr() const
+std::shared_ptr<SDL::Tracklet> SDL::TrackCandidate::outerTrackletPtr() const
 {
-    if (dynamic_cast<Tracklet*>(outerTrackletPtr_))
+    if (std::dynamic_pointer_cast<Tracklet>(outerTrackletPtr_))
     {
-        return dynamic_cast<Tracklet*>(outerTrackletPtr_);
+        return std::dynamic_pointer_cast<Tracklet>(outerTrackletPtr_);
     }
     else
     {
@@ -45,11 +45,11 @@ SDL::Tracklet* SDL::TrackCandidate::outerTrackletPtr() const
 
 }
 
-SDL::Triplet* SDL::TrackCandidate::innerTripletPtr() const
+std::shared_ptr<SDL::Triplet> SDL::TrackCandidate::innerTripletPtr() const
 {
-    if (dynamic_cast<Triplet*>(innerTrackletPtr_))
+    if (std::dynamic_pointer_cast<Triplet>(innerTrackletPtr_))
     {
-        return dynamic_cast<Triplet*>(innerTrackletPtr_);
+        return std::dynamic_pointer_cast<Triplet>(innerTrackletPtr_);
     }
     else
     {
@@ -58,11 +58,11 @@ SDL::Triplet* SDL::TrackCandidate::innerTripletPtr() const
     }
 }
 
-SDL::Triplet* SDL::TrackCandidate::outerTripletPtr() const
+std::shared_ptr<SDL::Triplet> SDL::TrackCandidate::outerTripletPtr() const
 {
-    if (dynamic_cast<Triplet*>(outerTrackletPtr_))
+    if (std::dynamic_pointer_cast<Triplet>(outerTrackletPtr_))
     {
-        return dynamic_cast<Triplet*>(outerTrackletPtr_);
+        return std::dynamic_pointer_cast<Triplet>(outerTrackletPtr_);
     }
     else
     {
@@ -76,3 +76,6 @@ short SDL::TrackCandidate::trackCandidateType() const
     return trackCandidateType_;
 }
 
+SDL::TrackCandidate::~TrackCandidate()
+{
+}
