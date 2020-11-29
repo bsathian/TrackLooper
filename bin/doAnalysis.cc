@@ -718,6 +718,7 @@ int main(int argc, char** argv)
             //pixel tracklet addition
             if(ana.verbose != 0) std::cout<<"Adding pixel segments!"<<std::endl;
             addPixelSegments(event,-1);
+            if(ana.verbose != 0) std::cout<<"# of Pixel Segments: "<<event.getNumberOfPixelSegments()<<std::endl;
             
             if(ana.verbose != 0) std::cout<<" Reco pixel tracklet start"<<std::endl;
             my_timer.Start(kFALSE);
@@ -725,6 +726,7 @@ int main(int argc, char** argv)
             event.createPixelTracklets();
             float ptl_elapsed = my_timer.RealTime();
             if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << ptl_elapsed - ptl_start_time << " secs" << std::endl;
+            if (ana.verbose != 0) std::cout << "# of Pixel Tracklets: "<<event.getNumberOfPixelTracklets()<<std::endl;
 
             // ----------------
             if (ana.verbose != 0) std::cout << "Reco Tracklet start" << std::endl;
