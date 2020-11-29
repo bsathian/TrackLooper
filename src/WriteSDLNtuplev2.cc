@@ -514,7 +514,7 @@ void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& ev
 {
 
     // get layer ptrs
-    const std::vector<SDL::Layer*> layerPtrs = event.getLayerPtrs();
+    auto layerPtrs = event.getLayerPtrs();
 
     // sim track to minidoublet matching
     std::vector<vector<int>> sim_mdIdx(trk.sim_pt().size());
@@ -528,7 +528,7 @@ void WriteSDLNtuplev2::setMiniDoubletBranches(SDL::EventForAnalysisInterface& ev
     {
 
         // MiniDoublet ptrs
-        const std::vector<SDL::MiniDoublet*>& minidoubletPtrs = layerPtr->getMiniDoubletPtrs();
+        const std::vector<std::shared_ptr<SDL::MiniDoublet>>& minidoubletPtrs = layerPtr->getMiniDoubletPtrs();
 
         // Loop over minidoublet ptrs
         for (auto& minidoubletPtr : minidoubletPtrs)
@@ -641,7 +641,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
-    const std::vector<SDL::Layer*> layerPtrs = event.getLayerPtrs();
+    auto layerPtrs = event.getLayerPtrs();
 
     // sim track to segment matching
     std::vector<vector<int>> sim_sgIdx(trk.sim_pt().size());
@@ -652,7 +652,7 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
     {
 
         // Segment ptrs
-        const std::vector<SDL::Segment*>& segmentPtrs = layerPtr->getSegmentPtrs();
+        const std::vector<std::shared_ptr<SDL::Segment>>& segmentPtrs = layerPtr->getSegmentPtrs();
 
         // Loop over segment ptrs
         for (auto& segmentPtr : segmentPtrs)
@@ -737,8 +737,8 @@ void WriteSDLNtuplev2::setSegmentBranches(SDL::EventForAnalysisInterface& event)
             ana.tx->pushbackToBranch<float>("sg_deltaPhiChangeMax",segmentPtr->getDeltaPhiMaxChange());
             ana.tx->pushbackToBranch<float>("sg_zIn",segmentPtr->getZIn());
             ana.tx->pushbackToBranch<float>("sg_zOut",segmentPtr->getZOut());
-            ana.tx->pushbackToBranch<float>("sg_rtIn",segmentPtr->getRtIn());
-            ana.tx->pushbackToBranch<float>("sg_rtOut",segmentPtr->getRtOut());
+            ana.tx->pushbackToBranch<float>("sg_RtIn",segmentPtr->getRtIn());
+            ana.tx->pushbackToBranch<float>("sg_RtOut",segmentPtr->getRtOut());
             ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDSegment",segmentPtr->getDAlphaInnerMDSegment());
             ana.tx->pushbackToBranch<float>("sg_dAlphaOuterMDSegment",segmentPtr->getDAlphaOuterMDSegment());
             ana.tx->pushbackToBranch<float>("sg_dAlphaInnerMDOuterMD",segmentPtr->getDAlphaInnerMDOuterMD());
@@ -769,10 +769,10 @@ void WriteSDLNtuplev2::setPixelSegmentBranches(SDL::EventForAnalysisInterface& e
     std::vector<vector<int>> sim_psgIdx(trk.sim_pt().size());
     std::vector<vector<int>> sim_psgIdx_isMTVmatch(trk.sim_pt().size());
 
-    SDL::Layer* layerPtr = &event.getPixelLayer();
+    std::shared_ptr<SDL::Layer> layerPtr = std::shared_ptr<SDL::Layer>(&event.getPixelLayer());
 
     // Segment ptrs
-    const std::vector<SDL::Segment*>& segmentPtrs = layerPtr->getSegmentPtrs();
+    const std::vector<std::shared_ptr<SDL::Segment>>& segmentPtrs = layerPtr->getSegmentPtrs();
     // Loop over segment ptrs
     for (auto& segmentPtr : segmentPtrs)
     {
@@ -867,7 +867,7 @@ void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
 {
 
     // get layer ptrs
-    const std::vector<SDL::Layer*> layerPtrs = event.getLayerPtrs();
+    auto layerPtrs = event.getLayerPtrs();
 
     // sim track to triplet matching
     std::vector<vector<int>> sim_tpIdx(trk.sim_pt().size());
@@ -878,7 +878,7 @@ void WriteSDLNtuplev2::setTripletBranches(SDL::EventForAnalysisInterface& event)
     {
 
         // Triplet ptrs
-        const std::vector<SDL::Triplet*>& tripletPtrs = layerPtr->getTripletPtrs();
+        const std::vector<std::shared_ptr<SDL::Triplet>>& tripletPtrs = layerPtr->getTripletPtrs();
 
         // Loop over triplet ptrs
         for (auto& tripletPtr : tripletPtrs)
@@ -996,7 +996,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
 {
 
     // get layer ptrs
-    const std::vector<SDL::Layer*> layerPtrs = event.getLayerPtrs();
+    auto layerPtrs = event.getLayerPtrs();
 
     // sim track to tracklet matching
     std::vector<vector<int>> sim_qpIdx(trk.sim_pt().size());
@@ -1007,7 +1007,7 @@ void WriteSDLNtuplev2::setQuadrupletBranches(SDL::EventForAnalysisInterface& eve
     {
 
         // Quadruplet ptrs
-        const std::vector<SDL::Tracklet*>& trackletPtrs = layerPtr->getTrackletPtrs();
+        const std::vector<std::shared_ptr<SDL::Tracklet>>& trackletPtrs = layerPtr->getTrackletPtrs();
 
         // Loop over tracklet ptrs
         for (auto& trackletPtr : trackletPtrs)
@@ -1140,7 +1140,7 @@ void WriteSDLNtuplev2::setPixelQuadrupletBranches(SDL::EventForAnalysisInterface
     std::vector<vector<int>> sim_pqpIdx_isMTVmatch(trk.sim_pt().size());
 
     // Quadruplet ptrs
-    const std::vector<SDL::Tracklet*>& trackletPtrs = pixelLayer.getTrackletPtrs();
+    const std::vector<std::shared_ptr<SDL::Tracklet>>& trackletPtrs = pixelLayer.getTrackletPtrs();
 
     // Loop over tracklet ptrs
     for (auto& trackletPtr : trackletPtrs)
@@ -1258,8 +1258,8 @@ void WriteSDLNtuplev2::setTrackCandidateBranches(SDL::EventForAnalysisInterface&
 {
 
     // get layer ptrs
-    std::vector<SDL::Layer*> layerPtrs = event.getLayerPtrs();
-    layerPtrs.push_back(&(event.getPixelLayer()));
+    auto layerPtrs = event.getLayerPtrs();
+    layerPtrs.push_back(std::shared_ptr<SDL::Layer>(&(event.getPixelLayer())));
 
     // sim track to track candidate matching
     std::vector<vector<int>> sim_tcIdx(trk.sim_pt().size());
@@ -1270,7 +1270,7 @@ void WriteSDLNtuplev2::setTrackCandidateBranches(SDL::EventForAnalysisInterface&
     {
 
         // Track Candidate ptrs
-        const std::vector<SDL::TrackCandidate*>& trackCandidatePtrs = layerPtr->getTrackCandidatePtrs();
+        const std::vector<std::shared_ptr<SDL::TrackCandidate>>& trackCandidatePtrs = layerPtr->getTrackCandidatePtrs();
 
         // Loop over trackCandidate ptrs
         for (auto& trackCandidatePtr : trackCandidatePtrs)

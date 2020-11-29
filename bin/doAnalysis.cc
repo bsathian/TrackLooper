@@ -460,6 +460,7 @@ int main(int argc, char** argv)
         // pt_boundaries = {0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7, 0.72, 0.74, 0.76, 0.78, 0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1.0, 1.02, 1.04, 1.06, 1.08, 1.1, 1.12, 1.14, 1.16, 1.18, 1.2, 1.22, 1.24, 1.26, 1.28, 1.3, 1.32, 1.34, 1.36, 1.38, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.5, 5.0}; // lowpt
 
     // List of studies to perform
+   
     std::vector<Study*> studies;
     studies.push_back(new StudySegmentOccupancy("studySegmentOccupancy"));
     studies.push_back(new StudyTrackletOccupancy("studyTrackletOccupancy"));
@@ -468,6 +469,7 @@ int main(int argc, char** argv)
     studies.push_back(new StudyTrackCandidateOccupancyT4T4("studyTrackCandidateOccupancyT4T4"));
     studies.push_back(new StudyTrackCandidateOccupancyT4T3("studyTrackCandidateOccupancyT4T3"));
     studies.push_back(new StudyTrackCandidateOccupancyT3T4("studyTrackCandidateOccupancyT3T4"));
+    studies.push_back(new StudyPixelTrackletOccupancy("studyPixelTrackletOuterSegmentOccupancy"));
 
     // book the studies
     for (auto& study : studies)
@@ -716,17 +718,15 @@ int main(int argc, char** argv)
             // ----------------
         
             //pixel tracklet addition
-            if(ana.verbose != 0) std::cout<<"Adding pixel segments!"<<std::endl;
+            if(ana.verbose != 0) std::cout<<"Adding Pixel segments!"<<std::endl;
             addPixelSegments(event,-1);
             if(ana.verbose != 0) std::cout<<"# of Pixel Segments: "<<event.getNumberOfPixelSegments()<<std::endl;
-            
-            if(ana.verbose != 0) std::cout<<" Reco pixel tracklet start"<<std::endl;
+            if(ana.verbose != 0) std::cout<<" Reco Pixel tracklet start"<<std::endl;
             my_timer.Start(kFALSE);
-            float ptl_start_time = my_timer.RealTime();
             event.createPixelTracklets();
             float ptl_elapsed = my_timer.RealTime();
-            if (ana.verbose != 0) std::cout << "Reco Tracklet processing time: " << ptl_elapsed - ptl_start_time << " secs" << std::endl;
             if (ana.verbose != 0) std::cout << "# of Pixel Tracklets: "<<event.getNumberOfPixelTracklets()<<std::endl;
+            if (ana.verbose != 0) std::cout << "Reco Pixel Tracklet processing time: " << ptl_elapsed - tp_elapsed << " secs" << std::endl;
 
             // ----------------
             if (ana.verbose != 0) std::cout << "Reco Tracklet start" << std::endl;
@@ -791,6 +791,7 @@ int main(int argc, char** argv)
         // Perform various studies with reco events and sim-track-matched-reco-hits-based mini-doublets
         // ********************************************************************************************
     //create the reco study analysis object
+   
        SDL::EventForAnalysisInterface* eventForAnalysisInterface = new SDL::EventForAnalysisInterface(SDL::modulesInGPU, event.getHits(), event.getMiniDoublets(), event.getSegments(), event.getTracklets(),event.getTriplets(),event.getTrackCandidates());
 
 

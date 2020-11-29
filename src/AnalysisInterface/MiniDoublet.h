@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <tuple>
+#include <memory>
 
 #include "Module.h"
 #include "Hit.h"
@@ -26,16 +27,16 @@ namespace SDL
             float drtCut_;
             float miniCut_;
 
-            Hit* lowerHitPtr_;
-            Hit* upperHitPtr_;
-            Hit* anchorHitPtr_;
+            std::shared_ptr<Hit> lowerHitPtr_;
+            std::shared_ptr<Hit> upperHitPtr_;
+            std::shared_ptr<Hit> anchorHitPtr_;
         public:
-            MiniDoublet(float dz, float drt, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, float dzCut, float drtCut, float miniCut, Hit* lowerHitPtr, Hit* upperHitPtr);
+            MiniDoublet(float dz, float drt, float dphi, float dphichange, float dphinoshift, float dphichangenoshift, float dzCut, float drtCut, float miniCut, std::shared_ptr<Hit> lowerHitPtr, std::shared_ptr<Hit> upperHitPtr);
             void setAnchorHit();
             ~MiniDoublet();
-            Hit* lowerHitPtr() const;
-            Hit* upperHitPtr() const;
-            Hit* anchorHitPtr() const;
+            std::shared_ptr<Hit> lowerHitPtr() const;
+            std::shared_ptr<Hit> upperHitPtr() const;
+            std::shared_ptr<Hit> anchorHitPtr() const;
             const float& getDz() const;
             const float& getDrt() const;
             const float& getDeltaPhi() const;

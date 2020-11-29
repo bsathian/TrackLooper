@@ -304,63 +304,63 @@ const SDL::Module::ModuleLayerType& SDL::Module::moduleLayerType() const
     return moduleLayerType_;
 }
 
-const std::vector<SDL::Hit*>& SDL::Module::getHitPtrs() const
+const std::vector<std::shared_ptr<SDL::Hit>>& SDL::Module::getHitPtrs() const
 {
     return hits_;
 }
 
-const std::vector<SDL::MiniDoublet*>& SDL::Module::getMiniDoubletPtrs() const
+const std::vector<std::shared_ptr<SDL::MiniDoublet>>& SDL::Module::getMiniDoubletPtrs() const
 {
     return miniDoublets_;
 }
 
-const std::vector<SDL::Segment*>& SDL::Module::getSegmentPtrs() const
+const std::vector<std::shared_ptr<SDL::Segment>>& SDL::Module::getSegmentPtrs() const
 {
     return segments_;
 }
 
-const std::vector<SDL::Tracklet*>& SDL::Module::getTrackletPtrs() const
+const std::vector<std::shared_ptr<SDL::Tracklet>>& SDL::Module::getTrackletPtrs() const
 {
     return tracklets_;
 }
 
-const std::vector<SDL::Triplet*>& SDL::Module::getTripletPtrs() const
+const std::vector<std::shared_ptr<SDL::Triplet>>& SDL::Module::getTripletPtrs() const
 {
     return triplets_;
 }
 
-const std::vector<SDL::TrackCandidate*>& SDL::Module::getTrackCandidatePtrs() const
+const std::vector<std::shared_ptr<SDL::TrackCandidate>>& SDL::Module::getTrackCandidatePtrs() const
 {
     return trackCandidates_;
 }
 
-void SDL::Module::addHit(Hit* hit)
+void SDL::Module::addHit(std::shared_ptr<Hit> hit)
 {
     hits_.push_back(hit);
 }
 
-void SDL::Module::addMiniDoublet(MiniDoublet* md)
+void SDL::Module::addMiniDoublet(std::shared_ptr<MiniDoublet> md)
 {
     miniDoublets_.push_back(md);
 }
 
-void SDL::Module::addSegment(Segment* sg)
+void SDL::Module::addSegment(std::shared_ptr<Segment> sg)
 {
     segments_.push_back(sg);
 }
 
-void SDL::Module::addTracklet(Tracklet* tp)
+void SDL::Module::addTracklet(std::shared_ptr<Tracklet> tp)
 {
     tracklets_.push_back(tp);
 }
 
 
-void SDL::Module::addTriplet(Triplet* tp)
+void SDL::Module::addTriplet(std::shared_ptr<Triplet> tp)
 {
     triplets_.push_back(tp);
 }
 
-void SDL::Module::addTrackCandidate(TrackCandidate* tc)
+void SDL::Module::addTrackCandidate(std::shared_ptr<TrackCandidate> tc)
 {
     trackCandidates_.push_back(tc);
 }

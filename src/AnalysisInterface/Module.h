@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <tuple>
+#include <memory>
 
 #include "Hit.h"
 #include "MiniDoublet.h"
@@ -68,12 +69,12 @@ namespace SDL
         private:
             Side side_;
 
-            std::vector<Hit*> hits_;
-            std::vector<MiniDoublet*> miniDoublets_;
-            std::vector<Segment*> segments_;
-            std::vector<Tracklet*> tracklets_;
-            std::vector<Triplet*> triplets_;
-            std::vector<TrackCandidate*> trackCandidates_;
+            std::vector<std::shared_ptr<Hit>> hits_;
+            std::vector<std::shared_ptr<MiniDoublet>> miniDoublets_;
+            std::vector<std::shared_ptr<Segment>> segments_;
+            std::vector<std::shared_ptr<Tracklet>> tracklets_;
+            std::vector<std::shared_ptr<Triplet>> triplets_;
+            std::vector<std::shared_ptr<TrackCandidate>> trackCandidates_;
             //to accommodate the fact that we will overshoot existing array limits and need another way to count object multiplicities
             unsigned int nMiniDoublets_;
             unsigned int nSegments_;
@@ -103,12 +104,12 @@ namespace SDL
             const bool& isInverted() const;
             const ModuleType& moduleType() const;
             const ModuleLayerType& moduleLayerType() const;
-            const std::vector<Hit*>& getHitPtrs() const;
-            const std::vector<MiniDoublet*>& getMiniDoubletPtrs() const;
-            const std::vector<Segment*>& getSegmentPtrs() const;
-            const std::vector<Tracklet*>& getTrackletPtrs() const;
-            const std::vector<Triplet*>& getTripletPtrs() const;
-            const std::vector<TrackCandidate*>& getTrackCandidatePtrs() const;
+            const std::vector<std::shared_ptr<Hit>>& getHitPtrs() const;
+            const std::vector<std::shared_ptr<MiniDoublet>>& getMiniDoubletPtrs() const;
+            const std::vector<std::shared_ptr<Segment>>& getSegmentPtrs() const;
+            const std::vector<std::shared_ptr<Tracklet>>& getTrackletPtrs() const;
+            const std::vector<std::shared_ptr<Triplet>>& getTripletPtrs() const;
+            const std::vector<std::shared_ptr<TrackCandidate>>& getTrackCandidatePtrs() const;
 
             const int getNumberOfMiniDoublets() const;
             const int getNumberOfSegments() const;
@@ -144,12 +145,12 @@ namespace SDL
             void setDerivedQuantities();
 
 
-            void addHit(Hit* hit);
-            void addMiniDoublet(MiniDoublet* md);
-            void addSegment(Segment* sg);
-            void addTracklet(Tracklet* tp);
-            void addTriplet(Triplet* tp);
-            void addTrackCandidate(TrackCandidate* tc);
+            void addHit(std::shared_ptr<Hit> hit);
+            void addMiniDoublet(std::shared_ptr<MiniDoublet> md);
+            void addSegment(std::shared_ptr<Segment> sg);
+            void addTracklet(std::shared_ptr<Tracklet> tp);
+            void addTriplet(std::shared_ptr<Triplet> tp);
+            void addTrackCandidate(std::shared_ptr<TrackCandidate> tc);
     };
 
 }

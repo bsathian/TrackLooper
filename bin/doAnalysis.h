@@ -26,6 +26,7 @@
 #include "StudyTrackCandidateOccupancyT4T4.h"
 #include "StudyTrackCandidateOccupancyT4T3.h"
 #include "StudyTrackCandidateOccupancyT3T4.h"
+#include "StudyPixelTrackletOuterSegmentOccupancy.h"
 
 #include "constants.h"
 

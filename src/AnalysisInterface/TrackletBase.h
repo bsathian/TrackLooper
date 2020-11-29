@@ -3,6 +3,7 @@
 
 #include <iomanip>
 #include <functional>
+#include <memory>
 
 #include "Module.h"
 #include "Segment.h"
@@ -22,16 +23,16 @@ namespace SDL
         //abstract class of segments - can be triplet or tracklet
 
         protected: //so that we can public inherit these
-            Segment* innerSegmentPtr_;
-            Segment* outerSegmentPtr_;
+            std::shared_ptr<Segment> innerSegmentPtr_;
+            std::shared_ptr<Segment> outerSegmentPtr_;
 
         public:
             TrackletBase();
-            TrackletBase(Segment* innerSegmentPtr, Segment* outerSegmentPtr);
+            TrackletBase(std::shared_ptr<Segment> innerSegmentPtr, std::shared_ptr<Segment> outerSegmentPtr);
             virtual ~TrackletBase();
 
-            Segment* innerSegmentPtr() const;
-            Segment* outerSegmentPtr() const;
+            std::shared_ptr<Segment> innerSegmentPtr() const;
+            std::shared_ptr<Segment> outerSegmentPtr() const;
     };
 }
 #endif
