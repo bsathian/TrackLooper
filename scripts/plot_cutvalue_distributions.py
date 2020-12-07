@@ -13,7 +13,7 @@ tree = f["tree"]
 def plot_distributions(obj):
     global tree
     blacklist = ["hitIdx","simTrkIdx","layer","pt","eta","phi","sim_pt","sim_eta","sim_phi","type"]
-
+    print("object = ",obj)
     quantities = []
     for name in tree.keys():
         if name[:len(obj)] == obj and name not in map(lambda x : "{}_{}".format(obj,x),blacklist):
@@ -73,7 +73,5 @@ def plot_distributions(obj):
         plt.close()
 
 
-
-
-objects = ["md","sg","qp","psg","pqp","tp"]
+objects = ["md","sg","qp"]#,"psg","pqp","tp"]
 [plot_distributions(i) for i in objects]
