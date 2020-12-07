@@ -21,12 +21,29 @@ def plot_distributions(obj):
 
     a = tree["sim_{}Idx_isMTVmatch".format(obj)].array()
     b = ak.flatten(a, axis = 2)
-    
+
+    layers = tree["{}_layer".format(obj)].array()
+    cats = []
+    for event in layers:
+        cats.append([])
+        for trackObject in event:
+            string = ""
+            for layer in trackObject:
+                if layer == 0:
+                    string += "P"
+                elif layer <= 6:
+                    string += "B"
+                else:
+                    string += "E"
+            cats[-1].extend([string])
+
+    cats = ak.from_regular(cats)
+
     for quantity in quantities:
         print("quantity = ",quantity)
         qArray = tree[quantity].array()
         qArraySimTrackMatched = qArray[b]
-        if all(ak.flatten(qArray) == -999): 
+        if all(ak.flatten(qArray) == -999):
             continue
         minValue = min(ak.flatten(qArray)[ak.flatten(qArray) > -999])
         maxValue = max(ak.flatten(qArray))
@@ -54,6 +71,8 @@ def plot_distributions(obj):
         plt.title("Distribution for {}".format(quantity))
         plt.savefig("{}.pdf".format(quantity))
         plt.close()
+
+
 
 
 objects = ["md","sg","qp","psg","pqp","tp"]
