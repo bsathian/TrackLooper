@@ -23,6 +23,7 @@ def plot_distributions(obj):
     b = ak.flatten(a, axis = 2)
 
     layers = tree["{}_layer".format(obj)].array()
+    unique_cats = []
     cats = []
     for event in layers:
         cats.append([])
@@ -35,7 +36,9 @@ def plot_distributions(obj):
                     string += "B"
                 else:
                     string += "E"
-            cats[-1].extend([string])
+            cats[-1].append(string)
+            if string not in unique_cats:
+                unique_cats.append(cats)
 
     cats = ak.from_regular(cats)
 
@@ -71,6 +74,42 @@ def plot_distributions(obj):
         plt.title("Distribution for {}".format(quantity))
         plt.savefig("{}.pdf".format(quantity))
         plt.close()
+
+        for unique_cat in unique_cats:
+            print("category = {}".format(unique_cat))
+            print("quantity = ",quantity)
+            qArrayCat = qArray[cat == unique_cat]
+            qArraySimTrackMatchedCat = qArray[b][cat[b] == unique_cat]
+            if all(ak.flatten(qArrayCat) == -999):
+                continue
+            minValue = min(ak.flatten(qArrayCat)[ak.flatten(qArrayCat) > -999])
+            maxValue = max(ak.flatten(qArrayCat))
+            histMinLimit = minValue * 1.5 if minValue < 0 else minValue * 0.75
+            histMaxLimit = maxValue * 0.75 if maxValue < 0 else maxValue * 1.5
+            print("minValue = {}, maxValue = {}".format(minValue,maxValue))
+
+            allHist = hist.Hist("Events",hist.Bin("allValues","{}".format(quantity.split("_")[1]),1000,histMinLimit,histMaxLimit))
+            simTrackMatchedHist = hist.Hist("Events",hist.Bin("simtrkMatched","Sim track Matched {}".format(quantity.split("_")[1]),1000,histMinLimit,histMaxLimit))
+
+            allHist.fill(allValues = ak.flatten(qArrayCat)[ak.flatten(qArrayCat) > -999])
+            simTrackMatchedHist.fill(simtrkMatched = ak.flatten(qArraySimTrackMatchedCat)[ak.flatten(qArraySimTrackMatchedCat) > -999])
+
+            plt.figure()
+            plt.yscale("log")
+            ax = hist.plot1d(allHist,fill_opts = {
+                'alpha': 1.0,
+                'edgecolor':(0,0,0,.5),
+                "color":"blue"}, )
+            ax.set_label(quantity)
+            hist.plot1d(simTrackMatchedHist,fill_opts = {
+            'alpha': 0.5,
+            'edgecolor':(0,0,0,.5),
+            'color':'red'}, legend_opts = {"labels":[quantity, "sim track matched "+quantity]})
+            plt.title("Distribution for {} {}".format(unique_cat,quantity))
+            plt.savefig("{}_{}.pdf".format(quantity,unique_cat))
+            plt.close()
+
+
 
 
 objects = ["md","sg","qp"]#,"psg","pqp","tp"]
