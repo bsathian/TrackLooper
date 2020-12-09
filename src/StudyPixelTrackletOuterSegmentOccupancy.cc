@@ -57,10 +57,10 @@ void StudyPixelTrackletOccupancy::resetArrays()
 void StudyPixelTrackletOccupancy::doStudy(SDL::EventForAnalysisInterface&event, std::vector<std::tuple<unsigned int, SDL::EventForAnalysisInterface*>> simtrkevents)
 {
     resetArrays();
-    SDL::Layer& pixelLayer = event.getPixelLayer();
+    std::shared_ptr<SDL::Layer> pixelLayer = event.getPixelLayer();
 
 
-    for(auto & trackletPtr : pixelLayer.getTrackletPtrs())
+    for(auto & trackletPtr : pixelLayer->getTrackletPtrs())
     {
         auto module = &(trackletPtr->outerSegmentPtr()->innerMiniDoubletPtr()->lowerHitPtr()->getModule());
         if(module->subdet() == SDL::Module::Barrel)

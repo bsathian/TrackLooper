@@ -95,7 +95,7 @@ void SDL::EventForAnalysisInterface::addMDsToAnalysisInterface(struct miniDouble
             }
             else
             {
-                getPixelLayer().addMiniDoublet(miniDoublets_[mdIndex]);
+                getPixelLayer()->addMiniDoublet(miniDoublets_[mdIndex]);
             }
 
         }
@@ -127,7 +127,7 @@ void SDL::EventForAnalysisInterface::addSegmentsToAnalysisInterface(struct segme
             }
             else
             {
-                getPixelLayer().addSegment(segments_[segmentIndex]);
+                getPixelLayer()->addSegment(segments_[segmentIndex]);
                 segments_[segmentIndex]->setPixelVariables(segmentsInGPU.ptIn[jdx],segmentsInGPU.ptErr[jdx], segmentsInGPU.px[jdx], segmentsInGPU.py[jdx], segmentsInGPU.pz[jdx], segmentsInGPU.etaErr[jdx]);
             }
         }
@@ -159,7 +159,7 @@ void SDL::EventForAnalysisInterface::addTrackletsToAnalysisInterface(struct trac
             }
             else
             {
-                getPixelLayer().addTracklet(tracklets_[trackletIndex]);
+                getPixelLayer()->addTracklet(tracklets_[trackletIndex]);
             }
         }
     }
@@ -241,7 +241,7 @@ void SDL::EventForAnalysisInterface::addTrackCandidatesToAnalysisInterface(struc
             }
             else
             {
-                getPixelLayer().addTrackCandidate(trackCandidates_[trackCandidateIndex]);
+                getPixelLayer()->addTrackCandidate(trackCandidates_[trackCandidateIndex]);
             }
 
             //printTrackCandidateLayers(trackCandidates_[trackCandidateIndex]);    
@@ -329,27 +329,33 @@ SDL::EventForAnalysisInterface::EventForAnalysisInterface(struct modules* module
     addModulesToAnalysisInterface(*modulesInGPU,mdsInGPU,segmentsInGPU,trackletsInGPU, tripletsInGPU, trackCandidatesInGPU);
     if(hitsInGPU != nullptr)
     {
+        std::cout<<"adding hits to analysis interface"<<std::endl;
         addHitsToAnalysisInterface(*hitsInGPU);
     }
     if(mdsInGPU != nullptr)
     {
+        std::cout<<"adding MDs to analysis interface"<<std::endl;
         addMDsToAnalysisInterface(*mdsInGPU);
     }
     if(segmentsInGPU != nullptr)
     {
+        std::cout<<"adding segments to analysis interface"<<std::endl;
         addSegmentsToAnalysisInterface(*segmentsInGPU);
     }
     if(trackletsInGPU != nullptr)
     {
+        std::cout<<"adding tracklets to analysis interface"<<std::endl;
         addTrackletsToAnalysisInterface(*trackletsInGPU);
     }
     if(tripletsInGPU != nullptr)
     {
+        std::cout<<"adding triplets to analysis interface"<<std::endl;
         addTripletsToAnalysisInterface(*tripletsInGPU);
     }
     if(trackCandidatesInGPU != nullptr)
     {
-//        addTrackCandidatesToAnalysisInterface(*trackCandidatesInGPU);
+        std::cout<<"adding track candidates to analysis interface"<<std::endl;
+        addTrackCandidatesToAnalysisInterface(*trackCandidatesInGPU);
     }
 }
 
@@ -363,7 +369,7 @@ const std::vector<std::shared_ptr<SDL::Module>> SDL::EventForAnalysisInterface::
     return lowerModulePointers;
 }
 
-SDL::Layer& SDL::EventForAnalysisInterface::getPixelLayer()
+std::shared_ptr<SDL::Layer> SDL::EventForAnalysisInterface::getPixelLayer()
 {
     return pixelLayer_;
 }
@@ -383,6 +389,9 @@ void SDL::EventForAnalysisInterface::createLayers()
         endcapLayers_[ilayer] = std::make_shared<SDL::Layer>(ilayer, SDL::Layer::Endcap);
         layerPtrs_.push_back(endcapLayers_[ilayer]);
     }
+
+   //create the pixel layer
+   pixelLayer_ = std::make_shared<SDL::Layer>();
 }
 
 SDL::Layer& SDL::EventForAnalysisInterface::getLayer(int ilayer, SDL::Layer::SubDet subdet)
